@@ -8,7 +8,7 @@ public class PlayerController : MonoBehaviour
     [Header("Movement")]
 
     [SerializeField] private float movementSpeed = 8f;
-    [SerializeField] private float rotationSpeed = 15f;
+    [SerializeField] private float rotationSpeed = 100f;
 
     //minimum distance dragged before player starts moving
     [SerializeField] private float touchDeadzone = 10f;
