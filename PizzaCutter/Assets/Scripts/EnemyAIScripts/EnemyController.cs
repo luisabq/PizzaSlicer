@@ -11,7 +11,11 @@ public class EnemyController : MonoBehaviour
     [Header("Enemy Drops")]
     [SerializeField] private GameObject xpOrbPrefab;
     [SerializeField] private GameObject healthPickupPrefab;
-   
+
+    [Header("VFX")]
+    [SerializeField] private GameObject hitVFXPrefab;
+    [SerializeField] private float vfxDestroyDelay = 2f;
+
 
     private float currentHealth;
     private float attackTimer;
@@ -111,6 +115,8 @@ public class EnemyController : MonoBehaviour
             $"HP: {currentHealth}/{enemyData.maxHealth}"
         );
 
+        SpawnHitVFX(transform.position);
+
         if (currentHealth <= 0f)
         {
             Die();
@@ -150,6 +156,17 @@ public class EnemyController : MonoBehaviour
 
         Destroy(gameObject);
     }
+
+
+    private void SpawnHitVFX(Vector3 spawnPosition)
+    {
+        if (hitVFXPrefab != null)
+        {
+            GameObject vfxInstance = Instantiate(hitVFXPrefab, spawnPosition, Quaternion.identity);
+            Destroy(vfxInstance, vfxDestroyDelay);
+        }
+    }
+
 
     public float GetCurrentHealth()
     {
