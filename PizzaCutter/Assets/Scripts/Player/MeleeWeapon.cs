@@ -19,7 +19,6 @@ public class MeleeWeapon : MonoBehaviour
 
     private void Awake()
     {
-        // Pass  inside the generic angle brackets
         playerStats = GetComponentInParent<PlayerStats>();
 
         if (playerStats != null)
@@ -93,7 +92,6 @@ public class MeleeWeapon : MonoBehaviour
         Transform target = GetNearestEnemy();
         if (target == null) return;
 
-        // Calculate direction to target in top-down space (flatten Y axis)
         Vector3 direction = (target.position - playerTransform.position);
         direction.y = 0f;
 
@@ -110,7 +108,7 @@ public class MeleeWeapon : MonoBehaviour
         
         float totalAttackSpeed = weaponData.baseWeaponAttackSpeed * (playerStats != null ? playerStats.attackSpeedMultiplier : 1f); //if no attackspeed found, set to 1
 
-        // Convert attacks per second into cooldown seconds
+        //Converts attacks per second into cooldown seconds
         float cooldown = 1f / (Mathf.Max(totalAttackSpeed, 0.01f));
         nextAttackTime = Time.time + cooldown;
     }
@@ -118,14 +116,14 @@ public class MeleeWeapon : MonoBehaviour
      void PerformAttack()
      {
         //Finding combined damage
-        float combinedDamage = weaponData.baseWeaponDamage + (playerStats != null ? playerStats.baseDamage : 5f); //iof no base damage found set to 5
+        float combinedDamage = weaponData.baseWeaponDamage + (playerStats != null ? playerStats.baseDamage : 5f); //if no base damage found set to 5
 
         //Play vfx/animation
         if (weaponData.attackVFX != null)
         {
             GameObject vfxInstance = Instantiate(weaponData.attackVFX, attackPoint.position, attackPoint.rotation);
             VisualEffect vfx;
-            vfxInstance.transform.SetParent(transform); //attatches to player
+            vfxInstance.transform.SetParent(transform); //whether vfx attatches to player
 
            
             if (vfxInstance.TryGetComponent(out vfx))
@@ -138,16 +136,16 @@ public class MeleeWeapon : MonoBehaviour
         }
 
         //Hitbox/Enemy detection 
-        Collider[] hitEnemies = Physics.OverlapSphere(attackPoint.position, weaponData.baseAttackRange, enemyLayer);  //GO BACK AND CHANGE THIS TO WHATEVER NIC HAS FOR ENEMY LAYER
+        Collider[] hits = Physics.OverlapSphere(attackPoint.position, weaponData.baseAttackRange, enemyLayer);
 
-        foreach (Collider enemy in hitEnemies)  //HERE TOO
+        foreach (var hit in hits)
         {
-
-            // if (enemy.TryGetComponent(out var health))  // AND ENEMY HEALTH VARIABLE
-            //{
-                // health.TakeDamage(combinedDamage);   //AND DAMAGE SYSTEM
-           // }
-            Debug.Log($"[MELEE ATTACK] Hit {enemy.name} for {combinedDamage} total damage!"); //and adjust enemy name here
+            // Try to get EnemyController directly on the object hit
+            if (hit.TryGetComponent<EnemyController>(out var enemy))
+            {
+                enemy.TakeDamage(combinedDamage);
+                Debug.Log($"[MELEE ATTACK] Hit {enemy.name} for {combinedDamage} total damage!");
+            }
         }
      }
 
