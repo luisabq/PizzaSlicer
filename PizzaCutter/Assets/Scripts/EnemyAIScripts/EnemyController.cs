@@ -85,11 +85,16 @@ public class EnemyController : MonoBehaviour
 
     private void DealDamageToPlayer()
     {
-        Debug.Log(
-            $"{enemyData.enemyName} attacked player " +
-            $"for {enemyData.attackDamage} damage."
-        );
-// Cameron, make sure to connect this here to the player health system, whenever you get that set up. also script code just so i don't forget too
+        if (player != null && player.TryGetComponent<PlayerHealth>(out var playerHealth))
+        {
+            playerHealth.TakeDamage(enemyData.attackDamage);
+
+            Debug.Log(
+                $"{enemyData.enemyName} attacked player " +
+                $"for {enemyData.attackDamage} damage."
+            );
+        }
+
     }
 
     public void TakeDamage(float damage)

@@ -5,7 +5,8 @@ public class PlayerStats : MonoBehaviour
 
     [Header("Base Stats")]
     public float baseDamage = 5f; // changes with player upgrades and used with weapon damage to calculate combined damage
-    public float attackSpeedMultiplier = 1f; 
+    public float attackSpeedMultiplier = 1f;
+    public float maxHealth = 100f;
 
 
 
