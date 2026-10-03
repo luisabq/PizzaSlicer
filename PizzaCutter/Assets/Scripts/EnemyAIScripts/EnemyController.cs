@@ -125,11 +125,17 @@ public class EnemyController : MonoBehaviour
         if (xpOrbPrefab != null)
         {
             Instantiate(xpOrbPrefab, transform.position, Quaternion.identity);
+            if (xpOrbPrefab.TryGetComponent<EXPOrb>(out var orb))
+            {
+                orb.SetXPValue(enemyData.xpReward);
+            }
         }
         else
         {
            Debug.Log("Me when i hate giving the enemy the exp orb prefab");
         }
+
+
             
 
         Destroy(gameObject);

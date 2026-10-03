@@ -1175,7 +1175,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6173689135583354075, guid: 493e13a63ac7cf1479afc487f009de66, type: 3}
       propertyPath: baseDamage
-      value: 500
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 6173689135583354075, guid: 493e13a63ac7cf1479afc487f009de66, type: 3}
+      propertyPath: xpToNextLevel
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 6173689135583354075, guid: 493e13a63ac7cf1479afc487f009de66, type: 3}
+      propertyPath: damageIncreasePerLevel
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 8134743552906177723, guid: 493e13a63ac7cf1479afc487f009de66, type: 3}
       propertyPath: m_TagString

@@ -76,6 +76,11 @@ public class EXPOrb : MonoBehaviour
         }
     }
 
+    //theres no way this is optimal
+    public void SetXPValue(int amount)
+    {
+        xpAmount = amount;
+    }
 
 
 
