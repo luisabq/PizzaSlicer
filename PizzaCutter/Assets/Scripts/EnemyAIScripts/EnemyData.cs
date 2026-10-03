@@ -20,4 +20,8 @@ public class EnemyData : ScriptableObject
 
     [Header("Rewards")]
     public int xpReward = 10;
+    public int healthReward = 10;
+
+    //where 1 = always drops
+    public float healthDropChance = 0.4f;
 }

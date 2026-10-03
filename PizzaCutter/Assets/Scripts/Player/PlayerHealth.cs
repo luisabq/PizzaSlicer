@@ -38,7 +38,7 @@ public class PlayerHealth : MonoBehaviour
     {
         currentHealth = currentHealth + healAmount;
         if (currentHealth >= playerStats.maxHealth) currentHealth = playerStats.maxHealth;
-        Debug.Log($"[PLAYER] Fully restored health to {currentHealth}!");
+        Debug.Log($"[PLAYER] Restored health to {currentHealth}!");
         return; 
     }
 

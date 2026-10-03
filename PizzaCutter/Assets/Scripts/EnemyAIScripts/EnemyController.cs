@@ -10,8 +10,8 @@ public class EnemyController : MonoBehaviour
 
     [Header("Enemy Drops")]
     [SerializeField] private GameObject xpOrbPrefab;
-    [SerializeField] private GameObject healthOrbPrefab;
-    [SerializeField] private float healthDropChance = 20f;
+    [SerializeField] private GameObject healthPickupPrefab;
+   
 
     private float currentHealth;
     private float attackTimer;
@@ -135,8 +135,18 @@ public class EnemyController : MonoBehaviour
            Debug.Log("Me when i hate giving the enemy the exp orb prefab");
         }
 
+        if (healthPickupPrefab != null && Random.value <= enemyData.healthDropChance)
+        {
+            //offsetting so xp and health arent overlapping
+            Vector3 spawnOffset = new Vector3(Random.Range(-0.5f, 0.5f), 0f, Random.Range(-0.5f, 0.5f));
+            GameObject healthObj = Instantiate(healthPickupPrefab, transform.position + spawnOffset, Quaternion.identity);
 
-            
+            if (healthObj.TryGetComponent<HealthPickup>(out var healthScript))
+            {
+                healthScript.SetHealValue(enemyData.healthReward);
+            }
+        }
+
 
         Destroy(gameObject);
     }
