@@ -129,3 +129,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemyController
   enemyData: {fileID: 11400000, guid: 36001e3629994ca449a5fb1f43ba7cc2, type: 2}
   player: {fileID: 0}
+  xpOrbPrefab: {fileID: 3407034089434938951, guid: ffa2ad617f5e6f144b1f6bbaead40acf, type: 3}
+  healthOrbPrefab: {fileID: 0}
+  healthDropChance: 20

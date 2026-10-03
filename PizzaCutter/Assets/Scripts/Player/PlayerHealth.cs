@@ -26,6 +26,26 @@ public class PlayerHealth : MonoBehaviour
         currentHealth = playerStats != null ? playerStats.maxHealth : 100f;
     }
 
+
+
+
+
+
+
+
+
+    public void Heal(float healAmount)
+    {
+        currentHealth = currentHealth + healAmount;
+        if (currentHealth >= playerStats.maxHealth) currentHealth = playerStats.maxHealth;
+        Debug.Log($"[PLAYER] Fully restored health to {currentHealth}!");
+        return; 
+    }
+
+
+
+
+
     public void TakeDamage(float damageAmount)
     {
         //Ignores damage if dead/in invincibility frames

@@ -8,6 +8,11 @@ public class EnemyController : MonoBehaviour
     [Header("Target")]
     [SerializeField] private Transform player;
 
+    [Header("Enemy Drops")]
+    [SerializeField] private GameObject xpOrbPrefab;
+    [SerializeField] private GameObject healthOrbPrefab;
+    [SerializeField] private float healthDropChance = 20f;
+
     private float currentHealth;
     private float attackTimer;
 
@@ -115,6 +120,17 @@ public class EnemyController : MonoBehaviour
     private void Die()
     {
         Debug.Log($"{enemyData.enemyName} is ded. DED I TELL YA!");
+
+        //spawns exp orb
+        if (xpOrbPrefab != null)
+        {
+            Instantiate(xpOrbPrefab, transform.position, Quaternion.identity);
+        }
+        else
+        {
+           Debug.Log("Me when i hate giving the enemy the exp orb prefab");
+        }
+            
 
         Destroy(gameObject);
     }
