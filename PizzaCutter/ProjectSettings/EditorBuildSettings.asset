@@ -8,8 +8,11 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/SampleScene.unity
     guid: 99c9720ab356a0642a771bea13969a05
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Parking Lot.unity
     guid: 0d368c9d6a15658429af866a794bdf34
+  - enabled: 1
+    path: Assets/Scenes/ProtoypeLevel.unity
+    guid: 0c8b54e7672d1f642b6220a4f533f3a4
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}

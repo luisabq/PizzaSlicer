@@ -1,0 +1,111 @@
+[Licensing::Module] Trying to connect to existing licensing client channel...
+Built from '6000.5/staging' branch; Version is '6000.5.9f1 (b57deb96f08d) revision 11894251'; Using compiler version '194234433'; Build Type 'Release'
+[Licensing::IpcConnector] Successfully connected to: "LicenseClient-nblan" at "2026-10-04T17:18:29.5323323Z"
+OS: 'Windows 11  (10.0.26200) Core' Language: 'en' Physical Memory: 32601 MB
+BatchMode: 0, IsHumanControllingUs: 1, StartBugReporterOnCrash: 1, Is64bit: 1
+System  architecture: x64
+Process architecture: x64
+Date: 2026-10-04T17:18:29Z
+
+COMMAND LINE ARGUMENTS:
+X:\Unity Hub\Hub\Editor\6000.5.9f1\Editor\Unity.exe
+-projectpath
+C:\Users\nblan\OneDrive\Documentos\GitHub\PizzaSlicer
+-acceptSoftwareTermsForThisRunOnly
+-useHub
+-hubIPC
+-cloudEnvironment
+production
+-licensingIpc
+LicenseClient-nblan
+-hubSessionId
+e722bdb9-2ae8-4f73-bdfe-0e9fa0125782
+-accessToken
+D7BiPGldbCBtXj-XABp6RiJ7ebxDvSG5JgqppnzqHKY002f
+Successfully changed project path to: C:\Users\nblan\OneDrive\Documentos\GitHub\PizzaSlicer
+C:/Users/nblan/OneDrive/Documentos/GitHub/PizzaSlicer
+[UnityMemory] Configuration Parameters - Can be set up in boot.config
+    "memorysetup-temp-allocator-size-gi-baking-worker=262144"
+    "memorysetup-temp-allocator-size-gi-baking-worker=262144"
+    "memorysetup-temp-allocator-size-gi-baking-worker=262144"
+    "memorysetup-temp-allocator-size-gi-baking-worker=262144"
+    "memorysetup-temp-allocator-size-gi-baking-worker=262144"
+    "memorysetup-temp-allocator-size-nav-mesh-worker=65536"
+    "memorysetup-temp-allocator-size-audio-worker=65536"
+    "memorysetup-temp-allocator-size-cloud-worker=32768"
+    "memorysetup-temp-allocator-size-gfx=262144"
+    "memorysetup-remapper-allocator-initial-capacity=32768"
+    "memorysetup-temp-allocator-size-preload-manager=33554432"
+    "memorysetup-allocator-temp-initial-block-size-main=262144"
+    "memorysetup-allocator-temp-initial-block-size-worker=262144"
+    "memorysetup-temp-allocator-size-job-worker=262144"
+    "memorysetup-temp-allocator-size-background-worker=32768"
+    "memorysetup-bucket-allocator-granularity=16"
+    "memorysetup-bucket-allocator-bucket-count=8"
+    "memorysetup-bucket-allocator-block-size=33554432"
+    "memorysetup-bucket-allocator-block-count=8"
+    "memorysetup-main-allocator-block-size=16777216"
+    "memorysetup-thread-allocator-block-size=16777216"
+    "memorysetup-main-allocator-mimalloc-enabled=0"
+    "memorysetup-gfx-main-allocator-block-size=16777216"
+    "memorysetup-gfx-thread-allocator-block-size=16777216"
+    "memorysetup-cache-allocator-block-size=4194304"
+    "memorysetup-typetree-allocator-block-size=2097152"
+    "memorysetup-profiler-bucket-allocator-granularity=16"
+    "memorysetup-profiler-bucket-allocator-bucket-count=8"
+    "memorysetup-profiler-bucket-allocator-block-size=33554432"
+    "memorysetup-profiler-bucket-allocator-block-count=8"
+    "memorysetup-profiler-allocator-block-size=16777216"
+    "memorysetup-profiler-editor-allocator-block-size=1048576"
+    "memorysetup-temp-allocator-size-main=16777216"
+    "memorysetup-job-temp-allocator-block-size=2097152"
+    "memorysetup-job-temp-allocator-block-size-background=1048576"
+    "memorysetup-job-temp-allocator-reduction-small-platforms=262144"
+Player connection [4528]  Target information:
+
+Player connection [4528]  * "[IP] 192.168.1.116 [Port] 55504 [Flags] 2 [Guid] 2173449360 [EditorId] 2173449360 [Version] 1048832 [Id] WindowsEditor(7,DESKTOP-E8H7HID) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" 
+
+Player connection [4528] Host joined multi-casting on [225.0.0.222:54997]...
+Player connection [4528] Host joined alternative multi-casting on [225.0.0.222:34997]...
+Input System module state changed to: Initialized.
+[Physics::Module] Initialized fallback backend.
+[Physics::Module] Id: 0xdecafbad
+[Package Manager] Connected to IPC stream "Upm-40732" after 0.6 seconds.
+[Licensing::Module] Licensing is not yet initialized.
+[Licensing::Client] Error: HandshakeResponse reported an error:
+	ResponseCode: 505
+	ResponseStatus: Unsupported protocol version '1.18.3'.
+[Licensing::Module] Error: Failed to handshake to channel: "LicenseClient-nblan"
+[Licensing::IpcConnector] LicenseClient-nblan channel disconnected successfully.
+[Licensing::IpcConnector] Channel LicenseClient-nblan-6000.5.9 doesn't exist
+[Licensing::Module] Successfully launched the LicensingClient (PId: 26228)
+Starting IPC server.
+Waiting for clients to connect on \\.\pipe\Unity-LicenseClient-nblan-6000.5.9, press Ctrl-C to exit.
+[Licensing::IpcConnector] Successfully connected to: "LicenseClient-nblan-6000.5.9" at "2026-10-04T17:18:35.8508271Z"
+[Licensing::Client] Code 10 while verifying Licensing Client signature (process Id: 26228, path: "X:/Unity Hub/Hub/Editor/6000.5.9f1/Editor/Data/Resources/Licensing/Client/Unity.Licensing.Client.exe")
+[Licensing::Module] LicensingClient has failed validation; ignoring
+[Licensing::Client] Handshaking with LicensingClient:
+  Version:                 1.18.3+d7ffd15
+  Session Id:              e36c389ae15243a9bfed2e10b3b292c0
+  Correlation Id:          d62b768941faa585ef5fbf3aa7673e47
+  External correlation Id: 2841423607063172639
+  Machine Id:              yERd/xmh2TasNPQw2MeH1eV96fA=
+[Licensing::Module] Successfully connected to LicensingClient on channel: "LicenseClient-nblan-6000.5.9" (connect: 2.91s, validation: 0.19s, handshake: 0.01s)
+[Licensing::IpcConnector] Successfully connected to: "LicenseClient-nblan-6000.5.9-notifications" at "2026-10-04T17:18:36.0442187Z"
+[Licensing::Module] Connected to LicensingClient (PId: 26228, launch time: 0.02, total connection time: 3.10s)
+[Licensing::Client] Successfully updated the access token
+[Licensing::Module] Successfully updated the access token D7BiPGldbC...
+[Licensing::Client] Successfully resolved entitlement details
+[Licensing::Module] License group:
+  Id: 2475878536905-UnityPersXXXX
+  Product: Unity Personal
+  Type: Assigned
+  Expiration: Unlimited
+[Licensing::Client] Successfully updated license, isAsync: True, time: 0.01
+[Licensing::Client] Successfully resolved entitlement details
+[Licensing::Module] Licensing Background thread has ended after 6.54s
+[Licensing::Module] Licensing is initialized (took 5.08s).
+[Licensing::Client] Successfully resolved entitlement details
+Library Redirect Path: Library/
+Rebuilding Library because the asset database could not be found!
+Exiting without the bug reporter. Application will terminate with return code 0Shut down.
