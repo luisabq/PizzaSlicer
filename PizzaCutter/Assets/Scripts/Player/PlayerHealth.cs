@@ -6,21 +6,20 @@ public class PlayerHealth : MonoBehaviour
     [Header("Invincibility Frames")]
     [SerializeField] private float iFrameDuration = 3.0f;
     [SerializeField] private float flashInterval = 0.5f;
+    [SerializeField] private Renderer[] playerRenderers;
 
     private PlayerStats playerStats;
-    private Renderer[] playerRenderers;
     private float currentHealth;
     private bool isInvincible = false;
 
     public float CurrentHealth => currentHealth;
     public bool IsInvincible => isInvincible;
-
+    // changed this so that capsule stops flashing and instead does player model
     private void Awake()
     {
         playerStats = GetComponent<PlayerStats>();
-        playerRenderers = GetComponentsInChildren<Renderer>();
     }
-
+   
     private void Start()
     {
         currentHealth = playerStats != null ? playerStats.maxHealth : 100f;
