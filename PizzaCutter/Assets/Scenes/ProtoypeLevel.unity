@@ -11228,6 +11228,14 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: -5.4074
       objectReference: {fileID: 0}
+    - target: {fileID: 2325833459737719461, guid: 493e13a63ac7cf1479afc487f009de66, type: 3}
+      propertyPath: m_SlopeLimit
+      value: 4.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 2325833459737719461, guid: 493e13a63ac7cf1479afc487f009de66, type: 3}
+      propertyPath: m_StepOffset
+      value: 0.03
+      objectReference: {fileID: 0}
     - target: {fileID: 2356159721063503068, guid: 493e13a63ac7cf1479afc487f009de66, type: 3}
       propertyPath: m_LocalPosition.x
       value: 5.51732
