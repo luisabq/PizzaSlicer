@@ -55,7 +55,7 @@ public class PlayerStats : MonoBehaviour
         maxHealth += healthIncreasePerLevel;
         if (playerHealth != null)
         {
-            playerHealth.Heal(maxHealth);
+            playerHealth.Heal(Mathf.Round((float)(0.3 * maxHealth)));
         }
 
         Debug.Log($"[LEVEL UP!] Reached Level {currentLevel}! Max HP: {maxHealth}, Damage: {baseDamage}");
