@@ -17,11 +17,14 @@ public class PlayerController : MonoBehaviour
     private Vector2 keyboardInput;
     private Vector2 touchStartPosition;
 
+    private PlayerStats playerStats;
+
     private void Awake()
     {
        controller = GetComponent<CharacterController>();
         EnhancedTouchSupport.Enable();
        TouchSimulation.Enable();
+        playerStats = GetComponent<PlayerStats>();
     }
 
     public void OnMove(InputValue value)
@@ -31,12 +34,23 @@ public class PlayerController : MonoBehaviour
 
     private void ApplyMovement()
     {
+
+        //doesnt move player if over UI stuff
+        
+
+
         Vector3 moveDirection = Vector3.zero;
 
         //Touch
         if (Touch.activeTouches.Count > 0)
         {
             Touch activeTouch = Touch.activeTouches[0];
+
+            if (UnityEngine.EventSystems.EventSystem.current != null &&
+        UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject())
+            {
+                return;
+            }
 
             //Finds drag origin point
             if (activeTouch.phase == UnityEngine.InputSystem.TouchPhase.Began)
@@ -66,7 +80,8 @@ public class PlayerController : MonoBehaviour
 
         if (moveDirection.magnitude > 0.01f)
         {
-            controller.Move(moveDirection * movementSpeed * Time.deltaTime);
+            float speed = playerStats != null ? playerStats.MoveSpeed : movementSpeed;
+            controller.Move(moveDirection * speed * Time.deltaTime);
             Quaternion targetRotation = Quaternion.LookRotation(moveDirection, Vector3.up);
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
         }
@@ -79,6 +94,13 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        if (Time.timeScale <= 0f) return;
         ApplyMovement();
+    }
+
+    private void OnEnable()
+    {
+        touchStartPosition = Vector2.zero;
+        keyboardInput = Vector2.zero;
     }
 }

@@ -105,8 +105,12 @@ public class MeleeWeapon : MonoBehaviour
 
     void CalculateNextAttackTime()
     {
-        
-        float totalAttackSpeed = weaponData.baseWeaponAttackSpeed * (playerStats != null ? playerStats.attackSpeedMultiplier : 1f); //if no attackspeed found, set to 1
+
+        // float totalAttackSpeed = weaponData.baseWeaponAttackSpeed * (playerStats != null ? playerStats.attackSpeedMultiplier : 1f); //if no attackspeed found, set to 1
+        float speedMultiplier = playerStats != null ? playerStats.AttackSpeed : 1f;
+        float totalAttackSpeed = weaponData.baseWeaponAttackSpeed * speedMultiplier;
+
+
 
         //Converts attacks per second into cooldown seconds
         float cooldown = 1f / (Mathf.Max(totalAttackSpeed, 0.01f));
@@ -116,7 +120,11 @@ public class MeleeWeapon : MonoBehaviour
      void PerformAttack()
      {
         //Finding combined damage
-        float combinedDamage = weaponData.baseWeaponDamage + (playerStats != null ? playerStats.baseDamage : 5f); //if no base damage found set to 5
+        //float combinedDamage = weaponData.baseWeaponDamage + (playerStats != null ? playerStats.baseDamage : 5f); //if no base damage found set to 5
+        float extraDamage = playerStats != null ? playerStats.Damage : 0f;
+        float combinedDamage = weaponData.baseWeaponDamage + extraDamage;
+
+
 
         //Play vfx/animation
         if (weaponData.attackVFX != null)

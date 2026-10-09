@@ -13,7 +13,10 @@ public class PlayerHealth : MonoBehaviour
     private bool isInvincible = false;
 
     public float CurrentHealth => currentHealth;
+    public float MaxHealth => playerStats != null ? playerStats.MaxHealth : 30f;
     public bool IsInvincible => isInvincible;
+
+    
     // changed this so that capsule stops flashing and instead does player model
     private void Awake()
     {
@@ -22,7 +25,7 @@ public class PlayerHealth : MonoBehaviour
    
     private void Start()
     {
-        currentHealth = playerStats != null ? playerStats.maxHealth : 100f;
+       currentHealth = MaxHealth;
     }
 
 
@@ -35,10 +38,16 @@ public class PlayerHealth : MonoBehaviour
 
     public void Heal(float healAmount)
     {
-        currentHealth = currentHealth + healAmount;
-        if (currentHealth >= playerStats.maxHealth) currentHealth = playerStats.maxHealth;
-        Debug.Log($"[PLAYER] Restored health to {currentHealth}!");
-        return; 
+        float maxHP = MaxHealth;
+        currentHealth = Mathf.Min(currentHealth + healAmount, maxHP);
+        Debug.Log($"[PLAYER] Restored health to {currentHealth}/{maxHP}!");
+    }
+
+    //not used rn but maybe could be between levels, if we're bringing stats across them
+    public void HealToMax()
+    {
+        currentHealth = MaxHealth;
+        Debug.Log($"[PLAYER] fully restored health to {currentHealth} omnomnom"); 
     }
 
 
@@ -68,7 +77,8 @@ public class PlayerHealth : MonoBehaviour
         isInvincible = true;
 
         float timer = 0f;
-        while (timer < iFrameDuration)
+        float duration = playerStats != null ? playerStats.IFrameDuration : iFrameDuration;
+        while (timer < duration)
         {
             SetRenderersEnabled(false);
             yield return new WaitForSeconds(flashInterval);

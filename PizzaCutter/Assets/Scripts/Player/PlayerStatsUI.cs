@@ -44,7 +44,7 @@ public class PlayerStatsUI : MonoBehaviour
         if (playerHealth == null || healthText == null) return;
 
         float hpCurrent = Mathf.Max(0f, playerHealth.CurrentHealth);
-        float hpMax = playerStats.maxHealth;
+        float hpMax = playerStats.MaxHealth;
 
 
         //makes sure to shows whole numbers

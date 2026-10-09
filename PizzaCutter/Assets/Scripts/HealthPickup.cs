@@ -8,7 +8,7 @@ public class HealthPickup : MonoBehaviour
     [SerializeField] private int healAmount = 10;
 
     [Header("Magnet & Pickup Settings")]
-    [SerializeField] private float magnetRadius = 5f;
+    //[SerializeField] private float magnetRadius = 5f;
     [SerializeField] private float moveSpeed = 8f;
     [SerializeField] private float pickupDistance = 0.5f;
 
@@ -17,21 +17,29 @@ public class HealthPickup : MonoBehaviour
 
     private Transform playerTransform;
     private bool isBeingCollected = false;
+    private PlayerStats playerStats;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        
         GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
         if (playerObj != null)
         {
             playerTransform = playerObj.transform;
+            playerStats = playerObj.GetComponent<PlayerStats>();
         }
+        
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (playerTransform == null) return;
+        if (playerTransform == null)
+        {
+            return;
+        }
+        
 
         if (isBeingCollected)
         {
@@ -47,7 +55,7 @@ public class HealthPickup : MonoBehaviour
 
         float distanceToPlayer = Vector3.Distance(transform.position, playerTransform.position);
 
-        if (distanceToPlayer <= magnetRadius)
+        if (distanceToPlayer <= playerStats.PickupRadius)
         {
             //Gravitation
             transform.position = Vector3.MoveTowards(transform.position, playerTransform.position, moveSpeed * Time.deltaTime);
