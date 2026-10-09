@@ -233,7 +233,7 @@ Transform:
   m_GameObject: {fileID: 5319911085463498966}
   serializedVersion: 2
   m_LocalRotation: {x: 0.60876137, y: -0, z: -0, w: 0.7933534}
-  m_LocalPosition: {x: 9.7443, y: 22.699501, z: -5.4074}
+  m_LocalPosition: {x: 9.7443, y: 22.6995, z: -5.4074}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -614,6 +614,7 @@ GameObject:
   - component: {fileID: 8286312155475221788}
   - component: {fileID: 3885703948228517989}
   - component: {fileID: 6173689135583354075}
+  - component: {fileID: 1790091662324601973}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -756,7 +757,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab7e311d89fe0184cacb6db066c7a360, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
-  movementSpeed: 8
+  movementSpeed: 4
   rotationSpeed: 15
   touchDeadzone: 10
 --- !u!114 &3885703948228517989
@@ -801,8 +802,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 471e83271d4159a45b821d6a52e67e72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerStats
-  baseDamage: 5
-  attackSpeedMultiplier: 1
+  baseDamage: 15
+  attackSpeedMultiplier: 0.6
+  maxHealth: 30
+  currentLevel: 1
+  currentXP: 0
+  xpToNextLevel: 100
+  neededXPPerLevelScale: 1.25
+  healthIncreasePerLevel: 20
+  damageIncreasePerLevel: 5
+--- !u!114 &1790091662324601973
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8134743552906177723}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1adb3bef26e57d2418d82aa890d1a3b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerHealth
+  iFrameDuration: 1
+  flashInterval: 0.1
+  playerRenderers:
+  - {fileID: 0}
 --- !u!1 &8918287297831118174
 GameObject:
   m_ObjectHideFlags: 0

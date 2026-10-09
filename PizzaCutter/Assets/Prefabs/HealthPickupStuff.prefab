@@ -47,9 +47,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HealthPickup
   healAmount: 10
-  magnetRadius: 5
-  moveSpeed: 8
-  pickupDistance: 0.5
+  magnetRadius: 2
+  moveSpeed: 3
+  pickupDistance: 0.2
   shrinkSpeed: 10
 --- !u!1 &5172054871144115451
 GameObject:
