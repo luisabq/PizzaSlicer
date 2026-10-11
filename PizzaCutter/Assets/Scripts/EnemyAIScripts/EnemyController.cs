@@ -1,4 +1,6 @@
+
 using UnityEngine;
+using UnityEngine.AI;
 
 public class EnemyController : MonoBehaviour
 {
@@ -16,12 +18,16 @@ public class EnemyController : MonoBehaviour
     [SerializeField] private GameObject hitVFXPrefab;
     [SerializeField] private float vfxDestroyDelay = 2f;
 
-
     private float currentHealth;
     private float attackTimer;
 
+    // NavMesh movement
+    private NavMeshAgent agent;
+
     private void Start()
     {
+        agent = GetComponent<NavMeshAgent>();
+
         if (enemyData == null)
         {
             Debug.LogError($"{gameObject.name} is missing EnemyData data duhh!");
@@ -29,6 +35,15 @@ public class EnemyController : MonoBehaviour
         }
 
         currentHealth = enemyData.maxHealth;
+
+        if (agent != null)
+        {
+            agent.speed = enemyData.moveSpeed;
+        }
+        else
+        {
+            Debug.LogError($"{gameObject.name} is missing a NavMeshAgent!");
+        }
 
         if (player == null)
         {
@@ -43,7 +58,10 @@ public class EnemyController : MonoBehaviour
 
     private void Update()
     {
-        if (enemyData == null || player == null)
+        if (enemyData == null || player == null || agent == null)
+            return;
+
+        if (!agent.isOnNavMesh)
             return;
 
         float distanceToPlayer = Vector3.Distance(
@@ -52,33 +70,21 @@ public class EnemyController : MonoBehaviour
         );
 
         if (distanceToPlayer > enemyData.detectionRange)
+        {
+            agent.isStopped = true;
             return;
+        }
 
         if (distanceToPlayer > enemyData.attackRange)
         {
-            MoveTowardPlayer();
+            agent.isStopped = false;
+            agent.SetDestination(player.position);
         }
         else
         {
+            agent.isStopped = true;
             AttackPlayer();
         }
-    }
-
-    private void MoveTowardPlayer()
-    {
-        Vector3 direction = player.position - transform.position;
-
-        direction.y = 0f;
-
-        if (direction.sqrMagnitude <= 0.01f)
-            return;
-
-        direction.Normalize();
-
-        transform.position +=
-            direction * enemyData.moveSpeed * Time.deltaTime;
-
-        transform.rotation = Quaternion.LookRotation(direction);
     }
 
     private void AttackPlayer()
@@ -138,7 +144,7 @@ public class EnemyController : MonoBehaviour
         }
         else
         {
-           Debug.Log("Me when i hate giving the enemy the exp orb prefab");
+            Debug.Log("Me when i hate giving the enemy the exp orb prefab");
         }
 
         if (healthPickupPrefab != null && Random.value <= enemyData.healthDropChance)
@@ -153,10 +159,8 @@ public class EnemyController : MonoBehaviour
             }
         }
 
-
         Destroy(gameObject);
     }
-
 
     private void SpawnHitVFX(Vector3 spawnPosition)
     {
@@ -166,7 +170,6 @@ public class EnemyController : MonoBehaviour
             Destroy(vfxInstance, vfxDestroyDelay);
         }
     }
-
 
     public float GetCurrentHealth()
     {
