@@ -156,4 +156,8 @@ public class EnemySpawner : MonoBehaviour
     {
         return waveComplete;
     }
+    public bool IsAllWavesComplete()
+    {
+        return currentWaveIndex >= waves.Length;
+    }
 }

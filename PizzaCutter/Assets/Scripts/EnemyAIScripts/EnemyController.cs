@@ -1,4 +1,6 @@
+
 using UnityEngine;
+using UnityEngine.AI;
 
 public class EnemyController : MonoBehaviour
 {
@@ -8,11 +10,24 @@ public class EnemyController : MonoBehaviour
     [Header("Target")]
     [SerializeField] private Transform player;
 
+    [Header("Enemy Drops")]
+    [SerializeField] private GameObject xpOrbPrefab;
+    [SerializeField] private GameObject healthPickupPrefab;
+
+    [Header("VFX")]
+    [SerializeField] private GameObject hitVFXPrefab;
+    [SerializeField] private float vfxDestroyDelay = 2f;
+
     private float currentHealth;
     private float attackTimer;
 
+    // NavMesh movement
+    private NavMeshAgent agent;
+
     private void Start()
     {
+        agent = GetComponent<NavMeshAgent>();
+
         if (enemyData == null)
         {
             Debug.LogError($"{gameObject.name} is missing EnemyData data duhh!");
@@ -20,6 +35,15 @@ public class EnemyController : MonoBehaviour
         }
 
         currentHealth = enemyData.maxHealth;
+
+        if (agent != null)
+        {
+            agent.speed = enemyData.moveSpeed;
+        }
+        else
+        {
+            Debug.LogError($"{gameObject.name} is missing a NavMeshAgent!");
+        }
 
         if (player == null)
         {
@@ -34,7 +58,10 @@ public class EnemyController : MonoBehaviour
 
     private void Update()
     {
-        if (enemyData == null || player == null)
+        if (enemyData == null || player == null || agent == null)
+            return;
+
+        if (!agent.isOnNavMesh)
             return;
 
         float distanceToPlayer = Vector3.Distance(
@@ -43,33 +70,21 @@ public class EnemyController : MonoBehaviour
         );
 
         if (distanceToPlayer > enemyData.detectionRange)
+        {
+            agent.isStopped = true;
             return;
+        }
 
         if (distanceToPlayer > enemyData.attackRange)
         {
-            MoveTowardPlayer();
+            agent.isStopped = false;
+            agent.SetDestination(player.position);
         }
         else
         {
+            agent.isStopped = true;
             AttackPlayer();
         }
-    }
-
-    private void MoveTowardPlayer()
-    {
-        Vector3 direction = player.position - transform.position;
-
-        direction.y = 0f;
-
-        if (direction.sqrMagnitude <= 0.01f)
-            return;
-
-        direction.Normalize();
-
-        transform.position +=
-            direction * enemyData.moveSpeed * Time.deltaTime;
-
-        transform.rotation = Quaternion.LookRotation(direction);
     }
 
     private void AttackPlayer()
@@ -85,11 +100,16 @@ public class EnemyController : MonoBehaviour
 
     private void DealDamageToPlayer()
     {
-        Debug.Log(
-            $"{enemyData.enemyName} attacked player " +
-            $"for {enemyData.attackDamage} damage."
-        );
-// Cameron, make sure to connect this here to the player health system, whenever you get that set up. also script code just so i don't forget too
+        if (player != null && player.TryGetComponent<PlayerHealth>(out var playerHealth))
+        {
+            playerHealth.TakeDamage(enemyData.attackDamage);
+
+            Debug.Log(
+                $"{enemyData.enemyName} attacked player " +
+                $"for {enemyData.attackDamage} damage."
+            );
+        }
+
     }
 
     public void TakeDamage(float damage)
@@ -101,6 +121,8 @@ public class EnemyController : MonoBehaviour
             $"HP: {currentHealth}/{enemyData.maxHealth}"
         );
 
+        SpawnHitVFX(transform.position);
+
         if (currentHealth <= 0f)
         {
             Die();
@@ -111,7 +133,42 @@ public class EnemyController : MonoBehaviour
     {
         Debug.Log($"{enemyData.enemyName} is ded. DED I TELL YA!");
 
+        //spawns exp orb
+        if (xpOrbPrefab != null)
+        {
+            Instantiate(xpOrbPrefab, transform.position, Quaternion.identity);
+            if (xpOrbPrefab.TryGetComponent<EXPOrb>(out var orb))
+            {
+                orb.SetXPValue(enemyData.xpReward);
+            }
+        }
+        else
+        {
+            Debug.Log("Me when i hate giving the enemy the exp orb prefab");
+        }
+
+        if (healthPickupPrefab != null && Random.value <= enemyData.healthDropChance)
+        {
+            //offsetting so xp and health arent overlapping
+            Vector3 spawnOffset = new Vector3(Random.Range(-0.5f, 0.5f), 0f, Random.Range(-0.5f, 0.5f));
+            GameObject healthObj = Instantiate(healthPickupPrefab, transform.position + spawnOffset, Quaternion.identity);
+
+            if (healthObj.TryGetComponent<HealthPickup>(out var healthScript))
+            {
+                healthScript.SetHealValue(enemyData.healthReward);
+            }
+        }
+
         Destroy(gameObject);
+    }
+
+    private void SpawnHitVFX(Vector3 spawnPosition)
+    {
+        if (hitVFXPrefab != null)
+        {
+            GameObject vfxInstance = Instantiate(hitVFXPrefab, spawnPosition, Quaternion.identity);
+            Destroy(vfxInstance, vfxDestroyDelay);
+        }
     }
 
     public float GetCurrentHealth()

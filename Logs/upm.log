@@ -1,0 +1,4 @@
+[2026-10-04T17:18:30.912Z][INFO] Command-line: 'X:\\Unity Hub\\Hub\\Editor\\6000.5.9f1\\Editor\\Data\\Resources\\PackageManager\\Server\\UnityPackageManager.exe' server -s 40732 --ipc-path Unity-Upm-40732 -l 2 --log-file C:\\Users\\nblan\\OneDrive\\Documentos\\GitHub\\PizzaSlicer/Logs/upm.log
+[2026-10-04T17:18:30.982Z][INFO] IPC server started (IPC path=Unity-Upm-40732).
+[2026-10-04T17:18:30.982Z][INFO] Hint: To connect to this UPM instance, launch Unity with the command-line parameter -upmIpcPath Upm-40732.
+[2026-10-04T17:18:47.100Z][INFO] Shutting down UnityPackageManager.exe: parent process [40732] is no longer running.
