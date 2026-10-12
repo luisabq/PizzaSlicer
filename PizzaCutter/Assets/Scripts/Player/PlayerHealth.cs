@@ -7,6 +7,9 @@ public class PlayerHealth : MonoBehaviour
     [SerializeField] private float iFrameDuration = 3.0f;
     [SerializeField] private float flashInterval = 0.5f;
     [SerializeField] private Renderer[] playerRenderers;
+    
+    [Header("Game Over UI")]
+    [SerializeField] private GameObject gameOverPanel;
 
     private PlayerStats playerStats;
     private float currentHealth;
@@ -26,6 +29,9 @@ public class PlayerHealth : MonoBehaviour
     private void Start()
     {
        currentHealth = MaxHealth;
+
+        if (gameOverPanel != null)
+            gameOverPanel.SetActive(false);
     }
 
     public void Heal(float healAmount)
@@ -110,6 +116,30 @@ public class PlayerHealth : MonoBehaviour
     private void Die()
     {
         Debug.Log("You dieded :D");
+
         Time.timeScale = 0f;
+
+        if (gameOverPanel != null)
+        {
+            gameOverPanel.SetActive(true);
+        }
+        else
+        {
+            Debug.LogWarning("Game Over Panel is not assigned.");
+        }
+    }
+    public void RestartAfterDeath()
+    {
+        Time.timeScale = 1f;
+
+        if (playerStats != null)
+            playerStats.ResetForNewRun();
+
+        ResetForNewRun();
+
+        if (gameOverPanel != null)
+            gameOverPanel.SetActive(false);
+
+        UnityEngine.SceneManagement.SceneManager.LoadScene("Level_01");
     }
 }

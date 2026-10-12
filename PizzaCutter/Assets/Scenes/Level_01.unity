@@ -11524,6 +11524,17 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 830230704}
   m_SourcePrefab: {fileID: 100100000, guid: 0810e80cd191e354da3da24823b728bd, type: 3}
+--- !u!114 &578723154 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4897708031516837856, guid: ce8ede2a248b3074891bb3fac84b8e49, type: 3}
+  m_PrefabInstance: {fileID: 7823109773842528859}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1adb3bef26e57d2418d82aa890d1a3b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerHealth
 --- !u!1 &580850239 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 2be35ea7e7b8ba6429ddeb159acbfb60, type: 3}
@@ -42351,6 +42362,11 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 3851162750929611534, guid: b19b6c5ea5452d14aabc6ae4a54c3b04, type: 3}
+--- !u!1 &1985004062 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6152421576952257214, guid: ce8ede2a248b3074891bb3fac84b8e49, type: 3}
+  m_PrefabInstance: {fileID: 7823109773842528859}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1988913274 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 76dc1045fd8209c4790f56cb83b37705, type: 3}
@@ -47015,6 +47031,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlayerEssentials
       objectReference: {fileID: 0}
+    - target: {fileID: 2705822653628175279, guid: ce8ede2a248b3074891bb3fac84b8e49, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 578723154}
+    - target: {fileID: 2705822653628175279, guid: ce8ede2a248b3074891bb3fac84b8e49, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: RestartAfterDeath
+      objectReference: {fileID: 0}
+    - target: {fileID: 2705822653628175279, guid: ce8ede2a248b3074891bb3fac84b8e49, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: PlayerHealth, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 2705822653628175279, guid: ce8ede2a248b3074891bb3fac84b8e49, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 3614623678764928466, guid: ce8ede2a248b3074891bb3fac84b8e49, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -47039,6 +47071,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 4897708031516837856, guid: ce8ede2a248b3074891bb3fac84b8e49, type: 3}
+      propertyPath: gameOverPanel
+      value: 
+      objectReference: {fileID: 1985004062}
     - target: {fileID: 5388674606954305812, guid: ce8ede2a248b3074891bb3fac84b8e49, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
