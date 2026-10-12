@@ -125,11 +125,35 @@ public class LevelManager : MonoBehaviour
         Time.timeScale = 1f;
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
+
     public void PlayAgain()
     {
         Time.timeScale = 1f;
+
+        GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
+
+        if (playerObject != null)
+        {
+            PlayerStats playerStats = playerObject.GetComponent<PlayerStats>();
+            PlayerHealth playerHealth = playerObject.GetComponent<PlayerHealth>();
+
+            // stats reset then health.
+            if (playerStats != null)
+                playerStats.ResetForNewRun();
+
+            if (playerHealth != null)
+                playerHealth.ResetForNewRun();
+        }
+        else
+        {
+            Debug.LogWarning(
+                "No player, creating new one"
+            );
+        }
+
         SceneManager.LoadScene("Level_01");
     }
+
 
 }
 

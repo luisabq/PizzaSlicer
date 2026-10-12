@@ -132,6 +132,24 @@ public class PlayerStats : MonoBehaviour
         }
         Time.timeScale = 1f; 
     }
+    public void ResetForNewRun()
+    {
+        // made this just in case sanchez chooses to be picky.
+        moveSpeedPoints = 0;
+        attackSpeedPoints = 0;
+        damagePoints = 0;
+        maxHealthPoints = 0;
+        iFramePoints = 0;
+        pickupRadiusPoints = 0;
+
+        // should reset all progression if a new run.
+        currentLevel = 1;
+        currentXP = 0;
+        xpToNextLevel = 100;
+
+        Debug.Log("[PLAYER STATS] New run started. Stats and XP reset.");
+    }
+
 
     //gives random stat increase amount
     public StatUpgradeOption RollRandomUpgrade()

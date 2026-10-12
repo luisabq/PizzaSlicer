@@ -28,14 +28,6 @@ public class PlayerHealth : MonoBehaviour
        currentHealth = MaxHealth;
     }
 
-
-
-
-
-
-
-
-
     public void Heal(float healAmount)
     {
         float maxHP = MaxHealth;
@@ -101,6 +93,16 @@ public class PlayerHealth : MonoBehaviour
                 rend.enabled = enabled;
             }
         }
+    }
+    public void ResetForNewRun()
+    {
+        // same thing as stats. reset for new run.
+        StopAllCoroutines();
+        isInvincible = false;
+        SetRenderersEnabled(true);
+        currentHealth = MaxHealth;
+
+        Debug.Log($"[PLAYER HEALTH] New run bozo. Health reset to {currentHealth}/{MaxHealth}. GOOD LUCK");
     }
 
 
