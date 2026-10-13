@@ -350,6 +350,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: P.L.C
       objectReference: {fileID: 0}
+    - target: {fileID: 1599234074133016570, guid: 089bd1717ebf328428f85e840925a398, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 223.31522
+      objectReference: {fileID: 0}
+    - target: {fileID: 1599234074133016570, guid: 089bd1717ebf328428f85e840925a398, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 250.6945
+      objectReference: {fileID: 0}
+    - target: {fileID: 1599234074133016570, guid: 089bd1717ebf328428f85e840925a398, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -15.8
+      objectReference: {fileID: 0}
     - target: {fileID: 3876440925589864140, guid: 089bd1717ebf328428f85e840925a398, type: 3}
       propertyPath: m_LocalPosition.x
       value: 45.76638
