@@ -329,6 +329,59 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1.1891617, y: 1.4789901, z: 1.002429}
   m_Center: {x: 0.0014147294, y: 0.23949328, z: -0.01161666}
+--- !u!1 &708155577862451624
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 246540672672504937}
+  - component: {fileID: 5196529042600613264}
+  m_Layer: 6
+  m_Name: MeatballGun
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &246540672672504937
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 708155577862451624}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 4256726419776958576}
+  m_Father: {fileID: 6543144145265414396}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5196529042600613264
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 708155577862451624}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b4972481d647344abb4a4edb6693a76, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MeatballGunWeapon
+  weaponData: {fileID: 11400000, guid: 2489e856ad0e5d24795aec36c4f75f0a, type: 2}
+  meatballPrefab: {fileID: 5575440086681700968, guid: 6b4a6578e41c2b141bdd6f520e82a83b, type: 3}
+  firePoint: {fileID: 7744754006110355686}
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 8
+  autoRotateToTarget: 1
+  searchRadius: 14
 --- !u!1 &722888925124756716
 GameObject:
   m_ObjectHideFlags: 0
@@ -624,7 +677,7 @@ GameObject:
   - component: {fileID: 4190217056729634527}
   - component: {fileID: 639748228420099436}
   m_Layer: 6
-  m_Name: AttackPoint
+  m_Name: MeleeAttackPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1156,6 +1209,7 @@ Transform:
   - {fileID: 4190217056729634527}
   - {fileID: 3100543093818539701}
   - {fileID: 6587974471305594197}
+  - {fileID: 246540672672504937}
   m_Father: {fileID: 8595673814433733786}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &6872681427267860127
@@ -1358,7 +1412,7 @@ MonoBehaviour:
   iFrameDuration: 1
   flashInterval: 0.1
   playerRenderers:
-  - {fileID: 0}
+  - {fileID: 5415019158924230202}
 --- !u!1 &1815100852431887379
 GameObject:
   m_ObjectHideFlags: 0
@@ -3214,6 +3268,118 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!1 &8534769552770181669
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7744754006110355686}
+  m_Layer: 6
+  m_Name: Firepoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7744754006110355686
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8534769552770181669}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.5, y: 0.5, z: 0.5, w: 0.5}
+  m_LocalPosition: {x: 0.00471, y: 0.00016, z: 0.00078}
+  m_LocalScale: {x: 0.013444565, y: 0.013444565, z: 0.013444565}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4256726419776958576}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &4366335897062217627
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 246540672672504937}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: d6a55e1fb1f3e8f43ab57792dba455b8, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 74.37949
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: d6a55e1fb1f3e8f43ab57792dba455b8, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 74.37949
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: d6a55e1fb1f3e8f43ab57792dba455b8, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 74.37949
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: d6a55e1fb1f3e8f43ab57792dba455b8, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.546
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: d6a55e1fb1f3e8f43ab57792dba455b8, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.03
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: d6a55e1fb1f3e8f43ab57792dba455b8, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.53
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: d6a55e1fb1f3e8f43ab57792dba455b8, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: d6a55e1fb1f3e8f43ab57792dba455b8, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: d6a55e1fb1f3e8f43ab57792dba455b8, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: d6a55e1fb1f3e8f43ab57792dba455b8, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: d6a55e1fb1f3e8f43ab57792dba455b8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: d6a55e1fb1f3e8f43ab57792dba455b8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: d6a55e1fb1f3e8f43ab57792dba455b8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: d6a55e1fb1f3e8f43ab57792dba455b8, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: d6a55e1fb1f3e8f43ab57792dba455b8, type: 3}
+      propertyPath: m_Name
+      value: PS_MeatballGun
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: d6a55e1fb1f3e8f43ab57792dba455b8, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7744754006110355686}
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: d6a55e1fb1f3e8f43ab57792dba455b8, type: 3}
+--- !u!4 &4256726419776958576 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: d6a55e1fb1f3e8f43ab57792dba455b8, type: 3}
+  m_PrefabInstance: {fileID: 4366335897062217627}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &5956881524353570677
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3425,6 +3591,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 541ffdfea7b723a4b969f586b2a4e454, type: 3}
+--- !u!23 &5415019158924230202 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -7511558181221131132, guid: 541ffdfea7b723a4b969f586b2a4e454, type: 3}
+  m_PrefabInstance: {fileID: 6694484976345178814}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &6587974471305594197 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 541ffdfea7b723a4b969f586b2a4e454, type: 3}

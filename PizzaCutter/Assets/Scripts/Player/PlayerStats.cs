@@ -31,7 +31,7 @@ public class PlayerStats : MonoBehaviour
     [Header("Gains Per Stat Point")]
     [SerializeField] private float moveSpeedPerPoint = 0.5f;
     [SerializeField] private float attackSpeedPerPoint = 0.1f;
-    [SerializeField] private float damagePerPoint = 3f;
+    [SerializeField] private float damagePerPoint = 7f;
     [SerializeField] private float maxHealthPerPoint = 10f;
     [SerializeField] private float iFramePerPoint = 0.2f;
     [SerializeField] private float pickupRadiusPerPoint = 0.5f;
