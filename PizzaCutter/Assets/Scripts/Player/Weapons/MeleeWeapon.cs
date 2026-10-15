@@ -172,6 +172,12 @@ public class MeleeWeapon : MonoBehaviour
         }
     }
 
+
+    public void SetWeaponData(WeaponData newData)
+    {
+        weaponData = newData;
+    }
+
     void OnDrawGizmosSelected()
     {
         if (weaponData != null && attackPoint != null)

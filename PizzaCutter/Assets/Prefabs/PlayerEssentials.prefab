@@ -1185,6 +1185,7 @@ GameObject:
   - component: {fileID: 7869420817391974614}
   - component: {fileID: 5606460996792810122}
   - component: {fileID: 4897708031516837856}
+  - component: {fileID: 3009489390824704939}
   m_Layer: 6
   m_Name: Player
   m_TagString: Player
@@ -1413,6 +1414,22 @@ MonoBehaviour:
   flashInterval: 0.1
   playerRenderers:
   - {fileID: 5415019158924230202}
+--- !u!114 &3009489390824704939
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1766390754032725741}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af80a676829c9de4a824b8d09cdb7cb9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerWeaponManager
+  meleeWeaponScript: {fileID: 639748228420099436}
+  meatballGunScript: {fileID: 5196529042600613264}
+  currentMeleeData: {fileID: 11400000, guid: 0908008c1d3f44847b0133209f5f8b31, type: 2}
+  currentMeatballData: {fileID: 11400000, guid: 2489e856ad0e5d24795aec36c4f75f0a, type: 2}
 --- !u!1 &1815100852431887379
 GameObject:
   m_ObjectHideFlags: 0
@@ -1538,6 +1555,9 @@ MonoBehaviour:
   - {fileID: 3730221001221931365}
   - {fileID: 1793829392177461067}
   - {fileID: 2495332765828523553}
+  titleText: {fileID: 8903943492701114526}
+  baseMeleeData: {fileID: 11400000, guid: 0908008c1d3f44847b0133209f5f8b31, type: 2}
+  baseMeatballData: {fileID: 11400000, guid: 2489e856ad0e5d24795aec36c4f75f0a, type: 2}
 --- !u!1 &2394922523161081721
 GameObject:
   m_ObjectHideFlags: 0
@@ -2246,8 +2266,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 133.7
-  m_fontSizeBase: 133.7
+  m_fontSize: 110
+  m_fontSizeBase: 110
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18

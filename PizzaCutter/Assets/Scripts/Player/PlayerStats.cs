@@ -91,29 +91,31 @@ public class PlayerStats : MonoBehaviour
     public void LevelUp()
     {
         currentLevel++;
-
-        Debug.Log(
-            $"[LEVEL UP] Reached level {currentLevel}. " +
-            "Attempting to open upgrade UI."
-        );
-
         if (LevelUpUI.Instance == null)
         {
-            Debug.LogError(
-                "LevelUpUI.Instance is null. " +
-                "Gameplay will stay unpaused."
-            );
-
+            Debug.LogError("LevelUpUI.Instance is null. Gameplay will stay unpaused.");
             return;
         }
 
-        if (!LevelUpUI.Instance.TryShowLevelUpChoices())
+        if (currentLevel % 5 == 0)
         {
-            Debug.LogError(
-                "Could not open upgrade UI. " +
-                "Gameplay will stay unpaused."
-            );
+            LevelUpUI.Instance.ShowWeaponUpgradeChoices();
+            Debug.Log("Should be showing weapon upgrade now");
+            Time.timeScale = 0f;
         }
+        else
+        {
+            Debug.Log("Should be NOT showing weapon upgrade now");
+
+            // TryShowLevelUpChoices already handles pausing and showing stats
+            if (!LevelUpUI.Instance.TryShowLevelUpChoices())
+            {
+                Debug.LogError("Could not open stat upgrade UI. Gameplay will stay unpaused.");
+            }
+        }
+
+        Debug.Log($"[LEVEL UP] Reached level {currentLevel}. Attempting to open upgrade UI.");
+
     }
 
 

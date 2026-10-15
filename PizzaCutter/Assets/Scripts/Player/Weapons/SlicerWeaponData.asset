@@ -13,8 +13,10 @@ MonoBehaviour:
   m_Name: SlicerWeaponData
   m_EditorClassIdentifier: Assembly-CSharp::WeaponData
   weaponName: Pizza Slicer
-  currentLevel: 1
+  weaponType: 0
+  tier: 1
   baseWeaponDamage: 10
   baseWeaponAttackSpeed: 1
-  weapoonAttackRange: 2.5
+  baseAttackRange: 2.5
+  nextTierUpgrade: {fileID: 11400000, guid: 2fd737395b04914499edd217c368b743, type: 2}
   attackVFX: {fileID: 5012424879141562128, guid: 3768d353bc357ee4a88ab2ef62078b29, type: 3}

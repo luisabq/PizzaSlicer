@@ -13,8 +13,10 @@ MonoBehaviour:
   m_Name: MeatballGunData
   m_EditorClassIdentifier: Assembly-CSharp::WeaponData
   weaponName: Meatball Gun
-  currentLevel: 1
+  weaponType: 1
+  tier: 1
   baseWeaponDamage: 5
   baseWeaponAttackSpeed: 1
   baseAttackRange: 2.5
+  nextTierUpgrade: {fileID: 11400000, guid: 8d91a4c06fbaad44fb384c4527a38a32, type: 2}
   attackVFX: {fileID: 0}

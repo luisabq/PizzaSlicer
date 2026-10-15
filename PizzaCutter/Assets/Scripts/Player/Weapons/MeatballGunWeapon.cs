@@ -150,6 +150,11 @@ public class MeatballGunWeapon : MonoBehaviour
         
     }
 
+    public void SetWeaponData(WeaponData newData)
+    {
+        weaponData = newData;
+    }
+
     void OnDrawGizmosSelected()
     {
         if (weaponData != null && firePoint != null)
