@@ -1,3 +1,4 @@
+
 using UnityEngine;
 using UnityEngine.VFX;
 
@@ -87,8 +88,8 @@ public class MeleeWeapon : MonoBehaviour
         return nearestEnemy;
     }
 
-        void RotateTowardsNearestEnemy()
-     {
+    void RotateTowardsNearestEnemy()
+    {
         Transform target = GetNearestEnemy();
         if (target == null) return;
 
@@ -100,7 +101,7 @@ public class MeleeWeapon : MonoBehaviour
             Quaternion targetRotation = Quaternion.LookRotation(direction);
             playerTransform.rotation = targetRotation;
         }
-     }
+    }
 
 
     void CalculateNextAttackTime()
@@ -117,8 +118,8 @@ public class MeleeWeapon : MonoBehaviour
         nextAttackTime = Time.time + cooldown;
     }
 
-     void PerformAttack()
-     {
+    void PerformAttack()
+    {
         //Finding combined damage
         //float combinedDamage = weaponData.baseWeaponDamage + (playerStats != null ? playerStats.baseDamage : 5f); //if no base damage found set to 5
         float extraDamage = playerStats != null ? playerStats.Damage : 0f;
@@ -133,14 +134,14 @@ public class MeleeWeapon : MonoBehaviour
             VisualEffect vfx;
             vfxInstance.transform.SetParent(transform); //whether vfx attatches to player
 
-           
+
             if (vfxInstance.TryGetComponent(out vfx))
             {
                 vfx.Reinit();
                 vfx.Play();
             }
 
-            Destroy(vfxInstance, 1.5f); 
+            Destroy(vfxInstance, 1.5f);
         }
 
         //Hitbox/Enemy detection 
@@ -148,22 +149,37 @@ public class MeleeWeapon : MonoBehaviour
 
         foreach (var hit in hits)
         {
-            // Try to get EnemyController directly on the object hit
-            if (hit.TryGetComponent<EnemyController>(out var enemy))
+            // if melee enemy, do damage
+            EnemyController meleeEnemy =
+                hit.GetComponentInParent<EnemyController>();
+
+            if (meleeEnemy != null)
             {
-                enemy.TakeDamage(combinedDamage);
-                Debug.Log($"[MELEE ATTACK] Hit {enemy.name} for {combinedDamage} total damage!");
+                meleeEnemy.TakeDamage(combinedDamage);
+                Debug.Log($"[MELEE ATTACK] Hit {meleeEnemy.name} for {combinedDamage} total damage!");
+                continue;
+            }
+
+            // if ranged enemy, do damage
+            RangedEnemyController rangedEnemy =
+                hit.GetComponentInParent<RangedEnemyController>();
+
+            if (rangedEnemy != null)
+            {
+                rangedEnemy.TakeDamage(combinedDamage);
+                Debug.Log($"[MELEE ATTACK] Hit ranged enemy {rangedEnemy.name} for {combinedDamage} total damage!");
             }
         }
-     }
+    }
 
-     void OnDrawGizmosSelected()
-     {
+    void OnDrawGizmosSelected()
+    {
         if (weaponData != null && attackPoint != null)
         {
             Gizmos.color = Color.red;
             Gizmos.DrawWireSphere(attackPoint.position, weaponData.baseAttackRange);
         }
-     }
+    }
 
 }
+

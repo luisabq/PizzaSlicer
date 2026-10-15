@@ -26,16 +26,97 @@ public class LevelUpUI : MonoBehaviour
         if (levelUpPanel != null) levelUpPanel.SetActive(false);
     }
 
-    public void ShowLevelUpChoices()
+    // public void ShowLevelUpChoices()
+    // {
+    // currentChoices.Clear();
+
+    // while (currentChoices.Count < 3)
+    // {
+    // StatUpgradeOption option = playerStats.RollRandomUpgrade();
+
+    //will keep looping and setting stats until no stat duplicates
+    // bool isDuplicate = false;
+    // foreach (var existing in currentChoices)
+    // {
+    // if (existing.statType == option.statType)
+    // {
+    // isDuplicate = true;
+    //break;
+    //    }
+    // }
+    //if (!isDuplicate)
+    //{
+    //  currentChoices.Add(option);
+    // }
+    // }
+
+    //displays options on UI buttons
+    // for (int i = 0; i < choiceButtons.Length; i++)
+    //  {
+    //    int index = i;
+    //  StatUpgradeOption option = currentChoices[i];
+    //choiceTexts[i].text = $"{FormatStatName(option.statType)}\n+{option.pointsGained} Points!";
+
+    //choiceButtons[i].onClick.RemoveAllListeners();
+    //finds out which choice was actually pressed, calls selectchoice with the button number
+    // choiceButtons[i].onClick.AddListener(() => {
+    //  Debug.Log($"Button {index} clicked via listener!");
+    //  SelectChoice(index);
+    // });
+    // }
+
+    //    levelUpPanel.SetActive(true);
+    // }
+
+
+    public bool TryShowLevelUpChoices()
     {
+        // make sure of UI references before attempting to pause.
+        if (levelUpPanel == null ||
+            choiceButtons == null ||
+            choiceTexts == null ||
+            choiceButtons.Length < 3 ||
+            choiceTexts.Length < 3)
+        {
+            Debug.LogError(
+                "[LEVEL UP UI ERROR] Missing panel, buttons, or texts. " +
+                "Check the LevelUpUI Inspector references."
+            );
+
+            return false;
+        }
+
+        // find PlayerStats if it hasn't been assigned yet.
+        if (playerStats == null)
+        {
+            GameObject player =
+                GameObject.FindGameObjectWithTag("Player");
+
+            if (player != null)
+            {
+                playerStats = player.GetComponent<PlayerStats>();
+            }
+        }
+
+        if (playerStats == null)
+        {
+            Debug.LogError(
+                "[LEVEL UP UI ERROR] PlayerStats could not be found."
+            );
+
+            return false;
+        }
+
+        // to prepare three upgrade choices
         currentChoices.Clear();
 
         while (currentChoices.Count < 3)
         {
-            StatUpgradeOption option = playerStats.RollRandomUpgrade();
+            StatUpgradeOption option =
+                playerStats.RollRandomUpgrade();
 
-            //will keep looping and setting stats until no stat duplicates
             bool isDuplicate = false;
+
             foreach (var existing in currentChoices)
             {
                 if (existing.statType == option.statType)
@@ -44,30 +125,40 @@ public class LevelUpUI : MonoBehaviour
                     break;
                 }
             }
+
             if (!isDuplicate)
             {
                 currentChoices.Add(option);
             }
         }
 
-        //displays options on UI buttons
-        for (int i = 0; i < choiceButtons.Length; i++)
+        // making sure all 3 buttons are good to go.
+        for (int i = 0; i < 3; i++)
         {
             int index = i;
             StatUpgradeOption option = currentChoices[i];
-            choiceTexts[i].text = $"{FormatStatName(option.statType)}\n+{option.pointsGained} Points!";
+
+            choiceTexts[i].text =
+                $"{FormatStatName(option.statType)}\n" +
+                $"+{option.pointsGained} Points!";
 
             choiceButtons[i].onClick.RemoveAllListeners();
-            //finds out which choice was actually pressed, calls selectchoice with the button number
-            choiceButtons[i].onClick.AddListener(() => {
-                Debug.Log($"Button {index} clicked via listener!");
+
+            choiceButtons[i].onClick.AddListener(() =>
+            {
                 SelectChoice(index);
             });
         }
 
+        // show UI before pausing the game pleeeeeeeeeeease.
         levelUpPanel.SetActive(true);
-    }
 
+        Debug.Log("[LEVEL UP UI] Upgrade panel opened.");
+
+        Time.timeScale = 0f;
+
+        return true;
+    }
 
 
 

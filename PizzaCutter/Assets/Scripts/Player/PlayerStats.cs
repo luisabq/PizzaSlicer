@@ -86,19 +86,36 @@ public class PlayerStats : MonoBehaviour
         }
     }
 
-    
+
+
     public void LevelUp()
     {
         currentLevel++;
 
-        //game pausing stuff for stat selection
-        Time.timeScale = 0f;
+        Debug.Log(
+            $"[LEVEL UP] Reached level {currentLevel}. " +
+            "Attempting to open upgrade UI."
+        );
 
-        if (LevelUpUI.Instance != null)
+        if (LevelUpUI.Instance == null)
         {
-            LevelUpUI.Instance.ShowLevelUpChoices();
+            Debug.LogError(
+                "LevelUpUI.Instance is null. " +
+                "Gameplay will stay unpaused."
+            );
+
+            return;
+        }
+
+        if (!LevelUpUI.Instance.TryShowLevelUpChoices())
+        {
+            Debug.LogError(
+                "Could not open upgrade UI. " +
+                "Gameplay will stay unpaused."
+            );
         }
     }
+
 
     /*  OLD CODE - that i dont wanna delete because im like what if we use it again even tho we def wont but like what if
       baseDamage += damageIncreasePerLevel;
