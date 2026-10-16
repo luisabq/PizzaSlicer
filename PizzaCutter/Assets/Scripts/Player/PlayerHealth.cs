@@ -7,9 +7,6 @@ public class PlayerHealth : MonoBehaviour
     [SerializeField] private float iFrameDuration = 3.0f;
     [SerializeField] private float flashInterval = 0.5f;
     [SerializeField] private Renderer[] playerRenderers;
-    
-    [Header("Game Over UI")]
-    [SerializeField] private GameObject gameOverPanel;
 
     private PlayerStats playerStats;
     private float currentHealth;
@@ -19,7 +16,11 @@ public class PlayerHealth : MonoBehaviour
     public float MaxHealth => playerStats != null ? playerStats.MaxHealth : 30f;
     public bool IsInvincible => isInvincible;
 
-    
+    private int playerLayer;
+    private int enemyLayer;
+
+
+
     // changed this so that capsule stops flashing and instead does player model
     private void Awake()
     {
@@ -28,11 +29,18 @@ public class PlayerHealth : MonoBehaviour
    
     private void Start()
     {
-       currentHealth = MaxHealth;
-
-        if (gameOverPanel != null)
-            gameOverPanel.SetActive(false);
+        currentHealth = MaxHealth;
+        playerLayer = LayerMask.NameToLayer("Player");
+        enemyLayer = LayerMask.NameToLayer("EnemyLayer");
     }
+
+
+
+
+
+
+
+
 
     public void Heal(float healAmount)
     {
@@ -73,6 +81,7 @@ public class PlayerHealth : MonoBehaviour
     private IEnumerator IFrameRoutine()
     {
         isInvincible = true;
+        Physics.IgnoreLayerCollision(playerLayer, enemyLayer, true); //can walk through enemies when hit
 
         float timer = 0f;
         float duration = playerStats != null ? playerStats.IFrameDuration : iFrameDuration;
@@ -87,6 +96,7 @@ public class PlayerHealth : MonoBehaviour
         }
 
         SetRenderersEnabled(true);
+        Physics.IgnoreLayerCollision(playerLayer, enemyLayer, false); //adds collision back
         isInvincible = false;
     }
 
@@ -100,46 +110,12 @@ public class PlayerHealth : MonoBehaviour
             }
         }
     }
-    public void ResetForNewRun()
-    {
-        // same thing as stats. reset for new run.
-        StopAllCoroutines();
-        isInvincible = false;
-        SetRenderersEnabled(true);
-        currentHealth = MaxHealth;
-
-        Debug.Log($"[PLAYER HEALTH] New run bozo. Health reset to {currentHealth}/{MaxHealth}. GOOD LUCK");
-    }
 
 
     //use this for death management like pausing the game or switching levels
     private void Die()
     {
         Debug.Log("You dieded :D");
-
         Time.timeScale = 0f;
-
-        if (gameOverPanel != null)
-        {
-            gameOverPanel.SetActive(true);
-        }
-        else
-        {
-            Debug.LogWarning("Game Over Panel is not assigned.");
-        }
-    }
-    public void RestartAfterDeath()
-    {
-        Time.timeScale = 1f;
-
-        if (playerStats != null)
-            playerStats.ResetForNewRun();
-
-        ResetForNewRun();
-
-        if (gameOverPanel != null)
-            gameOverPanel.SetActive(false);
-
-        UnityEngine.SceneManagement.SceneManager.LoadScene("Level_01");
     }
 }

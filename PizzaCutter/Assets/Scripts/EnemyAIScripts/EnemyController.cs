@@ -1,4 +1,4 @@
-
+using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -21,12 +21,15 @@ public class EnemyController : MonoBehaviour
     private float currentHealth;
     private float attackTimer;
 
+    private Rigidbody rb;
+
     // NavMesh movement
     private NavMeshAgent agent;
 
     private void Start()
     {
         agent = GetComponent<NavMeshAgent>();
+        rb = GetComponent<Rigidbody>();
 
         if (enemyData == null)
         {
@@ -180,4 +183,52 @@ public class EnemyController : MonoBehaviour
     {
         return enemyData != null ? enemyData.maxHealth : 0f;
     }
+
+
+    public void ApplyKnockback(Vector3 direction, float force, float duration = 0.2f)
+    {
+        StartCoroutine(KnockbackRoutine(direction, force, duration));
+    }
+
+    private IEnumerator KnockbackRoutine(Vector3 direction, float force, float duration)
+    {
+        if (agent != null && agent.enabled) //turns off navmesh stuff temporarily
+        {
+            agent.enabled = false;
+        }
+
+        if (rb != null)
+        {
+            rb.linearVelocity = Vector3.zero;
+            rb.angularVelocity = Vector3.zero;
+            rb.isKinematic = true;
+        }
+
+        yield return new WaitForSeconds(duration);
+
+        
+        if (rb != null)
+        {
+            rb.linearVelocity = Vector3.zero;
+        }
+
+        if (agent != null)
+        {
+            //makes sure agent is in the correct position, then turns back on navmesh stuff
+            
+            agent.enabled = true;
+
+            if (UnityEngine.AI.NavMesh.SamplePosition(transform.position, out var hit, 1.5f, UnityEngine.AI.NavMesh.AllAreas))
+            {
+                agent.Warp(hit.position);
+            }
+            else
+            {
+                agent.Warp(transform.position);
+            }
+
+        }
+    }
+
+
 }

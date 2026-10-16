@@ -10,11 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e1fc35a7e0df7e64fb4909d971fd5fc2, type: 3}
-  m_Name: SlicerWeaponData
+  m_Name: MeatballGunData3
   m_EditorClassIdentifier: Assembly-CSharp::WeaponData
-  weaponName: Pizza Slicer
-  currentLevel: 1
-  baseWeaponDamage: 10
-  baseWeaponAttackSpeed: 1
-  weapoonAttackRange: 2.5
-  attackVFX: {fileID: 5012424879141562128, guid: 3768d353bc357ee4a88ab2ef62078b29, type: 3}
+  weaponName: Meatball Gun
+  weaponType: 1
+  tier: 3
+  baseWeaponDamage: 15
+  baseWeaponAttackSpeed: 3
+  baseAttackRange: 2.5
+  nextTierUpgrade: {fileID: 0}
+  attackVFX: {fileID: 0}

@@ -7,12 +7,22 @@ public class LevelUpUI : MonoBehaviour
 {
     public static LevelUpUI Instance { get; private set; }
 
+    [Header("UI Stuff")]
     [SerializeField] private GameObject levelUpPanel;
     [SerializeField] private Button[] choiceButtons; //amount of buttons determined in inspector
     [SerializeField] private TextMeshProUGUI[] choiceTexts;
+    [SerializeField] private TextMeshProUGUI titleText; //changes for normal leveling vs weapon upgrades
+
+    [Header("All Base Weapons")]
+    [SerializeField] private WeaponData baseMeleeData;
+    [SerializeField] private WeaponData baseMeatballData;
+
+
 
     private PlayerStats playerStats;
+    private PlayerWeaponManager weaponManager;
     private List<StatUpgradeOption> currentChoices = new List<StatUpgradeOption>();
+    private List<WeaponData> currentWeaponChoices = new List<WeaponData>();
 
     private void Awake()
     {
@@ -26,16 +36,100 @@ public class LevelUpUI : MonoBehaviour
         if (levelUpPanel != null) levelUpPanel.SetActive(false);
     }
 
-    public void ShowLevelUpChoices()
+    // public void ShowLevelUpChoices()
+    // {
+    // currentChoices.Clear();
+
+    // while (currentChoices.Count < 3)
+    // {
+    // StatUpgradeOption option = playerStats.RollRandomUpgrade();
+
+    //will keep looping and setting stats until no stat duplicates
+    // bool isDuplicate = false;
+    // foreach (var existing in currentChoices)
+    // {
+    // if (existing.statType == option.statType)
+    // {
+    // isDuplicate = true;
+    //break;
+    //    }
+    // }
+    //if (!isDuplicate)
+    //{
+    //  currentChoices.Add(option);
+    // }
+    // }
+
+    //displays options on UI buttons
+    // for (int i = 0; i < choiceButtons.Length; i++)
+    //  {
+    //    int index = i;
+    //  StatUpgradeOption option = currentChoices[i];
+    //choiceTexts[i].text = $"{FormatStatName(option.statType)}\n+{option.pointsGained} Points!";
+
+    //choiceButtons[i].onClick.RemoveAllListeners();
+    //finds out which choice was actually pressed, calls selectchoice with the button number
+    // choiceButtons[i].onClick.AddListener(() => {
+    //  Debug.Log($"Button {index} clicked via listener!");
+    //  SelectChoice(index);
+    // });
+    // }
+
+    //    levelUpPanel.SetActive(true);
+    // }
+
+
+    public bool TryShowLevelUpChoices()
     {
+
+        if (titleText != null) titleText.text = "SELECT STAT UPGRADE";
+
+        // make sure of UI references before attempting to pause.
+        if (levelUpPanel == null ||
+            choiceButtons == null ||
+            choiceTexts == null ||
+            choiceButtons.Length < 3 ||
+            choiceTexts.Length < 3)
+        {
+            Debug.LogError(
+                "[LEVEL UP UI ERROR] Missing panel, buttons, or texts. " +
+                "Check the LevelUpUI Inspector references."
+            );
+
+            return false;
+        }
+
+        // find PlayerStats if it hasn't been assigned yet.
+        if (playerStats == null)
+        {
+            GameObject player =
+                GameObject.FindGameObjectWithTag("Player");
+
+            if (player != null)
+            {
+                playerStats = player.GetComponent<PlayerStats>();
+            }
+        }
+
+        if (playerStats == null)
+        {
+            Debug.LogError(
+                "[LEVEL UP UI ERROR] PlayerStats could not be found."
+            );
+
+            return false;
+        }
+
+        // to prepare three upgrade choices
         currentChoices.Clear();
 
         while (currentChoices.Count < 3)
         {
-            StatUpgradeOption option = playerStats.RollRandomUpgrade();
+            StatUpgradeOption option =
+                playerStats.RollRandomUpgrade();
 
-            //will keep looping and setting stats until no stat duplicates
             bool isDuplicate = false;
+
             foreach (var existing in currentChoices)
             {
                 if (existing.statType == option.statType)
@@ -44,30 +138,41 @@ public class LevelUpUI : MonoBehaviour
                     break;
                 }
             }
+
             if (!isDuplicate)
             {
                 currentChoices.Add(option);
             }
         }
 
-        //displays options on UI buttons
-        for (int i = 0; i < choiceButtons.Length; i++)
+        // making sure all 3 buttons are good to go.
+        for (int i = 0; i < 3; i++)
         {
             int index = i;
             StatUpgradeOption option = currentChoices[i];
-            choiceTexts[i].text = $"{FormatStatName(option.statType)}\n+{option.pointsGained} Points!";
+            choiceButtons[i].interactable = true;
+
+            choiceTexts[i].text =
+                $"{FormatStatName(option.statType)}\n" +
+                $"+{option.pointsGained} Points!";
 
             choiceButtons[i].onClick.RemoveAllListeners();
-            //finds out which choice was actually pressed, calls selectchoice with the button number
-            choiceButtons[i].onClick.AddListener(() => {
-                Debug.Log($"Button {index} clicked via listener!");
+
+            choiceButtons[i].onClick.AddListener(() =>
+            {
                 SelectChoice(index);
             });
         }
 
+        // show UI before pausing the game pleeeeeeeeeeease.
         levelUpPanel.SetActive(true);
-    }
 
+        Debug.Log("[LEVEL UP UI] Upgrade panel opened.");
+
+        Time.timeScale = 0f;
+
+        return true;
+    }
 
 
 
@@ -79,6 +184,130 @@ public class LevelUpUI : MonoBehaviour
         playerStats.ApplyStatUpgrade(selected.statType, selected.pointsGained);
         levelUpPanel.SetActive(false);
     }
+
+
+   //              WEAPON UPGRADE FUNCTIONS 
+
+
+    
+    public void ShowWeaponUpgradeChoices()
+    {
+        if (titleText != null) titleText.text = "CHOOSE WEAPON: ";
+
+        currentWeaponChoices.Clear();
+        List<WeaponData> availableUpgrades = BuildWeaponUpgradePool();
+
+        for (int i = 0; i < choiceButtons.Length; i++)
+        {
+            int index = i;
+
+            if (i < availableUpgrades.Count)
+            {
+                WeaponData wData = availableUpgrades[i];
+                currentWeaponChoices.Add(wData);
+
+                choiceButtons[i].interactable = true;
+
+                //checking if its unlocking the weapon or upgrading, checks if its tier 1, otherwise etc..
+                string actionType = wData.tier == 1 ? "UNLOCK WEAPON" : $"UPGRADE TIER {wData.tier}";
+                choiceTexts[i].text = $"{actionType}\n{wData.weaponName}";
+
+                choiceButtons[i].onClick.RemoveAllListeners();
+                choiceButtons[i].onClick.AddListener(() => SelectWeaponChoice(index));
+            }
+            else
+            {
+                //Blank slot if fewer than 3 actual options exist
+                choiceButtons[i].interactable = false;
+                choiceTexts[i].text = "    ";
+                choiceButtons[i].onClick.RemoveAllListeners();
+
+
+
+            }
+        }
+       
+        levelUpPanel.SetActive(true);
+    }
+
+    private List<WeaponData> BuildWeaponUpgradePool()
+    {
+        List<WeaponData> pool = new List<WeaponData>();
+
+        //checking for weapon manager stuff
+        if (weaponManager == null)
+        {
+            GameObject player = GameObject.FindGameObjectWithTag("Player");
+            if (player != null)
+            {
+                weaponManager = player.GetComponent<PlayerWeaponManager>();
+            }
+        }
+
+        if (weaponManager == null)
+        {
+            Debug.LogError("[LevelUpUI] PlayerWeaponManager could not be found on the Player!");
+            return pool;
+        }
+
+
+        //offers next tier or unlocking for melee
+        if (!weaponManager.IsWeaponUnlocked(WeaponType.Melee))
+        {
+            if (baseMeleeData != null) pool.Add(baseMeleeData);
+        }
+        else if (weaponManager.currentMeleeData != null && weaponManager.currentMeleeData.nextTierUpgrade != null)
+        {
+            pool.Add(weaponManager.currentMeleeData.nextTierUpgrade);
+        }
+
+        //then gun
+        if (!weaponManager.IsWeaponUnlocked(WeaponType.MeatballGun))
+        {
+            if (baseMeatballData != null) pool.Add(baseMeatballData);
+        }
+        else if (weaponManager.currentMeatballData != null && weaponManager.currentMeatballData.nextTierUpgrade != null)
+        {
+            pool.Add(weaponManager.currentMeatballData.nextTierUpgrade);
+        }
+
+        //ADD MORE WEAPONS HERE
+
+        return pool;
+    }
+
+
+
+
+    private void SelectWeaponChoice(int index)
+    {
+        WeaponData selectedWeapon = currentWeaponChoices[index];
+        weaponManager.ApplyWeaponUpgrade(selectedWeapon);
+
+        levelUpPanel.SetActive(false);
+        Time.timeScale = 1f;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     // formats the stat variable into text for showlevelupchoices
     private string FormatStatName(StatType type)
@@ -96,6 +325,7 @@ public class LevelUpUI : MonoBehaviour
         }
 
     }
+
 
 
     

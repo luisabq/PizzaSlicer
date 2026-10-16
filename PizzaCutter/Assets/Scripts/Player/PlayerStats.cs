@@ -31,7 +31,7 @@ public class PlayerStats : MonoBehaviour
     [Header("Gains Per Stat Point")]
     [SerializeField] private float moveSpeedPerPoint = 0.5f;
     [SerializeField] private float attackSpeedPerPoint = 0.1f;
-    [SerializeField] private float damagePerPoint = 3f;
+    [SerializeField] private float damagePerPoint = 7f;
     [SerializeField] private float maxHealthPerPoint = 10f;
     [SerializeField] private float iFramePerPoint = 0.2f;
     [SerializeField] private float pickupRadiusPerPoint = 0.5f;
@@ -86,19 +86,38 @@ public class PlayerStats : MonoBehaviour
         }
     }
 
-    
+
+
     public void LevelUp()
     {
         currentLevel++;
-
-        //game pausing stuff for stat selection
-        Time.timeScale = 0f;
-
-        if (LevelUpUI.Instance != null)
+        if (LevelUpUI.Instance == null)
         {
-            LevelUpUI.Instance.ShowLevelUpChoices();
+            Debug.LogError("LevelUpUI.Instance is null. Gameplay will stay unpaused.");
+            return;
         }
+
+        if (currentLevel % 5 == 0)
+        {
+            LevelUpUI.Instance.ShowWeaponUpgradeChoices();
+            Debug.Log("Should be showing weapon upgrade now");
+            Time.timeScale = 0f;
+        }
+        else
+        {
+            Debug.Log("Should be NOT showing weapon upgrade now");
+
+            // TryShowLevelUpChoices already handles pausing and showing stats
+            if (!LevelUpUI.Instance.TryShowLevelUpChoices())
+            {
+                Debug.LogError("Could not open stat upgrade UI. Gameplay will stay unpaused.");
+            }
+        }
+
+        Debug.Log($"[LEVEL UP] Reached level {currentLevel}. Attempting to open upgrade UI.");
+
     }
+
 
     /*  OLD CODE - that i dont wanna delete because im like what if we use it again even tho we def wont but like what if
       baseDamage += damageIncreasePerLevel;
