@@ -141,8 +141,8 @@ public class LevelManager : MonoBehaviour
             if (playerStats != null)
                 playerStats.ResetForNewRun();
 
-            if (playerHealth != null)
-                playerHealth.ResetForNewRun();
+           // if (playerHealth != null)
+               // playerHealth.ResetForNewRun();
         }
         else
         {
