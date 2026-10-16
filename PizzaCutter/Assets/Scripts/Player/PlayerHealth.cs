@@ -16,7 +16,11 @@ public class PlayerHealth : MonoBehaviour
     public float MaxHealth => playerStats != null ? playerStats.MaxHealth : 30f;
     public bool IsInvincible => isInvincible;
 
-    
+    private int playerLayer;
+    private int enemyLayer;
+
+
+
     // changed this so that capsule stops flashing and instead does player model
     private void Awake()
     {
@@ -25,7 +29,9 @@ public class PlayerHealth : MonoBehaviour
    
     private void Start()
     {
-       currentHealth = MaxHealth;
+        currentHealth = MaxHealth;
+        playerLayer = LayerMask.NameToLayer("Player");
+        enemyLayer = LayerMask.NameToLayer("EnemyLayer");
     }
 
 
@@ -75,6 +81,7 @@ public class PlayerHealth : MonoBehaviour
     private IEnumerator IFrameRoutine()
     {
         isInvincible = true;
+        Physics.IgnoreLayerCollision(playerLayer, enemyLayer, true); //can walk through enemies when hit
 
         float timer = 0f;
         float duration = playerStats != null ? playerStats.IFrameDuration : iFrameDuration;
@@ -89,6 +96,7 @@ public class PlayerHealth : MonoBehaviour
         }
 
         SetRenderersEnabled(true);
+        Physics.IgnoreLayerCollision(playerLayer, enemyLayer, false); //adds collision back
         isInvincible = false;
     }
 
