@@ -54,22 +54,52 @@ public class MeatballProjectile : MonoBehaviour
     }
 
 
-    private void OnCollisionEnter(Collision collision)
+      private void OnCollisionEnter(Collision collision)
+      {
+          if (!initialized)
+              return;
+
+
+          EnemyController meleeEnemy = collision.gameObject.GetComponentInParent<EnemyController>();
+          if (meleeEnemy != null)
+          {
+              meleeEnemy.TakeDamage(damage);
+              Debug.Log($"[MEATBALL] Hit enemy {meleeEnemy.name} for {damage} damage!");
+              Impact();
+              return;
+          }
+
+          RangedEnemyController rangedEnemy = collision.gameObject.GetComponentInParent<RangedEnemyController>();
+          if (rangedEnemy != null)
+          {
+              rangedEnemy.TakeDamage(damage);
+              Debug.Log($"[MEATBALL] Hit enemy {rangedEnemy.name} for {damage} damage!");
+              Impact();
+              return;
+          }
+
+          //For hitting anything else
+          Impact();
+      }
+
+     
+
+
+    /*private void OnTriggerEnter(Collider other)
     {
-        if (!initialized)
-            return;
+        if (other.CompareTag("Player") || other.CompareTag("Meatball") || other.CompareTag("VFX")) return;
 
 
-        EnemyController meleeEnemy = collision.gameObject.GetComponentInParent<EnemyController>();
-        if (meleeEnemy != null)
+        EnemyController enemy = other.GetComponentInParent<EnemyController>();
+        if (enemy != null)
         {
-            meleeEnemy.TakeDamage(damage);
-            Debug.Log($"[MEATBALL] Hit enemy {meleeEnemy.name} for {damage} damage!");
+            enemy.TakeDamage(damage);
+            Debug.Log($"[MEATBALL] Hit enemy {enemy.name} for {damage} damage!");
             Impact();
             return;
         }
 
-        RangedEnemyController rangedEnemy = collision.gameObject.GetComponentInParent<RangedEnemyController>();
+        RangedEnemyController rangedEnemy = other.GetComponentInParent<RangedEnemyController>();
         if (rangedEnemy != null)
         {
             rangedEnemy.TakeDamage(damage);
@@ -77,11 +107,15 @@ public class MeatballProjectile : MonoBehaviour
             Impact();
             return;
         }
-
-        //For hitting anything else
         Impact();
-    }
 
+    }
+    */
+
+     //ADD MORE ENEMIES HERE
+       
+    
+    
     private void Impact()
     {
         if (hitVFXPrefab != null)
@@ -91,8 +125,11 @@ public class MeatballProjectile : MonoBehaviour
         }
 
         Destroy(gameObject);
-    }
+    }  
 
-   
+
+
+
+
 }
 

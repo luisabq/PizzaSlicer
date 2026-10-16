@@ -13,6 +13,10 @@ public class MeleeWeapon : MonoBehaviour
     [SerializeField] private bool autoRotateToTarget = true;
     [SerializeField] private float searchRadius = 8f; // The players target scan range
 
+    [Header("Tier Modifiers")]
+    [SerializeField] private float tier2ScaleMultiplier = 1.3f;
+    [SerializeField] private float tier3ScaleMultiplier = 1.5f;
+    [SerializeField] private float tier3KnockbackForce = 5f;
 
     private PlayerStats playerStats;
     private Transform playerTransform;
@@ -124,7 +128,21 @@ public class MeleeWeapon : MonoBehaviour
         //float combinedDamage = weaponData.baseWeaponDamage + (playerStats != null ? playerStats.baseDamage : 5f); //if no base damage found set to 5
         float extraDamage = playerStats != null ? playerStats.Damage : 0f;
         float combinedDamage = weaponData.baseWeaponDamage + extraDamage;
+        int currentTier = weaponData.tier;
 
+        float currentAttackRange = weaponData.baseAttackRange;
+        float vfxScale = 1;
+
+        if (currentTier == 2)
+        {
+            currentAttackRange *= 1.25f; //more reach for tier 2
+            vfxScale = tier2ScaleMultiplier;
+        }
+        else if (currentTier >= 3)
+        {
+            currentAttackRange *= 1.4f; //even more reach, knockback logic further down + in knockback function
+            vfxScale = tier3ScaleMultiplier;
+        }
 
 
         //Play vfx/animation
@@ -133,6 +151,7 @@ public class MeleeWeapon : MonoBehaviour
             GameObject vfxInstance = Instantiate(weaponData.attackVFX, attackPoint.position, attackPoint.rotation);
             VisualEffect vfx;
             vfxInstance.transform.SetParent(transform); //whether vfx attatches to player
+            vfxInstance.transform.localScale = Vector3.one * vfxScale; //scales the vfx
 
 
             if (vfxInstance.TryGetComponent(out vfx))
@@ -149,6 +168,13 @@ public class MeleeWeapon : MonoBehaviour
 
         foreach (var hit in hits)
         {
+
+            Vector3 hitDirection = (hit.transform.position - playerTransform.position).normalized;
+            hitDirection.y = 0f;
+
+
+
+
             // if melee enemy, do damage
             EnemyController meleeEnemy =
                 hit.GetComponentInParent<EnemyController>();
@@ -156,6 +182,7 @@ public class MeleeWeapon : MonoBehaviour
             if (meleeEnemy != null)
             {
                 meleeEnemy.TakeDamage(combinedDamage);
+                ApplyKnockbackIfNeeded(hit.gameObject, hitDirection, currentTier);
                 Debug.Log($"[MELEE ATTACK] Hit {meleeEnemy.name} for {combinedDamage} total damage!");
                 continue;
             }
@@ -167,10 +194,40 @@ public class MeleeWeapon : MonoBehaviour
             if (rangedEnemy != null)
             {
                 rangedEnemy.TakeDamage(combinedDamage);
-                Debug.Log($"[MELEE ATTACK] Hit ranged enemy {rangedEnemy.name} for {combinedDamage} total damage!");
+                ApplyKnockbackIfNeeded(hit.gameObject, hitDirection, currentTier);
+                Debug.Log($"[MELEE ATTACK] Hit {rangedEnemy.name} for {combinedDamage} total damage!");
             }
+
+            // ADD MORE ENEMIES HERE
+
         }
     }
+
+
+    private void ApplyKnockbackIfNeeded(GameObject enemyObj, Vector3 hitDirection, int currentTier)
+    {
+        if (currentTier >= 3)
+        {
+            EnemyController meleeEnemy = enemyObj.GetComponentInParent<EnemyController>();
+            if (meleeEnemy != null)
+            {
+                meleeEnemy.ApplyKnockback(hitDirection, tier3KnockbackForce);
+                return;
+            }
+
+            RangedEnemyController rangedEnemy = enemyObj.GetComponentInParent<RangedEnemyController>();
+            if (rangedEnemy != null)
+            {
+                rangedEnemy.ApplyKnockback(hitDirection, tier3KnockbackForce);
+            }
+            //ADD MORE ENEMIES HERE
+
+        }
+    }
+
+
+
+
 
 
     public void SetWeaponData(WeaponData newData)
@@ -183,7 +240,11 @@ public class MeleeWeapon : MonoBehaviour
         if (weaponData != null && attackPoint != null)
         {
             Gizmos.color = Color.red;
-            Gizmos.DrawWireSphere(attackPoint.position, weaponData.baseAttackRange);
+            float gizmoRange = weaponData.baseAttackRange;
+            if (weaponData.tier == 2) gizmoRange *= 1.25f;
+            else if (weaponData.tier >= 3) gizmoRange *= 1.4f;
+
+            Gizmos.DrawWireSphere(attackPoint.position, gizmoRange);
         }
     }
 

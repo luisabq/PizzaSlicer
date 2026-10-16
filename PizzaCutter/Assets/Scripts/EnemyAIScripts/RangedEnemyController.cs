@@ -1,4 +1,4 @@
-
+using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -21,6 +21,8 @@ public class RangedEnemyController : MonoBehaviour
     [SerializeField] private float attackWindUp = 0.5f;
     [SerializeField] private LayerMask obstacleLayers;
 
+
+
     [Header("Enemy Drops")]
     [SerializeField] private GameObject xpOrbPrefab;
     [SerializeField] private GameObject healthPickupPrefab;
@@ -34,10 +36,12 @@ public class RangedEnemyController : MonoBehaviour
     private float windUpTimer;
     private bool preparingAttack;
 
+    private Rigidbody rb;
     private NavMeshAgent agent;
 
     private void Start()
     {
+        rb = GetComponent<Rigidbody>();
         agent = GetComponent<NavMeshAgent>();
 
         if (enemyData == null)
@@ -305,5 +309,41 @@ public class RangedEnemyController : MonoBehaviour
     {
         return enemyData != null ? enemyData.maxHealth : 0f;
     }
+
+    public void ApplyKnockback(Vector3 direction, float force, float duration = 0.2f)
+    {
+        StartCoroutine(KnockbackRoutine(direction, force, duration));
+    }
+
+    private IEnumerator KnockbackRoutine(Vector3 direction, float force, float duration)
+    {
+        if (agent != null && agent.enabled) //turns off navmesh stuff temporarily
+        {
+            agent.enabled = false;
+        }
+
+        if (rb != null)
+        {
+            rb.isKinematic = false;
+            rb.linearVelocity = Vector3.zero;
+            rb.AddForce(direction * force, ForceMode.Impulse);
+        }
+
+        yield return new WaitForSeconds(duration);
+
+
+        if (rb != null)
+        {
+            rb.linearVelocity = Vector3.zero;
+        }
+
+        if (agent != null)
+        {
+            //makes sure agent is in the correct position, then turns back on navmesh stuff
+            agent.Warp(transform.position);
+            agent.enabled = true;
+        }
+    }
+
 }
 

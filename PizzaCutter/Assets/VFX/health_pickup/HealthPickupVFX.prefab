@@ -4905,7 +4905,7 @@ GameObject:
   - component: {fileID: 1291350413836456222}
   m_Layer: 0
   m_Name: HealthPickupVFX
-  m_TagString: Untagged
+  m_TagString: VFX
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

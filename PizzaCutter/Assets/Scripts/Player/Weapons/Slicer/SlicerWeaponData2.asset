@@ -19,4 +19,4 @@ MonoBehaviour:
   baseWeaponAttackSpeed: 2
   baseAttackRange: 3.5
   nextTierUpgrade: {fileID: 11400000, guid: 983f359aae55b974c8ac24cbc4625424, type: 2}
-  attackVFX: {fileID: 5012424879141562128, guid: 3768d353bc357ee4a88ab2ef62078b29, type: 3}
+  attackVFX: {fileID: 5012424879141562128, guid: 64d3db05ee9e1044ea4c4cf5013d043d, type: 3}
