@@ -19,10 +19,7 @@ public class MeatballProjectile : MonoBehaviour
     }
 
 
-    public void Initialize(
-        Vector3 direction,
-        float damageAmount,
-        Transform owner)
+    public void Initialize(Vector3 direction, float damageAmount, Transform owner)
     {
         damage = damageAmount;
 

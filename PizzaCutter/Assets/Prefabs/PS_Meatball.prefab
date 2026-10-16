@@ -72,6 +72,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PS_Meatball
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 72f2c4e4ce02b554cb6e15a2af4e26eb, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -85,6 +89,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 72f2c4e4ce02b554cb6e15a2af4e26eb, type: 3}
       insertIndex: -1
       addedObject: {fileID: 304573358467384404}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 72f2c4e4ce02b554cb6e15a2af4e26eb, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3431840147070652485}
   m_SourcePrefab: {fileID: 100100000, guid: 72f2c4e4ce02b554cb6e15a2af4e26eb, type: 3}
 --- !u!1 &5575440086681700968 stripped
 GameObject:
@@ -154,3 +161,16 @@ MonoBehaviour:
   speed: 12
   lifetime: 5
   hitVFXPrefab: {fileID: 591812712659207760, guid: 708c9f3aad2b5e84d9eb044ec4d4e4e6, type: 3}
+--- !u!114 &3431840147070652485
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5575440086681700968}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 906c7e9e25048e24188bc90dc827354c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MeatballHoming
+  homingSpeed: 5

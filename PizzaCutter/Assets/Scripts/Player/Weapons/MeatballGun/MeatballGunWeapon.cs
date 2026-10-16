@@ -116,11 +116,13 @@ public class MeatballGunWeapon : MonoBehaviour
 
     private void FireMeatball(Transform target)
     {
-        if (meatballPrefab == null)
+        if (meatballPrefab == null || weaponData == null)
         {
             Debug.LogError("meatballess gun");
             return;
         }
+
+        int currentTier = weaponData.tier;
 
         //Finding combined damage
         //float combinedDamage = weaponData.baseWeaponDamage + (playerStats != null ? playerStats.baseDamage : 5f); //if no base damage found set to 5
@@ -132,27 +134,87 @@ public class MeatballGunWeapon : MonoBehaviour
         if (target != null)
         {
             fireDirection = (target.position - firePoint.position).normalized;
+            fireDirection.y = 0f;
         }
         else
         {
             fireDirection = playerTransform.forward;
         }
 
-        // Spawn Meatball
-        GameObject meatballObj = Instantiate(meatballPrefab, firePoint.position, Quaternion.LookRotation(fireDirection));
 
+
+        switch (currentTier)
+        {
+            case 1:
+                //TIER 1: normal straight shot at target
+                SpawnMeatball(fireDirection, combinedDamage);
+                break;
+
+            case 2:
+                //TIER 2: 3 shot spread, sorta like a trident, at a target.
+                //(good for crowds, but useless really against single target)
+                Vector3 leftDir = Quaternion.Euler(0f, -45f, 0f) * fireDirection;
+                Vector3 centerDir = fireDirection;
+                Vector3 rightDir = Quaternion.Euler(0f, 45f, 0f) * fireDirection;
+
+                SpawnMeatball(leftDir, combinedDamage);
+                SpawnMeatball(centerDir, combinedDamage);
+                SpawnMeatball(rightDir, combinedDamage);
+                break;
+
+            case 3:
+                //TIER 3: Homing projectiles, doing this in another script and enabling it so that it doesnt need to track every bullet,
+                //the bullets track themselvess
+                Vector3 t3LeftDir = Quaternion.Euler(0f, -45f, 0f) * fireDirection;
+                Vector3 t3CenterDir = fireDirection;
+                Vector3 t3RightDir = Quaternion.Euler(0f, 45f, 0f) * fireDirection;
+
+                GameObject leftMeatball = SpawnMeatball(t3LeftDir, combinedDamage);
+                GameObject centerMeatball = SpawnMeatball(t3CenterDir, combinedDamage);
+                GameObject rightMeatball = SpawnMeatball(t3RightDir, combinedDamage);
+
+                // Enable homing on all 3 spawned meatballs
+                EnableHomingIfPresent(leftMeatball);
+                EnableHomingIfPresent(centerMeatball);
+                EnableHomingIfPresent(rightMeatball);
+                break;
+        }
+
+
+    }
+
+
+
+    private GameObject SpawnMeatball(Vector3 direction, float damage)
+    {
+        GameObject meatballObj = Instantiate(meatballPrefab, firePoint.position, Quaternion.LookRotation(direction));
+
+        //MeatballProjectile projectile = meatballObj.GetComponent<MeatballProjectile>();
         if (meatballObj.TryGetComponent<MeatballProjectile>(out var projectile))
         {
-            projectile.Initialize(fireDirection, combinedDamage, playerTransform);
+            projectile.Initialize(direction, damage, playerTransform);
         }
+
+        return meatballObj;
+    }
 
         //Hitbox/Enemy detection + damage are all decided in meatballprojectile script, go there!
         
-    }
+    
 
     public void SetWeaponData(WeaponData newData)
     {
         weaponData = newData;
+    }
+
+
+
+    private void EnableHomingIfPresent(GameObject meatballObj)
+    {
+        if (meatballObj != null && meatballObj.TryGetComponent<MeatballHoming>(out var homing))
+        {
+            homing.enabled = true;
+        }
     }
 
     void OnDrawGizmosSelected()

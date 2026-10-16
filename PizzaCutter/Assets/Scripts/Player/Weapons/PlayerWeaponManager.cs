@@ -8,7 +8,10 @@ public class PlayerWeaponManager : MonoBehaviour
     //ADD MORE WEAPONS HERE
 
 
+
+
     [Header("Current Weapon Data")]
+    [SerializeField] private WeaponData startingMeleeData;
     public WeaponData currentMeleeData;
     public WeaponData currentMeatballData;
     //ADD MORE WEAPONS HERE
@@ -16,9 +19,11 @@ public class PlayerWeaponManager : MonoBehaviour
     private void Start()
     {
         //starts with melee only
-        if (meleeWeaponScript != null)
+        if (meleeWeaponScript != null && startingMeleeData != null)
         {
+            currentMeleeData = startingMeleeData;
             meleeWeaponScript.gameObject.SetActive(true);
+            meleeWeaponScript.SetWeaponData(startingMeleeData);
         }
 
         if (meatballGunScript != null)
