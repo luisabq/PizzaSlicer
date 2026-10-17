@@ -341,7 +341,7 @@ GameObject:
   - component: {fileID: 5196529042600613264}
   m_Layer: 6
   m_Name: MeatballGun
-  m_TagString: Player
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -678,7 +678,7 @@ GameObject:
   - component: {fileID: 639748228420099436}
   m_Layer: 6
   m_Name: MeleeAttackPoint
-  m_TagString: Player
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -720,6 +720,8 @@ MonoBehaviour:
   tier2ScaleMultiplier: 1.7
   tier3ScaleMultiplier: 2
   tier3KnockbackForce: 10
+  swingSound: {fileID: 8300000, guid: 635e68073e505db47897ff06419b61bb, type: 3}
+  swingVolume: 0.799
 --- !u!1 &1100946356267800282
 GameObject:
   m_ObjectHideFlags: 0
@@ -2509,7 +2511,7 @@ GameObject:
   - component: {fileID: 4627843229825138802}
   m_Layer: 6
   m_Name: cylinder for finding where player is looking
-  m_TagString: Player
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2789,7 +2791,7 @@ GameObject:
   - component: {fileID: 129095532648999149}
   m_Layer: 6
   m_Name: PlayerTransform
-  m_TagString: Player
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3483,7 +3485,7 @@ GameObject:
   - component: {fileID: 7744754006110355686}
   m_Layer: 6
   m_Name: Firepoint
-  m_TagString: Player
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3573,7 +3575,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: d6a55e1fb1f3e8f43ab57792dba455b8, type: 3}
       propertyPath: m_TagString
-      value: Player
+      value: Untagged
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3796,7 +3798,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 541ffdfea7b723a4b969f586b2a4e454, type: 3}
       propertyPath: m_TagString
-      value: Player
+      value: Untagged
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

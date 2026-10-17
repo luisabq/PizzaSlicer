@@ -18,6 +18,10 @@ public class MeleeWeapon : MonoBehaviour
     [SerializeField] private float tier3ScaleMultiplier = 1.5f;
     [SerializeField] private float tier3KnockbackForce = 5f;
 
+    [Header("Audio")]
+    [SerializeField] private AudioClip swingSound;
+    [Range(0f, 1f)][SerializeField] private float swingVolume = 1.0f;
+
     private PlayerStats playerStats;
     private Transform playerTransform;
     private float nextAttackTime;
@@ -161,6 +165,12 @@ public class MeleeWeapon : MonoBehaviour
             }
 
             Destroy(vfxInstance, 1.5f);
+        }
+
+        //Play audio
+        if (swingSound != null && SoundManager.Instance != null)
+        {
+            SoundManager.Instance.PlaySound(swingSound, swingVolume);
         }
 
         //Hitbox/Enemy detection 

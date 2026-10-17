@@ -19,6 +19,13 @@ public class EXPOrb : MonoBehaviour
     private bool isBeingCollected = false;
     private PlayerStats playerStats;
 
+
+    [Header("Audio")]
+    [SerializeField] private AudioClip magnetSound;
+    [Range(0f, 1f)][SerializeField] private float magnetVolume = 1.0f;
+    [SerializeField] private AudioClip collectSound;
+    [Range(0f, 1f)][SerializeField] private float collectVolume = 1.0f;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -63,6 +70,10 @@ public class EXPOrb : MonoBehaviour
 
             if (transform.localScale.x <= 0.05f)
             {
+                if (collectSound != null && SoundManager.Instance != null)
+                {
+                    SoundManager.Instance.PlaySound(collectSound, collectVolume);
+                }
                 Destroy(gameObject);
             }
             return;
@@ -74,6 +85,12 @@ public class EXPOrb : MonoBehaviour
         {
             //Gravitation
             transform.position = Vector3.MoveTowards(transform.position, playerTransform.position, moveSpeed * Time.deltaTime);
+
+            if (magnetSound != null && SoundManager.Instance != null)
+            {
+                SoundManager.Instance.PlaySound(magnetSound, magnetVolume);
+            }
+
             if (distanceToPlayer <= pickupDistance) Collect();
         }
 
@@ -82,12 +99,16 @@ public class EXPOrb : MonoBehaviour
 
     private void Collect()
     {
+
+        
+
         if (isBeingCollected) return;
 
         // Give XP points to player
         if (playerStats != null)
         {
-            playerStats.AddXP(xpAmount);
+            playerStats.AddXP(xpAmount); 
+
         }
 
         isBeingCollected = true;

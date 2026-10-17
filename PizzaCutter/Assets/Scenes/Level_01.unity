@@ -1162,6 +1162,10 @@ MonoBehaviour:
   moveSpeed: 3
   pickupDistance: 0.2
   shrinkSpeed: 10
+  magnetSound: {fileID: 0}
+  magnetVolume: 1
+  collectSound: {fileID: 0}
+  collectVolume: 1
 --- !u!1 &104751515
 GameObject:
   m_ObjectHideFlags: 0
@@ -1251,6 +1255,10 @@ MonoBehaviour:
   moveSpeed: 3
   pickupDistance: 0.2
   shrinkSpeed: 10
+  magnetSound: {fileID: 0}
+  magnetVolume: 1
+  collectSound: {fileID: 0}
+  collectVolume: 1
 --- !u!1 &111193869 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3273252098493075598, guid: fe74bb4f7eb7b864387bf43cf9ff38c6, type: 3}
@@ -1277,6 +1285,10 @@ MonoBehaviour:
   moveSpeed: 3
   pickupDistance: 0.2
   shrinkSpeed: 10
+  magnetSound: {fileID: 0}
+  magnetVolume: 1
+  collectSound: {fileID: 0}
+  collectVolume: 1
 --- !u!1001 &111346283
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1584,6 +1596,10 @@ MonoBehaviour:
   moveSpeed: 3
   pickupDistance: 0.2
   shrinkSpeed: 10
+  magnetSound: {fileID: 0}
+  magnetVolume: 1
+  collectSound: {fileID: 0}
+  collectVolume: 1
 --- !u!1001 &125356599
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2729,6 +2745,10 @@ MonoBehaviour:
   moveSpeed: 3
   pickupDistance: 0.2
   shrinkSpeed: 10
+  magnetSound: {fileID: 0}
+  magnetVolume: 1
+  collectSound: {fileID: 0}
+  collectVolume: 1
 --- !u!1001 &299438958
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2818,6 +2838,10 @@ MonoBehaviour:
   moveSpeed: 3
   pickupDistance: 0.2
   shrinkSpeed: 10
+  magnetSound: {fileID: 0}
+  magnetVolume: 1
+  collectSound: {fileID: 0}
+  collectVolume: 1
 --- !u!1001 &314281835
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3436,6 +3460,10 @@ MonoBehaviour:
   moveSpeed: 3
   pickupDistance: 0.2
   shrinkSpeed: 10
+  magnetSound: {fileID: 0}
+  magnetVolume: 1
+  collectSound: {fileID: 0}
+  collectVolume: 1
 --- !u!1001 &385734371
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3992,6 +4020,10 @@ MonoBehaviour:
   moveSpeed: 3
   pickupDistance: 0.2
   shrinkSpeed: 10
+  magnetSound: {fileID: 0}
+  magnetVolume: 1
+  collectSound: {fileID: 0}
+  collectVolume: 1
 --- !u!1 &416437689 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: c7166ea1a84865b4fa5bf7cf4917523c, type: 3}
@@ -4050,6 +4082,10 @@ MonoBehaviour:
   moveSpeed: 3
   pickupDistance: 0.2
   shrinkSpeed: 10
+  magnetSound: {fileID: 0}
+  magnetVolume: 1
+  collectSound: {fileID: 0}
+  collectVolume: 1
 --- !u!1 &421987349 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3273252098493075598, guid: fe74bb4f7eb7b864387bf43cf9ff38c6, type: 3}
@@ -4076,6 +4112,10 @@ MonoBehaviour:
   moveSpeed: 3
   pickupDistance: 0.2
   shrinkSpeed: 10
+  magnetSound: {fileID: 0}
+  magnetVolume: 1
+  collectSound: {fileID: 0}
+  collectVolume: 1
 --- !u!1001 &424941654
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4274,6 +4314,10 @@ MonoBehaviour:
   moveSpeed: 3
   pickupDistance: 0.2
   shrinkSpeed: 10
+  magnetSound: {fileID: 0}
+  magnetVolume: 1
+  collectSound: {fileID: 0}
+  collectVolume: 1
 --- !u!1 &435409208 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3407034089434938951, guid: ffa2ad617f5e6f144b1f6bbaead40acf, type: 3}
@@ -4295,6 +4339,10 @@ MonoBehaviour:
   moveSpeed: 3
   pickupDistance: 0.2
   shrinkSpeed: 15
+  magnetSound: {fileID: 0}
+  magnetVolume: 0.237
+  collectSound: {fileID: 0}
+  collectVolume: 1
 --- !u!1 &435788371 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3273252098493075598, guid: fe74bb4f7eb7b864387bf43cf9ff38c6, type: 3}
@@ -4321,6 +4369,10 @@ MonoBehaviour:
   moveSpeed: 3
   pickupDistance: 0.2
   shrinkSpeed: 10
+  magnetSound: {fileID: 0}
+  magnetVolume: 1
+  collectSound: {fileID: 0}
+  collectVolume: 1
 --- !u!1001 &452513023
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4734,6 +4786,10 @@ MonoBehaviour:
   moveSpeed: 3
   pickupDistance: 0.2
   shrinkSpeed: 10
+  magnetSound: {fileID: 0}
+  magnetVolume: 1
+  collectSound: {fileID: 0}
+  collectVolume: 1
 --- !u!1 &482314874 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 7e72a7c0f43a6d4489524daeb1df41c6, type: 3}
@@ -4852,6 +4908,10 @@ MonoBehaviour:
   moveSpeed: 3
   pickupDistance: 0.2
   shrinkSpeed: 10
+  magnetSound: {fileID: 0}
+  magnetVolume: 1
+  collectSound: {fileID: 0}
+  collectVolume: 1
 --- !u!1001 &491551684
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5110,6 +5170,10 @@ MonoBehaviour:
   moveSpeed: 3
   pickupDistance: 0.2
   shrinkSpeed: 10
+  magnetSound: {fileID: 0}
+  magnetVolume: 1
+  collectSound: {fileID: 0}
+  collectVolume: 1
 --- !u!1 &564434723 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: c7166ea1a84865b4fa5bf7cf4917523c, type: 3}
@@ -5523,6 +5587,10 @@ MonoBehaviour:
   moveSpeed: 3
   pickupDistance: 0.2
   shrinkSpeed: 10
+  magnetSound: {fileID: 0}
+  magnetVolume: 1
+  collectSound: {fileID: 0}
+  collectVolume: 1
 --- !u!1001 &635725284
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5609,6 +5677,10 @@ MonoBehaviour:
   moveSpeed: 3
   pickupDistance: 0.2
   shrinkSpeed: 10
+  magnetSound: {fileID: 0}
+  magnetVolume: 1
+  collectSound: {fileID: 0}
+  collectVolume: 1
 --- !u!1001 &648377040
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8130,6 +8202,10 @@ MonoBehaviour:
   moveSpeed: 3
   pickupDistance: 0.2
   shrinkSpeed: 10
+  magnetSound: {fileID: 0}
+  magnetVolume: 1
+  collectSound: {fileID: 0}
+  collectVolume: 1
 --- !u!1 &815919391
 GameObject:
   m_ObjectHideFlags: 0
@@ -8698,6 +8774,10 @@ MonoBehaviour:
   moveSpeed: 3
   pickupDistance: 0.2
   shrinkSpeed: 10
+  magnetSound: {fileID: 0}
+  magnetVolume: 1
+  collectSound: {fileID: 0}
+  collectVolume: 1
 --- !u!1 &854064409 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: c7166ea1a84865b4fa5bf7cf4917523c, type: 3}
@@ -9355,6 +9435,10 @@ MonoBehaviour:
   moveSpeed: 3
   pickupDistance: 0.2
   shrinkSpeed: 10
+  magnetSound: {fileID: 0}
+  magnetVolume: 1
+  collectSound: {fileID: 0}
+  collectVolume: 1
 --- !u!1 &893553420
 GameObject:
   m_ObjectHideFlags: 0
@@ -10179,6 +10263,63 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -2470403402002543907, guid: e8ced0c8817c7d7428db829f6a85b3e8, type: 3}
+--- !u!1001 &940379966
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 235890489599364390, guid: cec3e679aad641045893656fd61a8528, type: 3}
+      propertyPath: m_Name
+      value: SoundManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 4358285717316560145, guid: cec3e679aad641045893656fd61a8528, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 10.93036
+      objectReference: {fileID: 0}
+    - target: {fileID: 4358285717316560145, guid: cec3e679aad641045893656fd61a8528, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 3.09
+      objectReference: {fileID: 0}
+    - target: {fileID: 4358285717316560145, guid: cec3e679aad641045893656fd61a8528, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -1.26226
+      objectReference: {fileID: 0}
+    - target: {fileID: 4358285717316560145, guid: cec3e679aad641045893656fd61a8528, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4358285717316560145, guid: cec3e679aad641045893656fd61a8528, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4358285717316560145, guid: cec3e679aad641045893656fd61a8528, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4358285717316560145, guid: cec3e679aad641045893656fd61a8528, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4358285717316560145, guid: cec3e679aad641045893656fd61a8528, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4358285717316560145, guid: cec3e679aad641045893656fd61a8528, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4358285717316560145, guid: cec3e679aad641045893656fd61a8528, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: cec3e679aad641045893656fd61a8528, type: 3}
 --- !u!1 &949032140 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3273252098493075598, guid: fe74bb4f7eb7b864387bf43cf9ff38c6, type: 3}
@@ -10205,6 +10346,10 @@ MonoBehaviour:
   moveSpeed: 3
   pickupDistance: 0.2
   shrinkSpeed: 10
+  magnetSound: {fileID: 0}
+  magnetVolume: 1
+  collectSound: {fileID: 0}
+  collectVolume: 1
 --- !u!1 &952302114
 GameObject:
   m_ObjectHideFlags: 0
@@ -11846,6 +11991,10 @@ MonoBehaviour:
   moveSpeed: 3
   pickupDistance: 0.2
   shrinkSpeed: 10
+  magnetSound: {fileID: 0}
+  magnetVolume: 1
+  collectSound: {fileID: 0}
+  collectVolume: 1
 --- !u!1001 &1065639453
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -13205,6 +13354,10 @@ MonoBehaviour:
   moveSpeed: 3
   pickupDistance: 0.2
   shrinkSpeed: 10
+  magnetSound: {fileID: 0}
+  magnetVolume: 1
+  collectSound: {fileID: 0}
+  collectVolume: 1
 --- !u!4 &1206559048 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8296082573100672996, guid: ffa2ad617f5e6f144b1f6bbaead40acf, type: 3}
@@ -14288,6 +14441,10 @@ MonoBehaviour:
   moveSpeed: 3
   pickupDistance: 0.2
   shrinkSpeed: 10
+  magnetSound: {fileID: 0}
+  magnetVolume: 1
+  collectSound: {fileID: 0}
+  collectVolume: 1
 --- !u!1001 &1267946387
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -15777,6 +15934,10 @@ MonoBehaviour:
   moveSpeed: 3
   pickupDistance: 0.2
   shrinkSpeed: 10
+  magnetSound: {fileID: 0}
+  magnetVolume: 1
+  collectSound: {fileID: 0}
+  collectVolume: 1
 --- !u!1001 &1389726299
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -16973,6 +17134,10 @@ MonoBehaviour:
   moveSpeed: 3
   pickupDistance: 0.2
   shrinkSpeed: 10
+  magnetSound: {fileID: 0}
+  magnetVolume: 1
+  collectSound: {fileID: 0}
+  collectVolume: 1
 --- !u!1 &1488271035 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: e944e21fd2c30444e892c85c52296621, type: 3}
@@ -17572,6 +17737,10 @@ MonoBehaviour:
   moveSpeed: 3
   pickupDistance: 0.2
   shrinkSpeed: 10
+  magnetSound: {fileID: 0}
+  magnetVolume: 1
+  collectSound: {fileID: 0}
+  collectVolume: 1
 --- !u!1 &1561282201 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: c7166ea1a84865b4fa5bf7cf4917523c, type: 3}
@@ -17802,6 +17971,10 @@ MonoBehaviour:
   moveSpeed: 3
   pickupDistance: 0.2
   shrinkSpeed: 10
+  magnetSound: {fileID: 0}
+  magnetVolume: 1
+  collectSound: {fileID: 0}
+  collectVolume: 1
 --- !u!1 &1569424064 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: f4ef95f5f95397f4a8d7b42e90668af4, type: 3}
@@ -18627,6 +18800,10 @@ MonoBehaviour:
   moveSpeed: 3
   pickupDistance: 0.2
   shrinkSpeed: 10
+  magnetSound: {fileID: 0}
+  magnetVolume: 1
+  collectSound: {fileID: 0}
+  collectVolume: 1
 --- !u!1001 &1672925679
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -19127,6 +19304,10 @@ MonoBehaviour:
   moveSpeed: 3
   pickupDistance: 0.2
   shrinkSpeed: 10
+  magnetSound: {fileID: 0}
+  magnetVolume: 1
+  collectSound: {fileID: 0}
+  collectVolume: 1
 --- !u!1 &1732676153 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3273252098493075598, guid: fe74bb4f7eb7b864387bf43cf9ff38c6, type: 3}
@@ -19153,6 +19334,10 @@ MonoBehaviour:
   moveSpeed: 3
   pickupDistance: 0.2
   shrinkSpeed: 10
+  magnetSound: {fileID: 0}
+  magnetVolume: 1
+  collectSound: {fileID: 0}
+  collectVolume: 1
 --- !u!1 &1740426052 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3273252098493075598, guid: fe74bb4f7eb7b864387bf43cf9ff38c6, type: 3}
@@ -19179,6 +19364,10 @@ MonoBehaviour:
   moveSpeed: 3
   pickupDistance: 0.2
   shrinkSpeed: 10
+  magnetSound: {fileID: 0}
+  magnetVolume: 1
+  collectSound: {fileID: 0}
+  collectVolume: 1
 --- !u!1 &1749267609 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3273252098493075598, guid: fe74bb4f7eb7b864387bf43cf9ff38c6, type: 3}
@@ -19205,6 +19394,10 @@ MonoBehaviour:
   moveSpeed: 3
   pickupDistance: 0.2
   shrinkSpeed: 10
+  magnetSound: {fileID: 0}
+  magnetVolume: 1
+  collectSound: {fileID: 0}
+  collectVolume: 1
 --- !u!1 &1753018902 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: c7166ea1a84865b4fa5bf7cf4917523c, type: 3}
@@ -19315,6 +19508,10 @@ MonoBehaviour:
   moveSpeed: 3
   pickupDistance: 0.2
   shrinkSpeed: 10
+  magnetSound: {fileID: 0}
+  magnetVolume: 1
+  collectSound: {fileID: 0}
+  collectVolume: 1
 --- !u!1001 &1771479428
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -19628,6 +19825,10 @@ MonoBehaviour:
   moveSpeed: 3
   pickupDistance: 0.2
   shrinkSpeed: 10
+  magnetSound: {fileID: 0}
+  magnetVolume: 1
+  collectSound: {fileID: 0}
+  collectVolume: 1
 --- !u!1001 &1826047139
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -19981,6 +20182,10 @@ MonoBehaviour:
   moveSpeed: 3
   pickupDistance: 0.2
   shrinkSpeed: 10
+  magnetSound: {fileID: 0}
+  magnetVolume: 1
+  collectSound: {fileID: 0}
+  collectVolume: 1
 --- !u!1 &1831761414
 GameObject:
   m_ObjectHideFlags: 0
@@ -20432,6 +20637,10 @@ MonoBehaviour:
   moveSpeed: 3
   pickupDistance: 0.2
   shrinkSpeed: 10
+  magnetSound: {fileID: 0}
+  magnetVolume: 1
+  collectSound: {fileID: 0}
+  collectVolume: 1
 --- !u!1001 &1860658437
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -20939,6 +21148,10 @@ MonoBehaviour:
   moveSpeed: 3
   pickupDistance: 0.2
   shrinkSpeed: 10
+  magnetSound: {fileID: 0}
+  magnetVolume: 1
+  collectSound: {fileID: 0}
+  collectVolume: 1
 --- !u!1001 &1901605008
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -21269,6 +21482,10 @@ MonoBehaviour:
   moveSpeed: 3
   pickupDistance: 0.2
   shrinkSpeed: 10
+  magnetSound: {fileID: 0}
+  magnetVolume: 1
+  collectSound: {fileID: 0}
+  collectVolume: 1
 --- !u!1001 &1927708398
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -23361,6 +23578,10 @@ MonoBehaviour:
   moveSpeed: 3
   pickupDistance: 0.2
   shrinkSpeed: 10
+  magnetSound: {fileID: 0}
+  magnetVolume: 1
+  collectSound: {fileID: 0}
+  collectVolume: 1
 --- !u!1 &2062207694
 GameObject:
   m_ObjectHideFlags: 0
@@ -23889,6 +24110,10 @@ MonoBehaviour:
   moveSpeed: 3
   pickupDistance: 0.2
   shrinkSpeed: 10
+  magnetSound: {fileID: 0}
+  magnetVolume: 1
+  collectSound: {fileID: 0}
+  collectVolume: 1
 --- !u!1 &2106183821
 GameObject:
   m_ObjectHideFlags: 0
@@ -24412,6 +24637,10 @@ MonoBehaviour:
   moveSpeed: 3
   pickupDistance: 0.2
   shrinkSpeed: 10
+  magnetSound: {fileID: 0}
+  magnetVolume: 1
+  collectSound: {fileID: 0}
+  collectVolume: 1
 --- !u!1 &2138233982 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: e8ced0c8817c7d7428db829f6a85b3e8, type: 3}
@@ -24840,3 +25069,4 @@ SceneRoots:
   - {fileID: 1772474014}
   - {fileID: 1156843415}
   - {fileID: 113253021}
+  - {fileID: 940379966}
