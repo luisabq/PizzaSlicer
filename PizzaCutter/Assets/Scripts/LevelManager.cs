@@ -19,6 +19,9 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private GameObject levelCompleteUI;
     [SerializeField] private GameObject gameCompleteUI;
 
+    [Header("Game Over UI")]
+    [SerializeField] private GameObject gameOverUI;
+
     private bool levelComplete = false;
 
     private void Start()
@@ -30,6 +33,9 @@ public class LevelManager : MonoBehaviour
 
         if (gameCompleteUI != null)
             gameCompleteUI.SetActive(false);
+
+        if (gameOverUI != null)
+            gameOverUI.SetActive(false);
 
         StartCoroutine(PositionPlayerAtSpawn());
     }
@@ -105,6 +111,20 @@ public class LevelManager : MonoBehaviour
         Time.timeScale = 0f;
     }
 
+    public void ShowGameOverUI()
+    {
+        if (gameOverUI != null)
+        {
+            gameOverUI.SetActive(true);
+        }
+        else
+        {
+            Debug.LogWarning("Game Over UI is not assigned.");
+        }
+
+        Time.timeScale = 0f;
+    }
+
     public void LoadNextLevel()
     {
         if (currentLevel >= 3)
@@ -123,6 +143,17 @@ public class LevelManager : MonoBehaviour
     public void RestartLevel()
     {
         Time.timeScale = 1f;
+
+        GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
+
+        if (playerObject != null)
+        {
+            PlayerHealth playerHealth = playerObject.GetComponent<PlayerHealth>();
+
+            if (playerHealth != null)
+                playerHealth.ResetHealthForRestart();
+        }
+
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
@@ -136,24 +167,27 @@ public class LevelManager : MonoBehaviour
         {
             PlayerStats playerStats = playerObject.GetComponent<PlayerStats>();
             PlayerHealth playerHealth = playerObject.GetComponent<PlayerHealth>();
+            PlayerWeaponManager weaponManager = playerObject.GetComponent<PlayerWeaponManager>();
 
             // stats reset then health.
             if (playerStats != null)
                 playerStats.ResetForNewRun();
 
-           // if (playerHealth != null)
-               // playerHealth.ResetForNewRun();
+            if (weaponManager != null)
+                weaponManager.ResetToStartingLoadout();
+
+            if (playerHealth != null)
+                playerHealth.ResetHealthForRestart();
         }
         else
         {
             Debug.LogWarning(
-                "No player, creating new one"
+                "there's no player, time to start oooooverrrr"
             );
         }
 
         SceneManager.LoadScene("Level_01");
     }
-
 
 }
 

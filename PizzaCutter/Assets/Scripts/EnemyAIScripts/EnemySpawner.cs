@@ -1,3 +1,4 @@
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -81,10 +82,10 @@ public class EnemySpawner : MonoBehaviour
             yield break;
         }
 
-        if (wave.enemyPrefab == null)
+        if (wave.enemyCount > 0 && wave.enemyPrefab == null)
         {
             Debug.LogError(
-                $"{wave.waveName} has no enemy prefab dumass."
+                $"{wave.waveName} has no melee enemy prefab dumass."
             );
 
             spawningFinished = true;
@@ -93,18 +94,51 @@ public class EnemySpawner : MonoBehaviour
             yield break;
         }
 
+        if (wave.rangedEnemyCount > 0 && wave.rangedEnemyPrefab == null)
+        {
+            Debug.LogError(
+                $"{wave.waveName} has no ranged enemy prefab."
+            );
+
+            spawningFinished = true;
+            waveComplete = true;
+
+            yield break;
+        }
+
+        int totalEnemies = wave.enemyCount + wave.rangedEnemyCount;
+
         Debug.Log(
             $"Starting... {wave.waveName}: " +
-            $"{wave.enemyCount} enemies to kill mf."
+            $"{totalEnemies} enemies to kill mf."
         );
 
-        for (int i = 0; i < wave.enemyCount; i++)
-        {
-            SpawnEnemy(wave.enemyPrefab);
+        int meleeRemaining = wave.enemyCount;
+        int rangedRemaining = wave.rangedEnemyCount;
 
-            yield return new WaitForSeconds(
-                wave.spawnDelay
-            );
+        while (meleeRemaining > 0 || rangedRemaining > 0)
+        {
+            bool spawnRanged;
+
+            if (meleeRemaining <= 0)
+                spawnRanged = true;
+            else if (rangedRemaining <= 0)
+                spawnRanged = false;
+            else
+                spawnRanged = Random.value < 0.5f;
+
+            if (spawnRanged)
+            {
+                SpawnEnemy(wave.rangedEnemyPrefab);
+                rangedRemaining--;
+            }
+            else
+            {
+                SpawnEnemy(wave.enemyPrefab);
+                meleeRemaining--;
+            }
+
+            yield return new WaitForSeconds(wave.spawnDelay);
         }
 
         spawningFinished = true;
@@ -156,6 +190,7 @@ public class EnemySpawner : MonoBehaviour
     {
         return waveComplete;
     }
+
     public bool IsAllWavesComplete()
     {
         return currentWaveIndex >= waves.Length;

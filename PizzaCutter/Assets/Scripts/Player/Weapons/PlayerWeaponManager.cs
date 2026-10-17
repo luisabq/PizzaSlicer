@@ -1,3 +1,4 @@
+
 using UnityEngine;
 
 public class PlayerWeaponManager : MonoBehaviour
@@ -69,4 +70,24 @@ public class PlayerWeaponManager : MonoBehaviour
 
     }
 
+    public void ResetToStartingLoadout()
+    {
+        //resets weapons to the starting loadout for a new run
+        currentMeleeData = startingMeleeData;
+        currentMeatballData = null;
+
+        if (meleeWeaponScript != null)
+        {
+            meleeWeaponScript.gameObject.SetActive(startingMeleeData != null);
+
+            if (startingMeleeData != null)
+                meleeWeaponScript.SetWeaponData(startingMeleeData);
+        }
+
+        if (meatballGunScript != null)
+        {
+            meatballGunScript.gameObject.SetActive(false);
+        }
+
+    }
 }

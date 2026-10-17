@@ -1,3 +1,4 @@
+
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "NewWaveData", menuName = "Pizza Slicer-Cutter/Wave Data")]
@@ -9,6 +10,9 @@ public class WaveData : ScriptableObject
     [Header("Enemies")]
     public GameObject enemyPrefab;
     public int enemyCount = 5;
+
+    public GameObject rangedEnemyPrefab;
+    public int rangedEnemyCount = 0;
 
     [Header("Spawning")]
     public float spawnDelay = 1f;

@@ -14,5 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::WaveData
   waveName: Wave 1
   enemyPrefab: {fileID: 6445932388589793619, guid: 375bceaab84d8d14e973a64b6314e912, type: 3}
-  enemyCount: 14
+  enemyCount: 8
+  rangedEnemyPrefab: {fileID: 6445932388589793619, guid: d7f893e482adc1343a69cca426b77235, type: 3}
+  rangedEnemyCount: 8
   spawnDelay: 0.9

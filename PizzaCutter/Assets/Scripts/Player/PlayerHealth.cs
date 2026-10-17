@@ -26,7 +26,7 @@ public class PlayerHealth : MonoBehaviour
     {
         playerStats = GetComponent<PlayerStats>();
     }
-   
+
     private void Start()
     {
         currentHealth = MaxHealth;
@@ -53,7 +53,7 @@ public class PlayerHealth : MonoBehaviour
     public void HealToMax()
     {
         currentHealth = MaxHealth;
-        Debug.Log($"[PLAYER] fully restored health to {currentHealth} omnomnom"); 
+        Debug.Log($"[PLAYER] fully restored health to {currentHealth} omnomnom");
     }
 
 
@@ -70,6 +70,7 @@ public class PlayerHealth : MonoBehaviour
 
         if (currentHealth <= 0)
         {
+            currentHealth = 0;
             Die();
         }
         else
@@ -102,6 +103,8 @@ public class PlayerHealth : MonoBehaviour
 
     private void SetRenderersEnabled(bool enabled)
     {
+        if (playerRenderers == null) return;
+
         foreach (var rend in playerRenderers)
         {
             if (rend != null)
@@ -116,6 +119,31 @@ public class PlayerHealth : MonoBehaviour
     private void Die()
     {
         Debug.Log("You dieded :D");
-        Time.timeScale = 0f;
+
+        LevelManager levelManager = FindAnyObjectByType<LevelManager>();
+
+        if (levelManager != null)
+        {
+            levelManager.ShowGameOverUI();
+        }
+        else
+        {
+            Debug.LogWarning("LevelManager not found. Pausing game.");
+            Time.timeScale = 0f;
+        }
+    }
+
+    public void ResetHealthForRestart()
+    {
+        StopAllCoroutines();
+
+        currentHealth = MaxHealth;
+        isInvincible = false;
+
+        SetRenderersEnabled(true);
+
+        Physics.IgnoreLayerCollision(playerLayer, enemyLayer, false);
+
+        Debug.Log($"[PLAYER] Health reset to {currentHealth}/{MaxHealth} for level restart.");
     }
 }
