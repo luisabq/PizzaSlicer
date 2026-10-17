@@ -281,7 +281,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   xpAmount: 10
-  magnetRadius: 2
-  moveSpeed: 3
+  moveSpeed: 8
   pickupDistance: 0.2
   shrinkSpeed: 10

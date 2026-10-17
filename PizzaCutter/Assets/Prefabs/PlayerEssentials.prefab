@@ -1832,7 +1832,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7348671471fb17f4998032eb919bd9db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  playerHealth: {fileID: 0}
+  playerHealth: {fileID: 4897708031516837856}
   playerStats: {fileID: 5606460996792810122}
   healthText: {fileID: 8311005262042063443}
   levelText: {fileID: 7563199467585593807}
@@ -2915,7 +2915,7 @@ Transform:
   m_GameObject: {fileID: 6641854043487166936}
   serializedVersion: 2
   m_LocalRotation: {x: 0.60876137, y: -0, z: -0, w: 0.7933534}
-  m_LocalPosition: {x: 7.984, y: 22.24424, z: -9.86305}
+  m_LocalPosition: {x: 9.7443, y: 22.24424, z: -5.4074}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

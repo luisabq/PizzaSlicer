@@ -103,16 +103,24 @@ public class EnemyController : MonoBehaviour
 
     private void DealDamageToPlayer()
     {
-        if (player != null && player.TryGetComponent<PlayerHealth>(out var playerHealth))
-        {
-            playerHealth.TakeDamage(enemyData.attackDamage);
+        PlayerHealth playerHealth = player != null
+            ? player.GetComponentInParent<PlayerHealth>()
+            : null;
 
-            Debug.Log(
-                $"{enemyData.enemyName} attacked player " +
-                $"for {enemyData.attackDamage} damage."
-            );
+        if (playerHealth == null && player != null)
+        {
+            playerHealth = player.GetComponentInChildren<PlayerHealth>();
         }
 
+        if (playerHealth != null)
+        {
+            playerHealth.TakeDamage(enemyData.attackDamage);
+            Debug.Log($"{enemyData.enemyName} attacked player for {enemyData.attackDamage} damage.");
+        }
+        else
+        {
+            Debug.LogWarning("Melee enemy could not find PlayerHealth!");
+        }
     }
 
     public void TakeDamage(float damage)

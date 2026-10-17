@@ -18,28 +18,68 @@ public class HealthPickup : MonoBehaviour
     private Transform playerTransform;
     private bool isBeingCollected = false;
     private PlayerStats playerStats;
+    private PlayerHealth playerHealth;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
         GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
         if (playerObj != null)
         {
-            playerTransform = playerObj.transform;
             playerStats = playerObj.GetComponent<PlayerStats>();
+            playerHealth = playerObj.GetComponent<PlayerHealth>();
+
+            if (playerStats == null)
+            {
+                playerStats = playerObj.GetComponentInParent<PlayerStats>();
+            }
+
+            if (playerStats == null)
+            {
+                playerStats = playerObj.GetComponentInChildren<PlayerStats>();
+            }
+
+            if (playerHealth == null)
+            {
+                playerHealth = playerObj.GetComponentInParent<PlayerHealth>();
+            }
+
+            if (playerHealth == null)
+            {
+                playerHealth = playerObj.GetComponentInChildren<PlayerHealth>();
+            }
         }
-        
+
+        // Fallback if the tagged GameObject doesn't hold these components.
+        if (playerStats == null)
+        {
+            playerStats = FindAnyObjectByType<PlayerStats>();
+        }
+
+        if (playerHealth == null)
+        {
+            playerHealth = FindAnyObjectByType<PlayerHealth>();
+        }
+
+        // Prefer the PlayerStats object as the pickup target, since it provides PickupRadius.
+        if (playerStats != null)
+        {
+            playerTransform = playerStats.transform;
+        }
+        else if (playerHealth != null)
+        {
+            playerTransform = playerHealth.transform;
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (playerTransform == null)
+        if (playerTransform == null || playerStats == null)
         {
             return;
         }
-        
+
 
         if (isBeingCollected)
         {
@@ -69,14 +109,12 @@ public class HealthPickup : MonoBehaviour
     {
         if (isBeingCollected) return;
 
-        isBeingCollected = true;
-
-        // Give health
-        if (playerTransform != null && playerTransform.TryGetComponent<PlayerHealth>(out var playerHealth))
+        if (playerHealth != null)
         {
             playerHealth.Heal(healAmount);
         }
 
+        isBeingCollected = true;
 
         if (TryGetComponent<Collider>(out var col))
         {
@@ -89,9 +127,4 @@ public class HealthPickup : MonoBehaviour
     {
         healAmount = amount;
     }
-
-
-
-
-
 }

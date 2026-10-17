@@ -24709,6 +24709,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 5787109439696258990, guid: ce8ede2a248b3074891bb3fac84b8e49, type: 3}
+      propertyPath: playerHealth
+      value: 
+      objectReference: {fileID: 7823109773842528860}
     - target: {fileID: 6117514198987331708, guid: ce8ede2a248b3074891bb3fac84b8e49, type: 3}
       propertyPath: m_Layer
       value: 6
@@ -24800,6 +24804,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ce8ede2a248b3074891bb3fac84b8e49, type: 3}
+--- !u!114 &7823109773842528860 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4897708031516837856, guid: ce8ede2a248b3074891bb3fac84b8e49, type: 3}
+  m_PrefabInstance: {fileID: 7823109773842528859}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1adb3bef26e57d2418d82aa890d1a3b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerHealth
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

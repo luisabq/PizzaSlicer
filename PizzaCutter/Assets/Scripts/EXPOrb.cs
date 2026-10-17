@@ -22,19 +22,39 @@ public class EXPOrb : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
         GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
         if (playerObj != null)
         {
-            playerTransform = playerObj.transform;
             playerStats = playerObj.GetComponent<PlayerStats>();
+
+            if (playerStats == null)
+            {
+                playerStats = playerObj.GetComponentInParent<PlayerStats>();
+            }
+
+            if (playerStats == null)
+            {
+                playerStats = playerObj.GetComponentInChildren<PlayerStats>();
+            }
+        }
+
+        // Fallback if the tagged GameObject doesn't hold PlayerStats.
+        if (playerStats == null)
+        {
+            playerStats = FindAnyObjectByType<PlayerStats>();
+        }
+
+        // Use the object that actually owns PlayerStats as the target.
+        if (playerStats != null)
+        {
+            playerTransform = playerStats.transform;
         }
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (playerTransform == null) return;
+        if (playerTransform == null || playerStats == null) return;
 
         if (isBeingCollected)
         {
@@ -64,13 +84,13 @@ public class EXPOrb : MonoBehaviour
     {
         if (isBeingCollected) return;
 
-        isBeingCollected = true;
-
         // Give XP points to player
-        if (playerTransform.TryGetComponent<PlayerStats>(out var stats))
+        if (playerStats != null)
         {
-            stats.AddXP(xpAmount);
+            playerStats.AddXP(xpAmount);
         }
+
+        isBeingCollected = true;
 
         //supposed to disable colliders in order to not collect multiple times, but might mess things up so look at this first lol
         if (TryGetComponent<Collider>(out var col))
@@ -84,9 +104,4 @@ public class EXPOrb : MonoBehaviour
     {
         xpAmount = amount;
     }
-
-
-
-
-
 }
