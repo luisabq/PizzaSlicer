@@ -8,6 +8,16 @@ public class PlayerHealth : MonoBehaviour
     [SerializeField] private float flashInterval = 0.5f;
     [SerializeField] private Renderer[] playerRenderers;
 
+
+    [Header("Audio")]
+    [SerializeField] private AudioClip hurtSound;
+    [Range(0f, 1f)][SerializeField] private float hurtVolume = 1.0f;
+    [SerializeField] private AudioClip loseSound;
+    [Range(0f, 1f)][SerializeField] private float loseVolume = 1.0f;
+
+
+
+
     private PlayerStats playerStats;
     private float currentHealth;
     private bool isInvincible = false;
@@ -66,6 +76,11 @@ public class PlayerHealth : MonoBehaviour
         if (isInvincible || currentHealth <= 0) return;
 
         currentHealth -= damageAmount;
+        if (hurtSound != null && SoundManager.Instance != null)
+        {
+            SoundManager.Instance.PlaySound(hurtSound, hurtVolume);
+        }
+
         Debug.Log($"[PLAYER] Took {damageAmount} damage! Current Health: {currentHealth}");
 
         if (currentHealth <= 0)
@@ -119,6 +134,12 @@ public class PlayerHealth : MonoBehaviour
     private void Die()
     {
         Debug.Log("You dieded :D");
+        if (loseSound != null && SoundManager.Instance != null)
+        {
+            SoundManager.Instance.PlaySound(loseSound, loseVolume);
+        }
+
+
 
         LevelManager levelManager = FindAnyObjectByType<LevelManager>();
 

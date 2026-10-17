@@ -11,6 +11,11 @@ public class MainMenuManager : MonoBehaviour
     [SerializeField] private GameObject creditsPanel;
     [SerializeField] private GameObject settingsPanel;
 
+    [Header("Audio")]
+    [SerializeField] private AudioClip startSound;
+    [Range(0f, 1f)][SerializeField] private float startVolume = 1.0f;
+
+
     private void Start()
     {
         Time.timeScale = 1f;
@@ -24,6 +29,11 @@ public class MainMenuManager : MonoBehaviour
 
     public void StartGame()
     {
+        if (startSound != null && SoundManager.Instance != null)
+        {
+            SoundManager.Instance.PlaySound(startSound, startVolume);
+        }
+
         Time.timeScale = 1f;
         SceneManager.LoadScene(firstLevelScene);
     }

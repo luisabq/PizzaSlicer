@@ -21,6 +21,9 @@ public class MeleeWeapon : MonoBehaviour
     [Header("Audio")]
     [SerializeField] private AudioClip swingSound;
     [Range(0f, 1f)][SerializeField] private float swingVolume = 1.0f;
+    [SerializeField] private AudioClip hitSound;
+    [Range(0f, 1f)][SerializeField] private float hitVolume = 1.0f;
+
 
     private PlayerStats playerStats;
     private Transform playerTransform;
@@ -194,6 +197,10 @@ public class MeleeWeapon : MonoBehaviour
                 meleeEnemy.TakeDamage(combinedDamage);
                 ApplyKnockbackIfNeeded(hit.gameObject, hitDirection, currentTier);
                 Debug.Log($"[MELEE ATTACK] Hit {meleeEnemy.name} for {combinedDamage} total damage!");
+                if (hitSound != null && SoundManager.Instance != null)
+                {
+                    AudioSource.PlayClipAtPoint(hitSound, transform.position, hitVolume);
+                }
                 continue;
             }
 
@@ -206,9 +213,16 @@ public class MeleeWeapon : MonoBehaviour
                 rangedEnemy.TakeDamage(combinedDamage);
                 ApplyKnockbackIfNeeded(hit.gameObject, hitDirection, currentTier);
                 Debug.Log($"[MELEE ATTACK] Hit {rangedEnemy.name} for {combinedDamage} total damage!");
+                if (hitSound != null && SoundManager.Instance != null)
+                {
+                    AudioSource.PlayClipAtPoint(hitSound, transform.position, hitVolume);
+                }
             }
 
             // ADD MORE ENEMIES HERE
+
+            
+
 
         }
     }

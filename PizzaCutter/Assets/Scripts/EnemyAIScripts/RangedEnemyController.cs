@@ -31,6 +31,11 @@ public class RangedEnemyController : MonoBehaviour
     [SerializeField] private GameObject hitVFXPrefab;
     [SerializeField] private float vfxDestroyDelay = 2f;
 
+    [Header("Audio")]
+    [SerializeField] private AudioClip attackSound;
+    [Range(0f, 1f)][SerializeField] private float attackVolume = 1.0f;
+
+
     private float currentHealth;
     private float attackTimer;
     private float windUpTimer;
@@ -214,6 +219,9 @@ public class RangedEnemyController : MonoBehaviour
 
         Vector3 direction =
             (player.position - firePoint.position).normalized;
+
+        AudioSource.PlayClipAtPoint(attackSound, transform.position, attackVolume);
+
 
         GameObject projectile = Instantiate(
             projectilePrefab,

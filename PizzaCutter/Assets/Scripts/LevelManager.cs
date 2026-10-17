@@ -22,6 +22,12 @@ public class LevelManager : MonoBehaviour
     [Header("Game Over UI")]
     [SerializeField] private GameObject gameOverUI;
 
+    [Header("Audio")]
+    [SerializeField] private AudioClip winSound;
+    [Range(0f, 1f)][SerializeField] private float winVolume = 1.0f;
+    //lose sound stuff is in playerhealth
+
+
     private bool levelComplete = false;
 
     private void Start()
@@ -89,6 +95,10 @@ public class LevelManager : MonoBehaviour
     private void CompleteLevel()
     {
         levelComplete = true;
+        if (winSound != null && SoundManager.Instance != null)
+        {
+            SoundManager.Instance.PlaySound(winSound, winVolume);
+        }
 
         Debug.Log($"Level {currentLevel} complete!");
 

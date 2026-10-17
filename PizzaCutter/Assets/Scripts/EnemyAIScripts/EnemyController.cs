@@ -18,6 +18,11 @@ public class EnemyController : MonoBehaviour
     [SerializeField] private GameObject hitVFXPrefab;
     [SerializeField] private float vfxDestroyDelay = 2f;
 
+    [Header("Audio")]
+    [SerializeField] private AudioClip attackSound;
+    [Range(0f, 1f)][SerializeField] private float attackVolume = 1.0f;
+
+
     private float currentHealth;
     private float attackTimer;
 
@@ -115,6 +120,7 @@ public class EnemyController : MonoBehaviour
         if (playerHealth != null)
         {
             playerHealth.TakeDamage(enemyData.attackDamage);
+            AudioSource.PlayClipAtPoint(attackSound, transform.position, attackVolume);
             Debug.Log($"{enemyData.enemyName} attacked player for {enemyData.attackDamage} damage.");
         }
         else

@@ -23477,6 +23477,8 @@ MonoBehaviour:
   levelCompleteUI: {fileID: 924024531}
   gameCompleteUI: {fileID: 0}
   gameOverUI: {fileID: 0}
+  winSound: {fileID: 8300000, guid: 2c15d83c1ff19f142adaf01691b8b30d, type: 3}
+  winVolume: 1
 --- !u!4 &2024969446
 Transform:
   m_ObjectHideFlags: 0

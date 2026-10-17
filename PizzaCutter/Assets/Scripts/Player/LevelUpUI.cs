@@ -17,6 +17,13 @@ public class LevelUpUI : MonoBehaviour
     [SerializeField] private WeaponData baseMeleeData;
     [SerializeField] private WeaponData baseMeatballData;
 
+    [Header("Audio")]
+    [SerializeField] private AudioClip sound1;
+    [Range(0f, 1f)][SerializeField] private float volume1 = 1.0f;
+    [SerializeField] private AudioClip sound2;
+    [Range(0f, 1f)][SerializeField] private float volume2 = 1.0f;
+
+
 
 
     private PlayerStats playerStats;
@@ -166,6 +173,10 @@ public class LevelUpUI : MonoBehaviour
 
         // show UI before pausing the game pleeeeeeeeeeease.
         levelUpPanel.SetActive(true);
+        if (sound1 != null && SoundManager.Instance != null)
+        {
+            SoundManager.Instance.PlaySound(sound1, volume1);
+        }
 
         Debug.Log("[LEVEL UP UI] Upgrade panel opened.");
 
@@ -179,6 +190,11 @@ public class LevelUpUI : MonoBehaviour
     //function called to call a function in playerstats to actually apply the points..ikr
     private void SelectChoice(int choiceIndex)
     {
+        if (sound2 != null && SoundManager.Instance != null)
+        {
+            SoundManager.Instance.PlaySound(sound2, volume2);
+        }
+
         Debug.Log($"[LEVEL UP UI] Button clicked at index {choiceIndex}!");
         StatUpgradeOption selected = currentChoices[choiceIndex];
         playerStats.ApplyStatUpgrade(selected.statType, selected.pointsGained);
@@ -226,7 +242,12 @@ public class LevelUpUI : MonoBehaviour
 
             }
         }
-       
+
+        if (sound1 != null && SoundManager.Instance != null)
+        {
+            SoundManager.Instance.PlaySound(sound1, volume1);
+        }
+
         levelUpPanel.SetActive(true);
     }
 
@@ -281,6 +302,10 @@ public class LevelUpUI : MonoBehaviour
 
     private void SelectWeaponChoice(int index)
     {
+        if (sound2 != null && SoundManager.Instance != null)
+        {
+            SoundManager.Instance.PlaySound(sound2, volume2);
+        }
         WeaponData selectedWeapon = currentWeaponChoices[index];
         weaponManager.ApplyWeaponUpgrade(selectedWeapon);
 

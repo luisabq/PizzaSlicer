@@ -135,6 +135,8 @@ MonoBehaviour:
   healthPickupPrefab: {fileID: 4608339891104366702, guid: fe458f2f27f3eff4ab76c285299a3ed1, type: 3}
   hitVFXPrefab: {fileID: 591812712659207760, guid: 5b763ed92a8fe42468589fd9e3838d45, type: 3}
   vfxDestroyDelay: 2
+  attackSound: {fileID: 8300000, guid: 9254680b33a427b45b1f6d24a7edc734, type: 3}
+  attackVolume: 1
 --- !u!195 &8887459901576831655
 NavMeshAgent:
   m_ObjectHideFlags: 0

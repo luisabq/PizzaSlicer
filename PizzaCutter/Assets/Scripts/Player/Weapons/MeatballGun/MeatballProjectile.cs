@@ -9,6 +9,13 @@ public class MeatballProjectile : MonoBehaviour
     [SerializeField] private float lifetime = 5f;
     [SerializeField] private GameObject hitVFXPrefab;
 
+    [Header("Audio")]
+    [SerializeField] private AudioClip shootSound;
+    [Range(0f, 1f)][SerializeField] private float shootVolume = 1.0f;
+    [SerializeField] private AudioClip hitSound;
+    [Range(0f, 1f)][SerializeField] private float hitVolume = 1.0f;
+
+
     private Rigidbody rb;
     private float damage;
     private bool initialized;
@@ -49,6 +56,13 @@ public class MeatballProjectile : MonoBehaviour
         rb.linearVelocity = direction * speed;
 
         initialized = true;
+
+        if (shootSound != null && SoundManager.Instance != null)
+        {
+            SoundManager.Instance.PlaySound(shootSound, shootVolume);
+        }
+
+
 
         Destroy(gameObject, lifetime);
     }
@@ -120,6 +134,11 @@ public class MeatballProjectile : MonoBehaviour
     {
         if (hitVFXPrefab != null)
         {
+            if (hitSound != null && SoundManager.Instance != null)
+            {
+                AudioSource.PlayClipAtPoint(hitSound, transform.position, hitVolume);
+                //SoundManager.Instance.PlaySound(hitSound, hitVolume);
+            }
             GameObject vfx = Instantiate(hitVFXPrefab, transform.position, Quaternion.identity);
             Destroy(vfx, 1.5f);
         }

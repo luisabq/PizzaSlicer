@@ -722,6 +722,8 @@ MonoBehaviour:
   tier3KnockbackForce: 10
   swingSound: {fileID: 8300000, guid: 635e68073e505db47897ff06419b61bb, type: 3}
   swingVolume: 0.799
+  hitSound: {fileID: 8300000, guid: 9d3d5551039b6de45b96e38013dad261, type: 3}
+  hitVolume: 1
 --- !u!1 &1100946356267800282
 GameObject:
   m_ObjectHideFlags: 0
@@ -1496,6 +1498,10 @@ MonoBehaviour:
   flashInterval: 0.1
   playerRenderers:
   - {fileID: 5415019158924230202}
+  hurtSound: {fileID: 8300000, guid: 4a6de289131c70c4a99ae3e3f7a90d4d, type: 3}
+  hurtVolume: 1
+  loseSound: {fileID: 8300000, guid: 453d4ca1600146848a10f4b94a4552c9, type: 3}
+  loseVolume: 1
 --- !u!114 &3009489390824704939
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1668,6 +1674,10 @@ MonoBehaviour:
   titleText: {fileID: 8903943492701114526}
   baseMeleeData: {fileID: 11400000, guid: 0908008c1d3f44847b0133209f5f8b31, type: 2}
   baseMeatballData: {fileID: 11400000, guid: 2489e856ad0e5d24795aec36c4f75f0a, type: 2}
+  sound1: {fileID: 8300000, guid: 88581416016bf2f4d87a957937318733, type: 3}
+  volume1: 0.77
+  sound2: {fileID: 8300000, guid: 0ce1b8800f827c4488208bd275c4ed1d, type: 3}
+  volume2: 0.714
 --- !u!1 &2394922523161081721
 GameObject:
   m_ObjectHideFlags: 0
@@ -2917,7 +2927,7 @@ Transform:
   m_GameObject: {fileID: 6641854043487166936}
   serializedVersion: 2
   m_LocalRotation: {x: 0.60876137, y: -0, z: -0, w: 0.7933534}
-  m_LocalPosition: {x: 9.7443, y: 22.24424, z: -5.4074}
+  m_LocalPosition: {x: 7.984, y: 22.24424, z: -9.86305}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

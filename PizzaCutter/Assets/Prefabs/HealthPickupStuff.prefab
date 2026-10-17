@@ -50,6 +50,10 @@ MonoBehaviour:
   moveSpeed: 8
   pickupDistance: 0.2
   shrinkSpeed: 10
+  magnetSound: {fileID: 8300000, guid: 4e010057de62aa24eadf19272f911556, type: 3}
+  magnetVolume: 0.151
+  collectSound: {fileID: 8300000, guid: 1d809573c575d384b82b0ef3926748f2, type: 3}
+  collectVolume: 0.669
 --- !u!1 &5172054871144115451
 GameObject:
   m_ObjectHideFlags: 0

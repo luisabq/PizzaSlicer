@@ -20,6 +20,14 @@ public class HealthPickup : MonoBehaviour
     private PlayerStats playerStats;
     private PlayerHealth playerHealth;
 
+    [Header("Audio")]
+    [SerializeField] private AudioClip magnetSound;
+    [Range(0f, 1f)][SerializeField] private float magnetVolume = 1.0f;
+    [SerializeField] private AudioClip collectSound;
+    [Range(0f, 1f)][SerializeField] private float collectVolume = 1.0f;
+
+
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -88,6 +96,12 @@ public class HealthPickup : MonoBehaviour
 
             if (transform.localScale.x <= 0.05f)
             {
+                if (collectSound != null && SoundManager.Instance != null)
+                {
+                    SoundManager.Instance.PlaySound(collectSound, collectVolume);
+                }
+
+
                 Destroy(gameObject);
             }
             return;
@@ -99,6 +113,10 @@ public class HealthPickup : MonoBehaviour
         {
             //Gravitation
             transform.position = Vector3.MoveTowards(transform.position, playerTransform.position, moveSpeed * Time.deltaTime);
+            if (magnetSound != null && SoundManager.Instance != null)
+            {
+                SoundManager.Instance.PlaySound(magnetSound, magnetVolume);
+            }
             if (distanceToPlayer <= pickupDistance) Collect();
         }
 

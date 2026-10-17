@@ -165,6 +165,10 @@ MonoBehaviour:
   speed: 12
   lifetime: 5
   hitVFXPrefab: {fileID: 591812712659207760, guid: 708c9f3aad2b5e84d9eb044ec4d4e4e6, type: 3}
+  shootSound: {fileID: 8300000, guid: 79576ab1095c9de408e190b3332468de, type: 3}
+  shootVolume: 0.254
+  hitSound: {fileID: 8300000, guid: 01a41e3c05f9f9c46b378ad1ec8728e7, type: 3}
+  hitVolume: 1
 --- !u!114 &3431840147070652485
 MonoBehaviour:
   m_ObjectHideFlags: 0
