@@ -9168,7 +9168,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3407034089434938951, guid: ffa2ad617f5e6f144b1f6bbaead40acf, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8296082573100672996, guid: ffa2ad617f5e6f144b1f6bbaead40acf, type: 3}
       propertyPath: m_LocalPosition.x
@@ -17339,7 +17339,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3407034089434938951, guid: ffa2ad617f5e6f144b1f6bbaead40acf, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8296082573100672996, guid: ffa2ad617f5e6f144b1f6bbaead40acf, type: 3}
       propertyPath: m_LocalPosition.x
@@ -23476,7 +23476,7 @@ MonoBehaviour:
   playerSpawnPoint: {fileID: 85275243}
   levelCompleteUI: {fileID: 924024531}
   gameCompleteUI: {fileID: 0}
-  gameOverUI: {fileID: 0}
+  gameOverUI: {fileID: 114327614}
   winSound: {fileID: 8300000, guid: 2c15d83c1ff19f142adaf01691b8b30d, type: 3}
   winVolume: 1
 --- !u!4 &2024969446
