@@ -3599,6 +3599,12 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 29996b2294148cb47878f84df0583c9e, type: 3}
       insertIndex: -1
       addedObject: {fileID: 7966841316186491718}
+    - targetCorrespondingSourceObject: {fileID: -4991825132915709884, guid: 29996b2294148cb47878f84df0583c9e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6467985001465020124}
+    - targetCorrespondingSourceObject: {fileID: -1709609619428571922, guid: 29996b2294148cb47878f84df0583c9e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 517201476856305531}
   m_SourcePrefab: {fileID: 100100000, guid: 29996b2294148cb47878f84df0583c9e, type: 3}
 --- !u!1 &1347573579089161351 stripped
 GameObject:
@@ -3637,6 +3643,40 @@ SkinnedMeshRenderer:
   m_CorrespondingSourceObject: {fileID: -9061549628744100894, guid: 29996b2294148cb47878f84df0583c9e, type: 3}
   m_PrefabInstance: {fileID: 2194065378009846230}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &2651383966089853330 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -4991825132915709884, guid: 29996b2294148cb47878f84df0583c9e, type: 3}
+  m_PrefabInstance: {fileID: 2194065378009846230}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &6467985001465020124
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2651383966089853330}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25f4f57069b1c0c4d8c404235643db71, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AnimationStateControllerPlayer
+--- !u!1 &8517676671142991160 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -1709609619428571922, guid: 29996b2294148cb47878f84df0583c9e, type: 3}
+  m_PrefabInstance: {fileID: 2194065378009846230}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &517201476856305531
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8517676671142991160}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25f4f57069b1c0c4d8c404235643db71, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AnimationStateControllerPlayer
 --- !u!1001 &4366335897062217627
 PrefabInstance:
   m_ObjectHideFlags: 0
