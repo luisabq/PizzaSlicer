@@ -22,6 +22,8 @@ public class EnemyController : MonoBehaviour
     [SerializeField] private AudioClip attackSound;
     [Range(0f, 1f)][SerializeField] private float attackVolume = 1.0f;
 
+    
+
 
     private float currentHealth;
     private float attackTimer;
@@ -101,6 +103,8 @@ public class EnemyController : MonoBehaviour
 
         if (attackTimer <= 0f)
         {
+           //sets a trigger to tell the animator to play the attack animation
+           GetComponentInChildren<Animator>().SetTrigger("AttackOn");
             DealDamageToPlayer();
             attackTimer = enemyData.attackCooldown;
         }

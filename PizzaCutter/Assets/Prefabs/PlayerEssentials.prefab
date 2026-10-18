@@ -1500,9 +1500,9 @@ MonoBehaviour:
   playerRenderers:
   - {fileID: 2039016041524232756}
   hurtSound: {fileID: 8300000, guid: 4a6de289131c70c4a99ae3e3f7a90d4d, type: 3}
-  hurtVolume: 0.881
+  hurtVolume: 0.706
   loseSound: {fileID: 8300000, guid: 453d4ca1600146848a10f4b94a4552c9, type: 3}
-  loseVolume: 0.794
+  loseVolume: 0.548
 --- !u!114 &3009489390824704939
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3655,7 +3655,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2651383966089853330}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 25f4f57069b1c0c4d8c404235643db71, type: 3}
   m_Name: 
@@ -3672,7 +3672,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8517676671142991160}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 25f4f57069b1c0c4d8c404235643db71, type: 3}
   m_Name: 

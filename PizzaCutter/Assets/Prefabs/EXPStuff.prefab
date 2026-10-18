@@ -285,6 +285,6 @@ MonoBehaviour:
   pickupDistance: 0.2
   shrinkSpeed: 10
   magnetSound: {fileID: 8300000, guid: 4e010057de62aa24eadf19272f911556, type: 3}
-  magnetVolume: 0.065
+  magnetVolume: 0.029
   collectSound: {fileID: 8300000, guid: 414e0a0158d767d4ea10f9023d636338, type: 3}
-  collectVolume: 0.734
+  collectVolume: 0.223
