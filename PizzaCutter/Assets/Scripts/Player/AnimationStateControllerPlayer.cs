@@ -28,8 +28,6 @@ public class AnimationStateControllerPlayer : MonoBehaviour
 
         float horizontalSpeed = horizontalVelocity.magnitude;
 
-        animator.SetFloat("Speed", horizontalSpeed);
-
-       // Debug.Log("Speed: " + horizontalSpeed);
+        animator.SetFloat("Speed", horizontalSpeed); //This part is what directly affects the animator for running (speed)
     }
 }
