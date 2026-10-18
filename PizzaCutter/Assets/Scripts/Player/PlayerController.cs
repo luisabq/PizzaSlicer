@@ -34,30 +34,25 @@ public class PlayerController : MonoBehaviour
 
     private void ApplyMovement()
     {
-
-        //doesnt move player if over UI stuff
-        
-
-
         Vector3 moveDirection = Vector3.zero;
 
-        //Touch
+
+        //TOUCH
         if (Touch.activeTouches.Count > 0)
         {
             Touch activeTouch = Touch.activeTouches[0];
 
             if (UnityEngine.EventSystems.EventSystem.current != null &&
-        UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject())
+                UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject())
             {
+                controller.Move(Vector3.zero);
                 return;
             }
-
-            //Finds drag origin point
+            //Find drag origin point
             if (activeTouch.phase == UnityEngine.InputSystem.TouchPhase.Began)
             {
                 touchStartPosition = activeTouch.screenPosition;
             }
-
             //Gets direction from drag start to current finger position
             Vector2 currentPosition = activeTouch.screenPosition;
             Vector2 touchOffset = currentPosition - touchStartPosition;
@@ -69,21 +64,27 @@ public class PlayerController : MonoBehaviour
                 moveDirection = new Vector3(normalizedTouchDir.x, 0f, normalizedTouchDir.y);
             }
         }
+
         //WASD
         else if (keyboardInput.magnitude > 0.01f)
         {
-          
             moveDirection = new Vector3(keyboardInput.x, 0f, keyboardInput.y);
-            if (moveDirection.magnitude > 1f) moveDirection.Normalize();
+
+            if (moveDirection.magnitude > 1f)
+                moveDirection.Normalize();
         }
 
+        float speed = playerStats != null ? playerStats.MoveSpeed : movementSpeed;
+        controller.Move(moveDirection * speed * Time.deltaTime);
 
         if (moveDirection.magnitude > 0.01f)
         {
-            float speed = playerStats != null ? playerStats.MoveSpeed : movementSpeed;
-            controller.Move(moveDirection * speed * Time.deltaTime);
             Quaternion targetRotation = Quaternion.LookRotation(moveDirection, Vector3.up);
-            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+            transform.rotation = Quaternion.Slerp(
+                transform.rotation,
+                targetRotation,
+                rotationSpeed * Time.deltaTime
+            );
         }
     }
 
