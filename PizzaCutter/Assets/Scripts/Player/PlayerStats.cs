@@ -13,13 +13,13 @@ public class PlayerStats : MonoBehaviour
 
     //base values in relation to each stat's logic
     [Header("Base Stats")]
-   // public float baseDamage = 15f; 
-   // public float attackSpeedMultiplier = 0.6f;
-   // public float maxHealth = 30f;
+    // public float baseDamage = 15f; 
+    // public float attackSpeedMultiplier = 0.6f;
+    // public float maxHealth = 30f;
 
-    
+
     [SerializeField] public float baseMoveSpeed = 4f;
-    [SerializeField] public float baseAttackSpeed = 0.4f; 
+    [SerializeField] public float baseAttackSpeed = 0.4f;
     [SerializeField] public float baseDamage = 15f; //used with weapon damage
     [SerializeField] public float baseMaxHealth = 30f;
     [SerializeField] public float baseIFrameDuration = 1f;
@@ -45,7 +45,7 @@ public class PlayerStats : MonoBehaviour
     public float neededXPPerLevelScale = 1.25f;
     //public float healthIncreasePerLevel = 20f;
     //public float damageIncreasePerLevel = 5f;
-    public float healPercentFromLevel = 0.3f; 
+    public float healPercentFromLevel = 0.3f;
 
     private PlayerHealth playerHealth;
 
@@ -81,7 +81,7 @@ public class PlayerStats : MonoBehaviour
             currentXP -= xpToNextLevel;
 
             //rn scales the exp needed for the next level by a set amount each level.
-            xpToNextLevel = Mathf.RoundToInt(xpToNextLevel * neededXPPerLevelScale); 
+            xpToNextLevel = Mathf.RoundToInt(xpToNextLevel * neededXPPerLevelScale);
             LevelUp();
         }
     }
@@ -149,7 +149,7 @@ public class PlayerStats : MonoBehaviour
             case StatType.IFrames: iFramePoints += points; break;
             case StatType.PickupRadius: pickupRadiusPoints += points; break;
         }
-        Time.timeScale = 1f; 
+        Time.timeScale = 1f;
     }
     public void ResetForNewRun()
     {
@@ -164,7 +164,9 @@ public class PlayerStats : MonoBehaviour
         // should reset all progression if a new run.
         currentLevel = 1;
         currentXP = 0;
-        xpToNextLevel = 100;
+        xpToNextLevel = 50;
+        playerHealth = GetComponent<PlayerHealth>();
+        Time.timeScale = 1f;
 
         Debug.Log("[PLAYER STATS] New run started. Stats and XP reset.");
     }
@@ -178,34 +180,18 @@ public class PlayerStats : MonoBehaviour
 
 
         //randomly decides from 1 to 3 points for that stat, weighted. +3 has a lower chance, etc..
-        float roll = Random.value; 
+        float roll = Random.value;
         int points = 1;
 
-        if (roll <= 0.10f)       
+        if (roll <= 0.10f)
         {
             points = 3;
         }
-        else if (roll <= 0.40f)  
+        else if (roll <= 0.40f)
         {
             points = 2;
         }
-        
+
         return new StatUpgradeOption { statType = randomStat, pointsGained = points };
     }
-
-
-
-
-
-
-
-
-
-
-
 }
-
-
-
-
-

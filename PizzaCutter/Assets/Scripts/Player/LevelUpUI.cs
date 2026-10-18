@@ -33,14 +33,62 @@ public class LevelUpUI : MonoBehaviour
 
     private void Awake()
     {
+        if (Instance != null && Instance != this)
+        {
+            Debug.LogWarning("[LevelUpUI] Duplicate LevelUpUI found. Removing the duplicate component.");
+            Destroy(this);
+            return;
+        }
+
         Instance = this;
+        RefreshPlayerReferences();
     }
 
     private void Start()
     {
-        GameObject player = GameObject.FindGameObjectWithTag("Player");
-        if (player != null) playerStats = player.GetComponent<PlayerStats>();
         if (levelUpPanel != null) levelUpPanel.SetActive(false);
+        RefreshPlayerReferences();
+    }
+
+    private void OnDestroy()
+    {
+        // Do not leave a static reference pointing to a destroyed scene object.
+        if (Instance == this)
+            Instance = null;
+    }
+
+    private void RefreshPlayerReferences()
+    {
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+
+        if (player == null)
+        {
+            playerStats = null;
+            weaponManager = null;
+            return;
+        }
+
+        playerStats = player.GetComponent<PlayerStats>();
+        weaponManager = player.GetComponent<PlayerWeaponManager>();
+
+        if (playerStats == null)
+            Debug.LogError("[LevelUpUI] PlayerStats could not be found on the Player.");
+
+        if (weaponManager == null)
+            Debug.LogError("[LevelUpUI] PlayerWeaponManager could not be found on the Player.");
+    }
+
+    public void ResetForNewRun()
+    {
+        if (levelUpPanel != null)
+            levelUpPanel.SetActive(false);
+
+        currentChoices.Clear();
+        currentWeaponChoices.Clear();
+        RefreshPlayerReferences();
+        Time.timeScale = 1f;
+
+        Debug.Log("[LevelUpUI] Upgrade UI reset for a new run.");
     }
 
     // public void ShowLevelUpChoices()
@@ -88,6 +136,7 @@ public class LevelUpUI : MonoBehaviour
 
     public bool TryShowLevelUpChoices()
     {
+        RefreshPlayerReferences();
 
         if (titleText != null) titleText.text = "SELECT STAT UPGRADE";
 
@@ -129,6 +178,12 @@ public class LevelUpUI : MonoBehaviour
 
         // to prepare three upgrade choices
         currentChoices.Clear();
+
+        if (System.Enum.GetValues(typeof(StatType)).Length < 3)
+        {
+            Debug.LogError("[LevelUpUI] At least three StatType values are required for three distinct choices.");
+            return false;
+        }
 
         while (currentChoices.Count < 3)
         {
@@ -202,12 +257,21 @@ public class LevelUpUI : MonoBehaviour
     }
 
 
-   //              WEAPON UPGRADE FUNCTIONS 
+    //              WEAPON UPGRADE FUNCTIONS 
 
 
-    
+
     public void ShowWeaponUpgradeChoices()
     {
+        RefreshPlayerReferences();
+
+        if (levelUpPanel == null || choiceButtons == null || choiceTexts == null ||
+            choiceButtons.Length == 0 || choiceTexts.Length < choiceButtons.Length)
+        {
+            Debug.LogError("[LevelUpUI] Major upgrade UI references are missing or incomplete.");
+            return;
+        }
+
         if (titleText != null) titleText.text = "CHOOSE WEAPON: ";
 
         currentWeaponChoices.Clear();
@@ -353,6 +417,6 @@ public class LevelUpUI : MonoBehaviour
 
 
 
-    
 
-} 
+
+}

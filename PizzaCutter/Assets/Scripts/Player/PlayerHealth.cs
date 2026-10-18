@@ -158,13 +158,19 @@ public class PlayerHealth : MonoBehaviour
     {
         StopAllCoroutines();
 
+        // Refresh component and layer references in case this player persisted across scenes.
+        playerStats = GetComponent<PlayerStats>();
+        playerLayer = LayerMask.NameToLayer("Player");
+        enemyLayer = LayerMask.NameToLayer("EnemyLayer");
+
         currentHealth = MaxHealth;
         isInvincible = false;
 
         SetRenderersEnabled(true);
 
-        Physics.IgnoreLayerCollision(playerLayer, enemyLayer, false);
+        if (playerLayer >= 0 && enemyLayer >= 0)
+            Physics.IgnoreLayerCollision(playerLayer, enemyLayer, false);
 
-        Debug.Log($"[PLAYER] Health reset to {currentHealth}/{MaxHealth} for level restart.");
+        Debug.Log($"[PLAYER] Health reset to {currentHealth}/{MaxHealth} for a new run.");
     }
 }

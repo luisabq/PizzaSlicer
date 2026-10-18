@@ -152,22 +152,16 @@ public class LevelManager : MonoBehaviour
 
     public void RestartLevel()
     {
-        Time.timeScale = 1f;
-
-        GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
-
-        if (playerObject != null)
-        {
-            PlayerHealth playerHealth = playerObject.GetComponent<PlayerHealth>();
-
-            if (playerHealth != null)
-                playerHealth.ResetHealthForRestart();
-        }
-
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        RestartRunFromBeginning();
     }
 
     public void PlayAgain()
+    {
+        RestartRunFromBeginning();
+    }
+
+    // Both Game Over > Restart and Game Complete > Play Again start a fresh run.
+    private void RestartRunFromBeginning()
     {
         Time.timeScale = 1f;
 
@@ -179,22 +173,28 @@ public class LevelManager : MonoBehaviour
             PlayerHealth playerHealth = playerObject.GetComponent<PlayerHealth>();
             PlayerWeaponManager weaponManager = playerObject.GetComponent<PlayerWeaponManager>();
 
-            // stats reset then health.
             if (playerStats != null)
                 playerStats.ResetForNewRun();
+            else
+                Debug.LogError("[RESTART] PlayerStats was not found on the Player.");
 
             if (weaponManager != null)
                 weaponManager.ResetToStartingLoadout();
+            else
+                Debug.LogError("[RESTART] PlayerWeaponManager was not found on the Player.");
 
             if (playerHealth != null)
                 playerHealth.ResetHealthForRestart();
+            else
+                Debug.LogError("[RESTART] PlayerHealth was not found on the Player.");
         }
         else
         {
-            Debug.LogWarning(
-                "there's no player, time to start oooooverrrr"
-            );
+            Debug.LogError("[RESTART] Could not find the GameObject tagged Player.");
         }
+
+        if (LevelUpUI.Instance != null)
+            LevelUpUI.Instance.ResetForNewRun();
 
         SceneManager.LoadScene("Level_01");
     }
