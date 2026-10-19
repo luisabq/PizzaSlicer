@@ -204,6 +204,8 @@ public class RangedEnemyController : MonoBehaviour
         {
             preparingAttack = true;
             windUpTimer = attackWindUp;
+
+            GetComponentInChildren<Animator>().SetTrigger("AttackOn");
         }
     }
 

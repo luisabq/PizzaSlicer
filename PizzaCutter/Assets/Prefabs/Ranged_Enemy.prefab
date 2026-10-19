@@ -210,15 +210,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: b7c12016d5c65c347bcf582a3d832d34, type: 3}
       propertyPath: m_LocalScale.x
-      value: 1
+      value: 1.1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: b7c12016d5c65c347bcf582a3d832d34, type: 3}
       propertyPath: m_LocalScale.y
-      value: 1
+      value: 1.1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: b7c12016d5c65c347bcf582a3d832d34, type: 3}
       propertyPath: m_LocalScale.z
-      value: 1
+      value: 1.1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: b7c12016d5c65c347bcf582a3d832d34, type: 3}
       propertyPath: m_LocalPosition.x
@@ -264,6 +264,34 @@ PrefabInstance:
       propertyPath: m_Name
       value: Pizza_BusinessEnemy
       objectReference: {fileID: 0}
+    - target: {fileID: 3469503123963567039, guid: b7c12016d5c65c347bcf582a3d832d34, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.84163254
+      objectReference: {fileID: 0}
+    - target: {fileID: 3469503123963567039, guid: b7c12016d5c65c347bcf582a3d832d34, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.03546088
+      objectReference: {fileID: 0}
+    - target: {fileID: 3469503123963567039, guid: b7c12016d5c65c347bcf582a3d832d34, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.0929039
+      objectReference: {fileID: 0}
+    - target: {fileID: 3469503123963567039, guid: b7c12016d5c65c347bcf582a3d832d34, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.53081644
+      objectReference: {fileID: 0}
+    - target: {fileID: 3469503123963567039, guid: b7c12016d5c65c347bcf582a3d832d34, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 9.109
+      objectReference: {fileID: 0}
+    - target: {fileID: 3469503123963567039, guid: b7c12016d5c65c347bcf582a3d832d34, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 6.907
+      objectReference: {fileID: 0}
+    - target: {fileID: 3469503123963567039, guid: b7c12016d5c65c347bcf582a3d832d34, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -63.928
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 65702495048144492, guid: b7c12016d5c65c347bcf582a3d832d34, type: 3}
@@ -273,6 +301,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: b7c12016d5c65c347bcf582a3d832d34, type: 3}
       insertIndex: -1
       addedObject: {fileID: 6318398410801141636}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: b7c12016d5c65c347bcf582a3d832d34, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8880778709794653706}
   m_SourcePrefab: {fileID: 100100000, guid: b7c12016d5c65c347bcf582a3d832d34, type: 3}
 --- !u!4 &233997395261985073 stripped
 Transform:
@@ -296,3 +327,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a78e727ca8f9e44785e916fefc3f912, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AnimBisman
+--- !u!95 &8880778709794653706
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 609256747777215371}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 473a0bc7d50fcde44ae36ecd2c54d945, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
