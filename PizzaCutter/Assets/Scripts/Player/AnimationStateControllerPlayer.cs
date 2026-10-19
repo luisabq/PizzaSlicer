@@ -21,7 +21,6 @@ public class AnimationStateControllerPlayer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log("Update is running");
 
         Vector3 horizontalVelocity = cc.velocity;
         horizontalVelocity.y = 0;
