@@ -2,7 +2,8 @@ using UnityEngine;
 public enum WeaponType
 {
     Melee,
-    MeatballGun
+    MeatballGun,
+    Garlic
 }
 
 [CreateAssetMenu(fileName = "WeaponData", menuName = "Scriptable Objects/WeaponData")]

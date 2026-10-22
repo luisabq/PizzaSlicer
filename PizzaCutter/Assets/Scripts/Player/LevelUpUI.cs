@@ -16,6 +16,7 @@ public class LevelUpUI : MonoBehaviour
     [Header("All Base Weapons")]
     [SerializeField] private WeaponData baseMeleeData;
     [SerializeField] private WeaponData baseMeatballData;
+    [SerializeField] private WeaponData baseGarlicData;
 
     [Header("Audio")]
     [SerializeField] private AudioClip sound1;
@@ -369,6 +370,16 @@ public class LevelUpUI : MonoBehaviour
         else if (weaponManager.currentMeatballData != null && weaponManager.currentMeatballData.nextTierUpgrade != null)
         {
             pool.Add(weaponManager.currentMeatballData.nextTierUpgrade);
+        }
+
+        //then garlic
+        if (!weaponManager.IsWeaponUnlocked(WeaponType.Garlic))
+        {
+            if (baseGarlicData != null) pool.Add(baseGarlicData);
+        }
+        else if (weaponManager.currentGarlicData != null && weaponManager.currentGarlicData.nextTierUpgrade != null)
+        {
+            pool.Add(weaponManager.currentGarlicData.nextTierUpgrade);
         }
 
         //ADD MORE WEAPONS HERE

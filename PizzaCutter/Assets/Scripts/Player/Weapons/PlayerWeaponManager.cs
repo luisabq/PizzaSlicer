@@ -6,6 +6,7 @@ public class PlayerWeaponManager : MonoBehaviour
     [Header("Weapon Objects on Player")]
     [SerializeField] private MeleeWeapon meleeWeaponScript;
     [SerializeField] private MeatballGunWeapon meatballGunScript;
+    [SerializeField] private GarlicWeapon garlicScript;
     //ADD MORE WEAPONS HERE
 
 
@@ -15,6 +16,7 @@ public class PlayerWeaponManager : MonoBehaviour
     [SerializeField] private WeaponData startingMeleeData;
     public WeaponData currentMeleeData;
     public WeaponData currentMeatballData;
+    public WeaponData currentGarlicData;
     //ADD MORE WEAPONS HERE
 
     private void Start()
@@ -32,6 +34,11 @@ public class PlayerWeaponManager : MonoBehaviour
             meatballGunScript.gameObject.SetActive(false);
         }
 
+        if (garlicScript != null)
+        {
+            garlicScript.gameObject.SetActive(false);
+        }
+
 
         //ADD MORE WEAPONS HERE
     }
@@ -41,6 +48,9 @@ public class PlayerWeaponManager : MonoBehaviour
     {
         if (type == WeaponType.Melee) return currentMeleeData != null;
         if (type == WeaponType.MeatballGun) return currentMeatballData != null;
+        if (type == WeaponType.Garlic) return currentGarlicData != null;
+
+        //ADD MORE WEAPONS HERE
         return false;
     }
 
@@ -59,6 +69,12 @@ public class PlayerWeaponManager : MonoBehaviour
             currentMeatballData = newWeaponData;
             meatballGunScript.gameObject.SetActive(true); // Unlocks gun
             meatballGunScript.SetWeaponData(newWeaponData);
+        }
+        else if (newWeaponData.weaponType == WeaponType.Garlic)
+        {
+            currentGarlicData = newWeaponData;
+            garlicScript.gameObject.SetActive(true); // Unlocks garlic
+            garlicScript.SetWeaponData(newWeaponData);
         }
 
 
@@ -89,5 +105,11 @@ public class PlayerWeaponManager : MonoBehaviour
             meatballGunScript.gameObject.SetActive(false);
         }
 
+        if (garlicScript != null)
+        {
+            garlicScript.gameObject.SetActive(false);
+        }
+
+        //add more weapons here
     }
 }
