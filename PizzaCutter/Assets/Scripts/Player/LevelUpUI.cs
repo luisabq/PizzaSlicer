@@ -272,40 +272,55 @@ public class LevelUpUI : MonoBehaviour
             return;
         }
 
-        if (titleText != null) titleText.text = "CHOOSE WEAPON: ";
+
+        
+
+
 
         currentWeaponChoices.Clear();
         List<WeaponData> availableUpgrades = BuildWeaponUpgradePool();
 
-        for (int i = 0; i < choiceButtons.Length; i++)
+        if (availableUpgrades == null || availableUpgrades.Count == 0)
         {
-            int index = i;
-
-            if (i < availableUpgrades.Count)
-            {
-                WeaponData wData = availableUpgrades[i];
-                currentWeaponChoices.Add(wData);
-
-                choiceButtons[i].interactable = true;
-
-                //checking if its unlocking the weapon or upgrading, checks if its tier 1, otherwise etc..
-                string actionType = wData.tier == 1 ? "UNLOCK WEAPON" : $"UPGRADE TIER {wData.tier}";
-                choiceTexts[i].text = $"{actionType}\n{wData.weaponName}";
-
-                choiceButtons[i].onClick.RemoveAllListeners();
-                choiceButtons[i].onClick.AddListener(() => SelectWeaponChoice(index));
-            }
-            else
-            {
-                //Blank slot if fewer than 3 actual options exist
-                choiceButtons[i].interactable = false;
-                choiceTexts[i].text = "    ";
-                choiceButtons[i].onClick.RemoveAllListeners();
-
-
-
-            }
+            TryShowLevelUpChoices();
+            return;
         }
+        else if (titleText != null) 
+        { 
+        titleText.text = "CHOOSE WEAPON: ";
+        }
+
+            for (int i = 0; i < choiceButtons.Length; i++)
+            {
+                int index = i;
+
+                if (i < availableUpgrades.Count)
+                {
+                    WeaponData wData = availableUpgrades[i];
+                    currentWeaponChoices.Add(wData);
+
+                    choiceButtons[i].interactable = true;
+
+                    //checking if its unlocking the weapon or upgrading, checks if its tier 1, otherwise etc..
+                    string actionType = wData.tier == 1 ? "UNLOCK WEAPON" : $"UPGRADE TIER {wData.tier}";
+                    choiceTexts[i].text = $"{actionType}\n{wData.weaponName}";
+
+                    choiceButtons[i].onClick.RemoveAllListeners();
+                    choiceButtons[i].onClick.AddListener(() => SelectWeaponChoice(index));
+                }
+                else
+                {
+                    //Blank slot if fewer than 3 actual options exist
+                    choiceButtons[i].interactable = false;
+                    choiceTexts[i].text = "    ";
+                    choiceButtons[i].onClick.RemoveAllListeners();
+
+
+
+                }
+            }
+
+        
 
         if (sound1 != null && SoundManager.Instance != null)
         {

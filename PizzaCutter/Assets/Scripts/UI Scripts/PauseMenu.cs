@@ -20,6 +20,8 @@ public class PauseMenu : MonoBehaviour
     [Range(0f, 1f)][SerializeField] private float resumeVolume = 1.0f;
 
 
+    private PlayerStats playerStats;
+
 
     // Makes sure the menu starts closed
     private void Start()
@@ -140,5 +142,24 @@ public class PauseMenu : MonoBehaviour
     private void OnDestroy()
     {
         IsPaused = false;
+    }
+
+
+    //gives the player a level, for testing purposes 
+    public void InstantLevel()
+    {
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+
+        if (player != null)
+        {
+            playerStats = player.GetComponent<PlayerStats>();
+        }
+        if (playerStats != null)
+        {
+            playerStats.LevelUp();
+            Debug.Log("Pressed debug level up");
+            Resume();
+            Time.timeScale = 0f;
+        }
     }
 }
