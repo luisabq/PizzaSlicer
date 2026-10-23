@@ -131,6 +131,12 @@ public class GarlicWeapon : MonoBehaviour
     //Theres gotta be a better way to do this but this is for making it so the vfx dont rotate with the player's rotation, but still follows their position
     void LateUpdate()
     {
+        //for scene transitions 
+        if (activeVFXInstance == null && weaponData != null)
+        {
+            SetupAura();
+        }
+
         if (activeVFXInstance != null && attackPoint != null)
         {
             activeVFXInstance.transform.position = attackPoint.position;

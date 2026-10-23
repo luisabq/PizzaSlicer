@@ -14707,7 +14707,7 @@ Transform:
   m_GameObject: {fileID: 3273252098493075598}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.05958, y: 0, z: -1.27009}
+  m_LocalPosition: {x: 0.05958, y: 0.092, z: -1.27009}
   m_LocalScale: {x: 4.12, y: 4.12, z: 4.12}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -24410,7 +24410,7 @@ ParticleSystemRenderer:
   m_SmallMeshCulling: 1
   m_ForceMeshLod: -1
   m_MeshLodSelectionBias: 0
-  m_RenderingLayerMask: 1
+  m_RenderingLayerMask: 3
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: 0a6aaeeef8a304e4fa18b51d2d611f76, type: 2}
@@ -24438,7 +24438,7 @@ ParticleSystemRenderer:
   m_MaskInteraction: 0
   m_RenderMode: 4
   m_MeshDistribution: 0
-  m_SortMode: 0
+  m_SortMode: 3
   m_MinParticleSize: 0
   m_MaxParticleSize: 0.5
   m_CameraVelocityScale: 0
@@ -24493,13 +24493,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8526205724489444234}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.8638328, y: 0.8638328, z: 0.8638328}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 0.189, z: 0}
+  m_LocalScale: {x: 1.0655844, y: 1.0655844, z: 1.0655844}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 1068566818922055520}
-  m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!198 &5701227157965747638
 ParticleSystem:
   m_ObjectHideFlags: 0
@@ -29332,7 +29332,7 @@ ParticleSystemRenderer:
   m_MaskInteraction: 0
   m_RenderMode: 4
   m_MeshDistribution: 0
-  m_SortMode: 0
+  m_SortMode: 3
   m_MinParticleSize: 0
   m_MaxParticleSize: 0.5
   m_CameraVelocityScale: 0
@@ -29341,7 +29341,7 @@ ParticleSystemRenderer:
   m_SortingFudge: 0
   m_NormalDirection: 1
   m_ShadowBias: 0
-  m_RenderAlignment: 0
+  m_RenderAlignment: 2
   m_Pivot: {x: 0, y: 0, z: 0}
   m_Flip: {x: 0, y: 0, z: 0}
   m_EnableGPUInstancing: 1
