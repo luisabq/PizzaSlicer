@@ -625,7 +625,7 @@
 }
 
 {
-    "m_SGVersion": 0,
+    "m_SGVersion": 1,
     "m_Type": "UnityEditor.ShaderGraph.PositionNode",
     "m_ObjectId": "620b12a96fab420ab3ac968d92ea1e38",
     "m_Group": {
