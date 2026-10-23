@@ -91,6 +91,8 @@ public class PlayerWeaponManager : MonoBehaviour
         //resets weapons to the starting loadout for a new run
         currentMeleeData = startingMeleeData;
         currentMeatballData = null;
+        currentGarlicData = null; 
+        //ADD MORE WEAPONS HERE
 
         if (meleeWeaponScript != null)
         {

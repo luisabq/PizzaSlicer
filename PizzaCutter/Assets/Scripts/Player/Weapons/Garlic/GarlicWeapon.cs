@@ -23,8 +23,9 @@ public class GarlicWeapon : MonoBehaviour
 
     [Header("Poison Settings")]
     [SerializeField] private float poisonDuration = 4f; //how long in seconds the poison lasts on an enemy 
-    [SerializeField] private float poisonTickInterval = 1f; //how often poison deals damage
+    [SerializeField] private float poisonTickInterval = 1f; //how often poison deals damage initially
     [SerializeField] private float poisonDamagePercent = 0.5f; //the amount of damage poison deals, as a fraction of the aoe damage
+    [SerializeField] private GameObject poisonVFXPrefab; //poison effect that spawns on enemies
 
     [Header("Audio")]
     [SerializeField] private AudioClip pulseSound;
@@ -59,6 +60,7 @@ public class GarlicWeapon : MonoBehaviour
         public float durationTimer;
         public float nextTickTime;
         public float damagePerTick;
+        public GameObject activePoisonVFX;
     }
     private List<PoisonedEnemy> activePoisonedEnemies = new List<PoisonedEnemy>(); //for tracking every enemy thats been poisoned 
 
@@ -92,10 +94,10 @@ public class GarlicWeapon : MonoBehaviour
     void Start()
     {
         
-      //  if (weaponData != null)
-      //  {
-      //     lastKnownTier = weaponData.tier;
-       // }
+      if (weaponData != null)
+        {
+           lastKnownTier = weaponData.tier;
+        }
         //CalculateNextPulseTime();
     }
 
@@ -374,6 +376,7 @@ public class GarlicWeapon : MonoBehaviour
                 if (enemyTf != null)
                 {
                     DealDamageToEnemy(enemyTf.gameObject, GetCombinedDamage() * 0.5f); //Dot damage INSIDE aoe
+                    Debug.Log("[POISON] Enemy took " + GetCombinedDamage() * 0.5f + " damage from AOE DOT");
                 }
             }
 
@@ -458,50 +461,73 @@ public class GarlicWeapon : MonoBehaviour
             }
         }
 
+        //gives enemy poison vfx
+        GameObject spawnedVFX = null;
+        if (poisonVFXPrefab != null)
+        {
+            spawnedVFX = Instantiate(poisonVFXPrefab, enemyTf.position, Quaternion.identity, enemyTf);
+        }
+
+        //adds vfx to the class
+        activePoisonedEnemies.Add(new PoisonedEnemy
+        {
+            enemyController = enemyScript,
+            enemyTransform = enemyTf,
+            durationTimer = poisonDuration,
+            nextTickTime = Time.time + poisonTickInterval,
+            damagePerTick = poisonDamage,
+            activePoisonVFX = spawnedVFX
+        });
+
+
     }
 
         //The poison dot/timer logic
 
         void UpdatePoisonedEnemies()
+       {
+        for (int i = activePoisonedEnemies.Count - 1; i >= 0; i--)
         {
-            for (int i = activePoisonedEnemies.Count - 1; i >= 0; i--)
+            PoisonedEnemy p = activePoisonedEnemies[i];
+
+            //If enemy dies, its removed from the list
+            if (p.enemyTransform == null || p.enemyController == null)
             {
-                PoisonedEnemy p = activePoisonedEnemies[i];
+                activePoisonedEnemies.RemoveAt(i);
+                continue;
+            }
 
-                //If enemy dies, its removed from the list
-                if (p.enemyTransform == null || p.enemyController == null)
+            p.durationTimer -= Time.deltaTime;
+
+            //Apply poison tick damage over time
+            if (Time.time >= p.nextTickTime)
+            {
+                if (p.enemyController is EnemyController mEnemy)
                 {
-                    activePoisonedEnemies.RemoveAt(i);
-                    continue;
+                    mEnemy.TakeDamage(p.damagePerTick);
+                    //add sounds and stuff here
+                }
+                else if (p.enemyController is RangedEnemyController rEnemy)
+                {
+                    rEnemy.TakeDamage(p.damagePerTick);
                 }
 
-                p.durationTimer -= Time.deltaTime;
+                //ADD MORE ENEMIES HERE
 
-                //Apply poison tick damage over time
-                if (Time.time >= p.nextTickTime)
-                {
-                    if (p.enemyController is EnemyController mEnemy)
-                    {
-                        mEnemy.TakeDamage(p.damagePerTick);
-                     //add sounds and stuff here
-                    }
-                    else if (p.enemyController is RangedEnemyController rEnemy)
-                    {
-                        rEnemy.TakeDamage(p.damagePerTick);
-                    }
+                AudioSource.PlayClipAtPoint(damageSound, p.enemyTransform.position, damageVolume);
+                Debug.Log("[POISON] Enemy took " + p.damagePerTick + " damage from poison");
+                p.nextTickTime = Time.time + poisonTickInterval;
+            }
 
-                    //ADD MORE ENEMIES HERE
-
-                    p.nextTickTime = Time.time + poisonTickInterval;
-                }
-
-                //removes poison after timers done
-                if (p.durationTimer <= 0f)
-                {
-                    activePoisonedEnemies.RemoveAt(i);
-                }
+            //removes poison after timers done along with vfx on them
+            if (p.durationTimer <= 0f)
+            {
+                if (p.activePoisonVFX != null) Destroy(p.activePoisonVFX);
+                activePoisonedEnemies.RemoveAt(i);
             }
         }
+       }
+        
 
 
         void ApplyKnockbackIfNeeded(GameObject enemyObj, Vector3 hitDirection, int currentTier)

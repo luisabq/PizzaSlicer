@@ -1507,9 +1507,11 @@ MonoBehaviour:
   tier2ScaleMultiplier: 1.3
   tier3ScaleMultiplier: 1.5
   tier3KnockbackForce: 5
+  entryCooldown: 4
   poisonDuration: 4
   poisonTickInterval: 1
   poisonDamagePercent: 0.5
+  poisonVFXPrefab: {fileID: 3273252098493075598, guid: a100d220f390a124882286758ddf63bf, type: 3}
   pulseSound: {fileID: 8300000, guid: 6feffc1abf5228b459ac4e642bf4ad0a, type: 3}
   pulseVolume: 1
   damageSound: {fileID: 8300000, guid: b6d1543832147f24c835bb14adeff833, type: 3}
