@@ -1,4 +1,5 @@
 
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -94,7 +95,8 @@ public class EnemySpawner : MonoBehaviour
             yield break;
         }
 
-        if (wave.rangedEnemyCount > 0 && wave.rangedEnemyPrefab == null)
+        if (wave.rangedEnemyCount > 0 &&
+            wave.rangedEnemyPrefab == null)
         {
             Debug.LogError(
                 $"{wave.waveName} has no ranged enemy prefab."
@@ -106,7 +108,24 @@ public class EnemySpawner : MonoBehaviour
             yield break;
         }
 
-        int totalEnemies = wave.enemyCount + wave.rangedEnemyCount;
+        if (wave.ratEnemyCount > 0 &&
+            wave.ratEnemyPrefab == null)
+        {
+            Debug.LogError(
+                $"{wave.waveName} has Rat enemies configured, " +
+                "but no Rat prefab assigned."
+            );
+
+            spawningFinished = true;
+            waveComplete = true;
+
+            yield break;
+        }
+
+        int totalEnemies =
+            wave.enemyCount +
+            wave.rangedEnemyCount +
+            wave.ratEnemyCount;
 
         Debug.Log(
             $"Starting... {wave.waveName}: " +
@@ -115,33 +134,78 @@ public class EnemySpawner : MonoBehaviour
 
         int meleeRemaining = wave.enemyCount;
         int rangedRemaining = wave.rangedEnemyCount;
+        int ratRemaining = wave.ratEnemyCount;
 
-        while (meleeRemaining > 0 || rangedRemaining > 0)
+        while (meleeRemaining > 0 ||
+               rangedRemaining > 0 ||
+               ratRemaining > 0)
         {
-            bool spawnRanged;
+            // Randomly choose between enemy types still remaining.
+            int availableTypes = 0;
 
-            if (meleeRemaining <= 0)
-                spawnRanged = true;
-            else if (rangedRemaining <= 0)
-                spawnRanged = false;
-            else
-                spawnRanged = Random.value < 0.5f;
+            if (meleeRemaining > 0) availableTypes++;
+            if (rangedRemaining > 0) availableTypes++;
+            if (ratRemaining > 0) availableTypes++;
 
-            if (spawnRanged)
+            int chosenType = Random.Range(0, availableTypes);
+
+            if (meleeRemaining > 0)
             {
-                SpawnEnemy(wave.rangedEnemyPrefab);
-                rangedRemaining--;
+                if (chosenType == 0)
+                {
+                    SpawnEnemy(wave.enemyPrefab);
+                    meleeRemaining--;
+                }
+                else
+                {
+                    chosenType--;
+                    SpawnOtherEnemy(
+                        chosenType,
+                        wave,
+                        ref rangedRemaining,
+                        ref ratRemaining
+                    );
+                }
             }
             else
             {
-                SpawnEnemy(wave.enemyPrefab);
-                meleeRemaining--;
+                SpawnOtherEnemy(
+                    chosenType,
+                    wave,
+                    ref rangedRemaining,
+                    ref ratRemaining
+                );
             }
 
             yield return new WaitForSeconds(wave.spawnDelay);
         }
 
         spawningFinished = true;
+    }
+
+    private void SpawnOtherEnemy(
+        int chosenType,
+        WaveData wave,
+        ref int rangedRemaining,
+        ref int ratRemaining)
+    {
+        if (rangedRemaining > 0)
+        {
+            if (chosenType == 0)
+            {
+                SpawnEnemy(wave.rangedEnemyPrefab);
+                rangedRemaining--;
+                return;
+            }
+
+            chosenType--;
+        }
+
+        if (ratRemaining > 0 && chosenType == 0)
+        {
+            SpawnEnemy(wave.ratEnemyPrefab);
+            ratRemaining--;
+        }
     }
 
     private void SpawnEnemy(GameObject enemyPrefab)

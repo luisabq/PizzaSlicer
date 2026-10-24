@@ -92,8 +92,17 @@ public class MeatballProjectile : MonoBehaviour
               return;
           }
 
-          //For hitting anything else
-          Impact();
+        RatEnemyController ratEnemy = collision.gameObject.GetComponentInParent<RatEnemyController>();
+         if (ratEnemy != null)
+         {
+             ratEnemy.TakeDamage(damage);
+             Debug.Log($"[MEATBALL] Hit Rat {ratEnemy.name} for {damage} damage!");
+             Impact();
+             return;
+         }
+        
+         //For hitting anything else
+        Impact();
       }
 
      

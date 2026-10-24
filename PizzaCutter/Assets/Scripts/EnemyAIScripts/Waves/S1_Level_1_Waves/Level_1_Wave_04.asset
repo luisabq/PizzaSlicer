@@ -17,4 +17,6 @@ MonoBehaviour:
   enemyCount: 7
   rangedEnemyPrefab: {fileID: 6445932388589793619, guid: d7f893e482adc1343a69cca426b77235, type: 3}
   rangedEnemyCount: 4
+  ratEnemyPrefab: {fileID: 670784579579757561, guid: 91032116d1633c14e91899ce75e58cb4, type: 3}
+  ratEnemyCount: 3
   spawnDelay: 0.9

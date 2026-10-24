@@ -14,6 +14,9 @@ public class WaveData : ScriptableObject
     public GameObject rangedEnemyPrefab;
     public int rangedEnemyCount = 0;
 
+    public GameObject ratEnemyPrefab;
+    public int ratEnemyCount = 0;
+
     [Header("Spawning")]
     public float spawnDelay = 1f;
 }

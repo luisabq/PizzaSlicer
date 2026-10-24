@@ -219,10 +219,25 @@ public class MeleeWeapon : MonoBehaviour
                 }
             }
 
+            // if it LOOKS like a rat, do damage
+            RatEnemyController ratEnemy =
+                hit.GetComponentInParent<RatEnemyController>();
+
+            if (ratEnemy != null)
+            {
+                ratEnemy.TakeDamage(combinedDamage);
+                ApplyKnockbackIfNeeded(hit.gameObject, hitDirection, currentTier);
+
+                Debug.Log($"[MELEE ATTACK] Hit Rat for {combinedDamage} damage!");
+
+                if (hitSound != null && SoundManager.Instance != null)
+                {
+                    AudioSource.PlayClipAtPoint(
+                        hitSound, transform.position, hitVolume);
+                }
+            }
+
             // ADD MORE ENEMIES HERE
-
-            
-
 
         }
     }
@@ -244,6 +259,14 @@ public class MeleeWeapon : MonoBehaviour
             {
                 rangedEnemy.ApplyKnockback(hitDirection, tier3KnockbackForce);
             }
+
+            RatEnemyController ratEnemy = enemyObj.GetComponentInParent<RatEnemyController>();
+
+            if (ratEnemy != null)
+            {
+                ratEnemy.ApplyKnockback(hitDirection, tier3KnockbackForce);
+            }
+
             //ADD MORE ENEMIES HERE
 
         }

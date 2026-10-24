@@ -411,6 +411,9 @@ public class GarlicWeapon : MonoBehaviour
         RangedEnemyController rangedEnemy = obj.GetComponentInParent<RangedEnemyController>();
         if (rangedEnemy != null) return rangedEnemy;
 
+        RatEnemyController ratEnemy = obj.GetComponentInParent<RatEnemyController>();
+        if (ratEnemy != null) return ratEnemy;
+        
         //ADD MORE ENEMIES HERE
 
         return null;
@@ -441,7 +444,16 @@ public class GarlicWeapon : MonoBehaviour
             Debug.Log("Enemy took garlic damage");
             return;
         }
-
+        
+        RatEnemyController ratEnemy = enemyObj.GetComponentInParent<RatEnemyController>();
+        if (ratEnemy != null)
+        {
+            ratEnemy.TakeDamage(damageAmount);
+            ApplyKnockbackIfNeeded(enemyObj, hitDirection, 3);
+            AudioSource.PlayClipAtPoint(damageSound, enemyObj.transform.position, damageVolume);
+            Debug.Log("Enemy took garlic damage");
+            return;
+        }
         //ADD MORE ENEMIES HERE
     }
 
@@ -512,6 +524,11 @@ public class GarlicWeapon : MonoBehaviour
                     rEnemy.TakeDamage(p.damagePerTick);
                 }
 
+                else if (p.enemyController is RatEnemyController ratEnemy)
+                {
+                    ratEnemy.TakeDamage(p.damagePerTick);
+                }
+                
                 //ADD MORE ENEMIES HERE
 
                 AudioSource.PlayClipAtPoint(damageSound, p.enemyTransform.position, damageVolume);
@@ -546,9 +563,17 @@ public class GarlicWeapon : MonoBehaviour
                 {
                     rangedEnemy.ApplyKnockback(hitDirection, tier3KnockbackForce);
                 }
-                //ADD MORE ENEMIES HERE
 
-            }
+            RatEnemyController ratEnemy = enemyObj.GetComponentInParent<RatEnemyController>();
+
+            if (ratEnemy != null)
+                {
+                    ratEnemy.ApplyKnockback(hitDirection, tier3KnockbackForce);
+                }
+            
+            //ADD MORE ENEMIES HERE
+
+        }
         }
 
 
