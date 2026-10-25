@@ -17,7 +17,7 @@ MonoBehaviour:
   moveSpeed: 6
   detectionRange: 100
   attackDamage: 5
-  attackRange: 0.5
+  attackRange: 1.5
   attackCooldown: 0.5
   xpReward: 5
   healthReward: 10
