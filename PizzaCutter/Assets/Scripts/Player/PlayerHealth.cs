@@ -80,7 +80,7 @@ public class PlayerHealth : MonoBehaviour
         {
             SoundManager.Instance.PlaySound(hurtSound, hurtVolume);
         }
-
+        Handheld.Vibrate();
         Debug.Log($"[PLAYER] Took {damageAmount} damage! Current Health: {currentHealth}");
 
         if (currentHealth <= 0)
