@@ -206,8 +206,7 @@ public class RatEnemyController : MonoBehaviour
         if (playerHealth == null)
             return;
 
-        GetComponentInChildren<Animator>().SetTrigger("AttackOn");
-        AudioSource.PlayClipAtPoint(attackSound, transform.position, attackVolume);
+        
         playerHealth.TakeDamage(enemyData.attackDamage);
         contactDamageTimer = Mathf.Max(0.1f, enemyData.attackCooldown);
 
@@ -216,9 +215,11 @@ public class RatEnemyController : MonoBehaviour
 
     public void TakeDamage(float damage)
     {
+
         if (isDead)
             return;
-
+        GetComponentInChildren<Animator>().SetTrigger("AttackOn");
+        AudioSource.PlayClipAtPoint(attackSound, transform.position, attackVolume);
         currentHealth -= damage;
 
         if (hitVFXPrefab != null)
