@@ -25,6 +25,9 @@ public class RatEnemyController : MonoBehaviour
     [SerializeField] private float wanderRadius = 1.5f;
     [SerializeField] private float navMeshSampleDistance = 2f;
 
+    [Header("Contact Damage")]
+    [SerializeField] private float contactDamageRadius = 1.2f;
+
     [Header("Audio")]
     [SerializeField] private AudioClip attackSound;
     [Range(0f, 1f)][SerializeField] private float attackVolume = 1.0f;
@@ -82,6 +85,7 @@ public class RatEnemyController : MonoBehaviour
             return;
 
         contactDamageTimer -= Time.deltaTime;
+        CheckContactDamage();
         directionChangeTimer -= Time.deltaTime;
 
         float distanceToPlayer =
@@ -150,6 +154,42 @@ public class RatEnemyController : MonoBehaviour
     private void OnCollisionStay(Collision collision)
     {
         TryDamagePlayer(collision.transform);
+    }
+
+    private void CheckContactDamage()
+    {
+        if (isDead || enemyData == null || contactDamageTimer > 0f)
+            return;
+
+        Collider[] hits = Physics.OverlapSphere(
+            transform.position,
+            contactDamageRadius
+        );
+
+        foreach (Collider hit in hits)
+        {
+            PlayerHealth playerHealth =
+                hit.GetComponentInParent<PlayerHealth>();
+
+            if (playerHealth == null)
+                playerHealth = hit.GetComponentInChildren<PlayerHealth>();
+
+            if (playerHealth == null)
+                continue;
+
+            playerHealth.TakeDamage(enemyData.attackDamage);
+
+            contactDamageTimer = Mathf.Max(
+                0.1f,
+                enemyData.attackCooldown
+            );
+
+            Debug.Log(
+                $"[RAT] Contact damage attempted: {enemyData.attackDamage}"
+            );
+
+            return;
+        }
     }
 
     private void TryDamagePlayer(Transform other)
