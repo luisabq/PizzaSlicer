@@ -14,7 +14,7 @@ public class RatEnemyController : MonoBehaviour
     [Header("Enemy Drops")]
     [SerializeField] private GameObject xpOrbPrefab;
     [SerializeField] private GameObject healthPickupPrefab;
-
+   
     [Header("VFX")]
     [SerializeField] private GameObject hitVFXPrefab;
     [SerializeField] private float vfxDestroyDelay = 2f;
@@ -24,6 +24,10 @@ public class RatEnemyController : MonoBehaviour
     [SerializeField] private float directionChangeMaxTime = 0.65f;
     [SerializeField] private float wanderRadius = 1.5f;
     [SerializeField] private float navMeshSampleDistance = 2f;
+
+    [Header("Audio")]
+    [SerializeField] private AudioClip attackSound;
+    [Range(0f, 1f)][SerializeField] private float attackVolume = 1.0f;
 
     private NavMeshAgent agent;
     private Rigidbody rb;
@@ -162,6 +166,8 @@ public class RatEnemyController : MonoBehaviour
         if (playerHealth == null)
             return;
 
+        GetComponentInChildren<Animator>().SetTrigger("AttackOn");
+        AudioSource.PlayClipAtPoint(attackSound, transform.position, attackVolume);
         playerHealth.TakeDamage(enemyData.attackDamage);
         contactDamageTimer = Mathf.Max(0.1f, enemyData.attackCooldown);
 
