@@ -3,7 +3,8 @@ public enum WeaponType
 {
     Melee,
     MeatballGun,
-    Garlic
+    Garlic,
+    Moped
 }
 
 [CreateAssetMenu(fileName = "WeaponData", menuName = "Scriptable Objects/WeaponData")]

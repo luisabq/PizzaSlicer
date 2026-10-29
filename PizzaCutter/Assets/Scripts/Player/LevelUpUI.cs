@@ -17,6 +17,7 @@ public class LevelUpUI : MonoBehaviour
     [SerializeField] private WeaponData baseMeleeData;
     [SerializeField] private WeaponData baseMeatballData;
     [SerializeField] private WeaponData baseGarlicData;
+    [SerializeField] private WeaponData baseMopedData;
 
     [Header("Audio")]
     [SerializeField] private AudioClip sound1;
@@ -333,7 +334,7 @@ public class LevelUpUI : MonoBehaviour
 
     private List<WeaponData> BuildWeaponUpgradePool()
     {
-        List<WeaponData> pool = new List<WeaponData>();
+        List<WeaponData> fullPool = new List<WeaponData>();
 
         //checking for weapon manager stuff
         if (weaponManager == null)
@@ -348,43 +349,63 @@ public class LevelUpUI : MonoBehaviour
         if (weaponManager == null)
         {
             Debug.LogError("[LevelUpUI] PlayerWeaponManager could not be found on the Player!");
-            return pool;
+            return fullPool;
         }
 
+        int playerLevel = (playerStats != null) ? playerStats.currentLevel : 1;
 
         //offers next tier or unlocking for melee
         if (!weaponManager.IsWeaponUnlocked(WeaponType.Melee))
         {
-            if (baseMeleeData != null) pool.Add(baseMeleeData);
+            if (baseMeleeData != null) fullPool.Add(baseMeleeData);
         }
         else if (weaponManager.currentMeleeData != null && weaponManager.currentMeleeData.nextTierUpgrade != null)
         {
-            pool.Add(weaponManager.currentMeleeData.nextTierUpgrade);
+            fullPool.Add(weaponManager.currentMeleeData.nextTierUpgrade);
         }
 
         //then gun
         if (!weaponManager.IsWeaponUnlocked(WeaponType.MeatballGun))
         {
-            if (baseMeatballData != null) pool.Add(baseMeatballData);
+            if (baseMeatballData != null) fullPool.Add(baseMeatballData);
         }
         else if (weaponManager.currentMeatballData != null && weaponManager.currentMeatballData.nextTierUpgrade != null)
         {
-            pool.Add(weaponManager.currentMeatballData.nextTierUpgrade);
+            fullPool.Add(weaponManager.currentMeatballData.nextTierUpgrade);
         }
 
         //then garlic
         if (!weaponManager.IsWeaponUnlocked(WeaponType.Garlic))
         {
-            if (baseGarlicData != null) pool.Add(baseGarlicData);
+            if (baseGarlicData != null) fullPool.Add(baseGarlicData);
         }
         else if (weaponManager.currentGarlicData != null && weaponManager.currentGarlicData.nextTierUpgrade != null)
         {
-            pool.Add(weaponManager.currentGarlicData.nextTierUpgrade);
+            fullPool.Add(weaponManager.currentGarlicData.nextTierUpgrade);
+        }
+
+        if (!weaponManager.IsWeaponUnlocked(WeaponType.Moped))
+        {
+            if (baseMopedData != null) fullPool.Add(baseMopedData);
+        }
+        else if (weaponManager.currentMopedData != null && weaponManager.currentMopedData.nextTierUpgrade != null)
+        {
+            fullPool.Add(weaponManager.currentMopedData.nextTierUpgrade);
         }
 
         //ADD MORE WEAPONS HERE
 
-        return pool;
+        //shuffles them, giving out 3 choices
+        List<WeaponData> randomizedPool = new List<WeaponData>();
+        while (fullPool.Count > 0 && randomizedPool.Count < 3)
+        {
+            int randomIndex = Random.Range(0, fullPool.Count);
+            randomizedPool.Add(fullPool[randomIndex]);
+            fullPool.RemoveAt(randomIndex);
+        }
+
+        return randomizedPool;
+
     }
 
 

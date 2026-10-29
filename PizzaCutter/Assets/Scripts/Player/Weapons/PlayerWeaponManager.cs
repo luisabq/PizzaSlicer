@@ -7,6 +7,7 @@ public class PlayerWeaponManager : MonoBehaviour
     [SerializeField] private MeleeWeapon meleeWeaponScript;
     [SerializeField] private MeatballGunWeapon meatballGunScript;
     [SerializeField] private GarlicWeapon garlicScript;
+    [SerializeField] private MopedWeapon mopedScript;
     //ADD MORE WEAPONS HERE
 
 
@@ -17,6 +18,7 @@ public class PlayerWeaponManager : MonoBehaviour
     public WeaponData currentMeleeData;
     public WeaponData currentMeatballData;
     public WeaponData currentGarlicData;
+    public WeaponData currentMopedData;
     //ADD MORE WEAPONS HERE
 
     private void Start()
@@ -39,6 +41,11 @@ public class PlayerWeaponManager : MonoBehaviour
             garlicScript.gameObject.SetActive(false);
         }
 
+        if (mopedScript != null)
+        {
+            mopedScript.gameObject.SetActive(false);
+        }
+
 
         //ADD MORE WEAPONS HERE
     }
@@ -49,6 +56,7 @@ public class PlayerWeaponManager : MonoBehaviour
         if (type == WeaponType.Melee) return currentMeleeData != null;
         if (type == WeaponType.MeatballGun) return currentMeatballData != null;
         if (type == WeaponType.Garlic) return currentGarlicData != null;
+        if (type == WeaponType.Moped) return currentMopedData != null;
 
         //ADD MORE WEAPONS HERE
         return false;
@@ -76,6 +84,12 @@ public class PlayerWeaponManager : MonoBehaviour
             garlicScript.gameObject.SetActive(true); // Unlocks garlic
             garlicScript.SetWeaponData(newWeaponData);
         }
+        else if (newWeaponData.weaponType == WeaponType.Moped)
+        {
+            currentMopedData = newWeaponData;
+            mopedScript.gameObject.SetActive(true); // Unlocks moped
+            mopedScript.SetWeaponData(newWeaponData);
+        }
 
 
         //ADD MORE WEAPONS HERE
@@ -91,7 +105,8 @@ public class PlayerWeaponManager : MonoBehaviour
         //resets weapons to the starting loadout for a new run
         currentMeleeData = startingMeleeData;
         currentMeatballData = null;
-        currentGarlicData = null; 
+        currentGarlicData = null;
+        currentMopedData = null;
         //ADD MORE WEAPONS HERE
 
         if (meleeWeaponScript != null)
@@ -110,6 +125,11 @@ public class PlayerWeaponManager : MonoBehaviour
         if (garlicScript != null)
         {
             garlicScript.gameObject.SetActive(false);
+        }
+
+        if (mopedScript != null)
+        {
+            mopedScript.gameObject.SetActive(false);
         }
 
         //add more weapons here
