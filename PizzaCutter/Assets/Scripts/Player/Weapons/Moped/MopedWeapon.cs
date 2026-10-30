@@ -14,10 +14,11 @@ public class MopedWeapon : MonoBehaviour
     [SerializeField] private float navMeshSampleDistance = 2f; //basically the search radius for navmesh move points (?)
     [SerializeField] private float searchRadius = 8f; //The bike's detection range for enemies
 
+
     [Header("Moped Movement stuff")]
     [SerializeField] private float playerOrbitRadius = 3f;    //orbit radius around player when no enemies detected 
-    [SerializeField] private float directionChangeMinTime = 0.5f; //for randomized movement 
-    [SerializeField] private float directionChangeMaxTime = 1.5f;
+   // [SerializeField] private float directionChangeMinTime = 0.5f; //for randomized movement 
+   // [SerializeField] private float directionChangeMaxTime = 1.5f;
     [SerializeField] private float donutOrbitRadius = 2.5f;     //Radius of the donut circle when moped goes around an enemy
 
     /*[Header("Tier Modifiers")]
@@ -39,14 +40,19 @@ public class MopedWeapon : MonoBehaviour
     private AudioSource mopedAudioSource;
 
 
+    private float primaryTargetNextDamageTime;
+    [SerializeField] private float primaryDamageCooldown = 2f;
+
     private UnityEngine.AI.NavMeshAgent agent;
     private PlayerStats playerStats;
     private Transform playerTransform;
 
     private Transform currentEnemyTarget;
-    private float nextActionTimer;
+   // private float nextActionTimer;
     private float nextAttackTime;
     private float donutAngleTimer; //basically represents the angle the moped is at when doing donuts, it increases overtime during a donut
+   // private float wanderAngleTimer;
+
 
     private enum MopedState { OrbitingPlayer, DrivingToEnemy, DoingDonuts } //easy handling of different moped states
     private MopedState currentState = MopedState.OrbitingPlayer;
@@ -57,7 +63,7 @@ public class MopedWeapon : MonoBehaviour
         playerStats = GetComponentInParent<PlayerStats>();
         agent = GetComponent<NavMeshAgent>();
 
-        if (playerStats != null)
+        if (playerStats != null) 
         {
             playerTransform = playerStats.transform;
         }
@@ -104,9 +110,9 @@ public class MopedWeapon : MonoBehaviour
     {
         if (agent != null && weaponData != null)
         {
-            agent.speed = weaponData.baseWeaponAttackSpeed * 3f; //Adjusts moped speed by the base weapon speed. currently no change in speed 
+            agent.speed = weaponData.baseWeaponAttackSpeed * 3f; //Adjusts moped speed by the base weapon speed....sorta
         }
-        PickNewWanderDestination();
+        //PickNewWanderDestination();
     }
 
 
@@ -138,10 +144,36 @@ public class MopedWeapon : MonoBehaviour
 
     }
 
-    
+    /* 
+     * OLD PLAYER ORBIT
+     private void HandleOrbitingPlayerState()
+     {
+
+         //constantly scans for nearby enemies and locks on if found
+         Transform nearestEnemy = GetNearestEnemy();
+         if (nearestEnemy != null)
+         {
+             currentEnemyTarget = nearestEnemy;
+             currentState = MopedState.DrivingToEnemy;
+             Debug.Log("[MOPED STATE] Driving to enemy");
+             PlaySoundOnce(travelEngineSound, travelEngineVolume);
+             return;
+         }
+
+
+         //Otherwise, will orbit/wander around the player
+         nextActionTimer -= Time.deltaTime; //when its allowed to pick a new random spot around the player
+         if (nextActionTimer <= 0f || !agent.hasPath || agent.remainingDistance <= 0.5f) //this helps deal with sus positioning, so itll pick a new spot if it takes too long to get to where it wants to go, theres no path, or its in range of the desired spot
+         {
+             PickNewWanderDestination();
+         }
+     }
+
+     */
+
     private void HandleOrbitingPlayerState()
     {
-       
+
         //constantly scans for nearby enemies and locks on if found
         Transform nearestEnemy = GetNearestEnemy();
         if (nearestEnemy != null)
@@ -153,14 +185,15 @@ public class MopedWeapon : MonoBehaviour
             return;
         }
 
-       
-        //Otherwise, will orbit/wander around the player
-        nextActionTimer -= Time.deltaTime; //when its allowed to pick a new random spot around the player
-        if (nextActionTimer <= 0f || !agent.hasPath || agent.remainingDistance <= 0.5f) //this helps deal with sus positioning, so itll pick a new spot if it takes too long to get to where it wants to go, theres no path, or its in range of the desired spot
+
+        if (playerTransform != null)
         {
-            PickNewWanderDestination();
+            agent.isStopped = true;
+            transform.position = playerTransform.position;
+            transform.Rotate(Vector3.down, 360f * Time.deltaTime); //can change spinning speed here
         }
     }
+
 
     private void HandleDrivingToEnemyState()
     {
@@ -171,7 +204,7 @@ public class MopedWeapon : MonoBehaviour
             PlaySoundOnce(idleEngineSound, idleEngineVolume);
             Debug.Log("[MOPED STATE] Orbiting player");
             currentState = MopedState.OrbitingPlayer;
-            PickNewWanderDestination();
+          //  PickNewWanderDestination();
             return;
         }
 
@@ -181,7 +214,7 @@ public class MopedWeapon : MonoBehaviour
       
         float distanceToEnemy = Vector3.Distance(transform.position, currentEnemyTarget.position);
 
-        //When in range to the enemy, switch to doing donuts around them. Can also offset the donut here if we wanna make the locked on enemy not be hit by the donut or not
+        //When in range to the enemy, switch to doing donuts around them. rn these donuts USUALLY dont hit the target enemy, but for tier 2+ i made it so it manually just periodically deals damage to the target
         if (distanceToEnemy <= donutOrbitRadius + 1f)
         {
             
@@ -194,6 +227,13 @@ public class MopedWeapon : MonoBehaviour
             Debug.Log("[MOPED STATE] Starting Donuts around enemy: " + currentEnemyTarget.name);
         }
     }
+   
+
+
+
+
+
+    /* OLD DONUT STATE
 
     private void HandleDoingDonutsState()
     {
@@ -225,10 +265,21 @@ public class MopedWeapon : MonoBehaviour
         Vector3 donutOffset = new Vector3(x, 0f, z); //sort of like the distance and direction to the circle edge
         Vector3 targetPosition = currentEnemyTarget.position + donutOffset; //targetPosion is the moped's target on the "donut track", that it keeps following to go in a circle
 
-        if (UnityEngine.AI.NavMesh.SamplePosition(targetPosition, out UnityEngine.AI.NavMeshHit hit, navMeshSampleDistance, UnityEngine.AI.NavMesh.AllAreas)) //checks if the moped can actually go to that spot on the donut circle track, and if so, it does.
+        if (agent.enabled && agent.isOnNavMesh)
         {
-            agent.SetDestination(hit.position);
+ 
+            agent.isStopped = false;
+
+            if (!agent.hasPath || agent.remainingDistance < 0.5f)
+            {
+                if (UnityEngine.AI.NavMesh.SamplePosition(targetPosition, out UnityEngine.AI.NavMeshHit hit, navMeshSampleDistance, UnityEngine.AI.NavMesh.AllAreas))
+                {
+                    agent.SetDestination(hit.position);
+                }
+            }
         }
+
+        
 
         //during donuts, periodically calls to deal damage to enemies it collides with
         if (Time.time >= nextAttackTime)
@@ -245,30 +296,100 @@ public class MopedWeapon : MonoBehaviour
         }
     }
 
+    */
 
+    //donuts 2.0
+
+    private void HandleDoingDonutsState()
+    {
+        if (currentEnemyTarget == null)
+        {
+            Transform newEnemy = GetNearestEnemy();
+            if (newEnemy != null)
+            {
+                currentEnemyTarget = newEnemy;
+                PlaySoundOnce(travelEngineSound, travelEngineVolume);
+                currentState = MopedState.DrivingToEnemy;
+            }
+            else
+            {
+                PlaySoundOnce(idleEngineSound, idleEngineVolume);
+                Debug.Log("[MOPED STATE] Orbiting player");
+                currentState = MopedState.OrbitingPlayer;
+                //PickNewWanderDestination();
+            }
+            return;
+        }
+
+        //stops at enemy position
+        agent.isStopped = true;
+        transform.position = currentEnemyTarget.position;
+
+        //spinning the object, was going to do the model originally but being locked onto the enemy and spinning it this way is much better
+        transform.Rotate(Vector3.down, 720f * Time.deltaTime); 
+
+        //attack stuff
+        if (Time.time >= nextAttackTime)
+        {
+            PerformDonutAttack(); 
+            CalculateNextAttackTime();
+        }
+
+        //range check, if enemy moves range (somehow)
+        float distanceToEnemy = Vector3.Distance(transform.position, currentEnemyTarget.position);
+        if (distanceToEnemy > searchRadius)
+        {
+            Debug.Log("[MOPED STATE] Enemy moved away, going back to driving to enemy");
+            PlaySoundOnce(travelEngineSound, travelEngineVolume);
+            currentState = MopedState.DrivingToEnemy;
+        }
+    }
+
+
+
+
+
+
+
+    /*
     private void PickNewWanderDestination()
     {
         agent.isStopped = false;
 
-        //strays randomly when around player to look like a loose vehicle
-        Vector2 randomCircle = Random.insideUnitCircle * playerOrbitRadius; //picks a random point in a circle, sized to the custom size.
-        Vector3 destination = playerTransform.position + new Vector3(randomCircle.x, 0f, randomCircle.y); //putting that circle in 3d space based ont he players current position
+        wanderAngleTimer += Random.Range(1f, 2.5f);
+
+        //gettting a point along the player orbit radius
+        float x = Mathf.Cos(wanderAngleTimer) * playerOrbitRadius;
+        float z = Mathf.Sin(wanderAngleTimer) * playerOrbitRadius;
+        Vector3 destination = playerTransform.position + new Vector3(x, 0f, z);
 
         //checks if these spots can actually be moved on
         if (UnityEngine.AI.NavMesh.SamplePosition(destination, out UnityEngine.AI.NavMeshHit hit, navMeshSampleDistance, UnityEngine.AI.NavMesh.AllAreas))
         {
-            agent.SetDestination(hit.position);
+            Vector3 directionToDest = hit.position - playerTransform.position;
+            float distToDest = directionToDest.magnitude;
+
+            if (!Physics.Raycast(playerTransform.position, directionToDest.normalized, distToDest, LayerMask.GetMask("Default", "Obstacles"))) // Adjust layer mask to match your walls/environment
+            {
+                agent.SetDestination(hit.position);
+            }
+            else
+            {
+                //if a wall is in the way,go back to the player
+                //agent.SetDestination(playerTransform.position);
+            }
         }
-        //for now, if it cant get to a spot itll go to the player (since thats def a spot it can go to)
         else
         {
+            wanderAngleTimer += Mathf.PI;
             agent.SetDestination(playerTransform.position);
         }
 
-        nextActionTimer = Random.Range(directionChangeMinTime, directionChangeMaxTime); //resets the timer and picks a random time to swerve off path
+        //How often it picks a new target point along its sweeping arc
+        nextActionTimer = Random.Range(directionChangeMinTime, directionChangeMaxTime);
     }
 
-
+    */
 
 
 
@@ -323,19 +444,51 @@ public class MopedWeapon : MonoBehaviour
         int currentTier = weaponData.tier;
 
         float currentAttackRange = weaponData.baseAttackRange; //kinda unused but keeping just in case
-       // float vfxScale = 1;
 
-       /* if (currentTier == 2)
+
+        //to make it hit the targetted enemy at tier 2 and up
+        if (currentTier >= 2 && currentEnemyTarget != null && Time.time >= primaryTargetNextDamageTime)
         {
-            currentAttackRange *= 1.25f; //more reach for tier 2
-            vfxScale = tier2ScaleMultiplier;
+            bool hitSuccessful = false; //this is for the targetted enemy in the donut, it has a timer so it doesnt take 10000 hits in one second
+
+            if (currentEnemyTarget.TryGetComponent(out EnemyController meleeEnemy))
+            {
+                meleeEnemy.TakeDamage(combinedDamage);
+                SpawnHitVFX(currentEnemyTarget);
+                Debug.Log($"[MOPED] hit target {meleeEnemy.name} for {combinedDamage} damage!");
+                hitSuccessful = true;
+            }
+            else if (currentEnemyTarget.TryGetComponent(out RangedEnemyController rangedEnemy))
+            {
+                rangedEnemy.TakeDamage(combinedDamage);
+                SpawnHitVFX(currentEnemyTarget);
+                Debug.Log($"[MOPED] hit target {rangedEnemy.name} for {combinedDamage} damage!");
+                hitSuccessful = true;
+            }
+            else if (currentEnemyTarget.TryGetComponent(out RatEnemyController ratEnemy))
+            {
+                ratEnemy.TakeDamage(combinedDamage);
+                SpawnHitVFX(currentEnemyTarget);
+                Debug.Log($"[MOPED] hit target {ratEnemy.name} for {combinedDamage} damage!");
+                hitSuccessful = true;
+            }
+            //ADD MORE ENEMIES HERE
+
+            if (hitSuccessful)
+            {
+                if (hitSound != null && SoundManager.Instance != null)
+                {
+                    AudioSource.PlayClipAtPoint(hitSound, transform.position, hitVolume);
+                }
+
+                primaryTargetNextDamageTime = Time.time + primaryDamageCooldown;
+            }
         }
-        else if (currentTier >= 3)
-        {
-            currentAttackRange *= 1.4f; //even more reach, knockback logic further down + in knockback function
-            vfxScale = tier3ScaleMultiplier;
-        }
-       */
+
+
+
+
+
 
         //Play vfx/animation
         if (weaponData.attackVFX != null)
@@ -377,7 +530,7 @@ public class MopedWeapon : MonoBehaviour
             if (meleeEnemy != null)
             {
                 meleeEnemy.TakeDamage(combinedDamage);
-                // ApplyKnockbackIfNeeded(hit.gameObject, hitDirection, currentTier);
+              
                 SpawnHitVFX(hit.transform);
                 Debug.Log($"[MOPED] Hit {meleeEnemy.name} for {combinedDamage} total damage!");
                 if (hitSound != null && SoundManager.Instance != null)
@@ -394,7 +547,7 @@ public class MopedWeapon : MonoBehaviour
             if (rangedEnemy != null)
             {
                 rangedEnemy.TakeDamage(combinedDamage);
-                // ApplyKnockbackIfNeeded(hit.gameObject, hitDirection, currentTier);
+               
                 SpawnHitVFX(hit.transform);
                 Debug.Log($"[MOPED] Hit {rangedEnemy.name} for {combinedDamage} total damage!");
                 if (hitSound != null && SoundManager.Instance != null)
@@ -411,7 +564,7 @@ public class MopedWeapon : MonoBehaviour
             if (ratEnemy != null)
             {
                 ratEnemy.TakeDamage(combinedDamage);
-                // ApplyKnockbackIfNeeded(hit.gameObject, hitDirection, currentTier);
+                
                 SpawnHitVFX(hit.transform);
 
                 Debug.Log($"[MOPED] Hit Rat for {combinedDamage} damage!");
@@ -428,36 +581,7 @@ public class MopedWeapon : MonoBehaviour
     }
 
 
-    /*  private void ApplyKnockbackIfNeeded(GameObject enemyObj, Vector3 hitDirection, int currentTier)
-      {
-          if (currentTier >= 3)
-          {
-              EnemyController meleeEnemy = enemyObj.GetComponentInParent<EnemyController>();
-              if (meleeEnemy != null)
-              {
-                  meleeEnemy.ApplyKnockback(hitDirection, tier3KnockbackForce);
-                  return;
-              }
-
-              RangedEnemyController rangedEnemy = enemyObj.GetComponentInParent<RangedEnemyController>();
-              if (rangedEnemy != null)
-              {
-                  rangedEnemy.ApplyKnockback(hitDirection, tier3KnockbackForce);
-              }
-
-              RatEnemyController ratEnemy = enemyObj.GetComponentInParent<RatEnemyController>();
-
-              if (ratEnemy != null)
-              {
-                  ratEnemy.ApplyKnockback(hitDirection, tier3KnockbackForce);
-              }
-
-              //ADD MORE ENEMIES HERE
-
-          }
-      }
-
-      */
+    
 
 
     private void SpawnHitVFX(Transform enemyTransform)

@@ -15,8 +15,8 @@ MonoBehaviour:
   weaponName: Moped
   weaponType: 3
   tier: 3
-  baseWeaponDamage: 23
-  baseWeaponAttackSpeed: 1
+  baseWeaponDamage: 20
+  baseWeaponAttackSpeed: 15
   baseAttackRange: 1
   nextTierUpgrade: {fileID: 0}
   attackVFX: {fileID: 591812712659207760, guid: 5b763ed92a8fe42468589fd9e3838d45, type: 3}
