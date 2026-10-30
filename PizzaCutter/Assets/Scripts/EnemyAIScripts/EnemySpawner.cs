@@ -12,6 +12,9 @@ public class EnemySpawner : MonoBehaviour
     [Header("Spawn Points")]
     [SerializeField] private Transform[] spawnPoints;
 
+    [Header("VFX")]
+    [SerializeField] private GameObject spawnVFXPrefab;
+
     private List<GameObject> spawnedEnemies = new List<GameObject>();
 
     private int currentWaveIndex = 0;
@@ -214,6 +217,22 @@ public class EnemySpawner : MonoBehaviour
             spawnPoints[
                 Random.Range(0, spawnPoints.Length)
             ];
+
+        if (spawnVFXPrefab != null)
+        {
+            GameObject vfxInstance = Instantiate(
+                spawnVFXPrefab,
+                spawnPoint.position,
+                spawnPoint.rotation
+            );
+
+            if (vfxInstance.TryGetComponent(out UnityEngine.VFX.VisualEffect vfx))
+            {
+                vfx.Reinit();
+                vfx.Play();
+            }
+            Destroy(vfxInstance, 2f);
+        }
 
         GameObject enemy = Instantiate(
             enemyPrefab,

@@ -14276,6 +14276,7 @@ MonoBehaviour:
   - {fileID: 1271540009}
   - {fileID: 447200103}
   - {fileID: 351639427}
+  spawnVFXPrefab: {fileID: 3273252098493075598, guid: 1e0ceefe2320c314da09e31612387195, type: 3}
 --- !u!4 &2099703402
 Transform:
   m_ObjectHideFlags: 0
