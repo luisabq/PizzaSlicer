@@ -1147,7 +1147,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 383963390}
         m_TargetAssemblyTypeName: LevelManager, Assembly-CSharp
         m_MethodName: RestartLevel
         m_Mode: 1
@@ -2289,7 +2289,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LevelManager
   currentLevel: 3
-  nextLevelSceneName: 
+  nextLevelSceneName: Level_06
   enemySpawner: {fileID: 1329714231}
   playerSpawnPoint: {fileID: 1886660567}
   levelCompleteUI: {fileID: 646607869}
@@ -2395,7 +2395,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 383963390}
         m_TargetAssemblyTypeName: LevelManager, Assembly-CSharp
         m_MethodName: LoadNextLevel
         m_Mode: 1
@@ -5988,6 +5988,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 1210067370}
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: a9fd3eeb162c2354b82e2e3bd97d310d, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.6136
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: a9fd3eeb162c2354b82e2e3bd97d310d, type: 3}
       propertyPath: m_LocalPosition.x
       value: 35.683
       objectReference: {fileID: 0}
@@ -7342,8 +7346,12 @@ PrefabInstance:
     m_TransformParent: {fileID: 1210067370}
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: a9fd3eeb162c2354b82e2e3bd97d310d, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.275
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: a9fd3eeb162c2354b82e2e3bd97d310d, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 50.281
+      value: 50.299
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: a9fd3eeb162c2354b82e2e3bd97d310d, type: 3}
       propertyPath: m_LocalPosition.y
@@ -7351,7 +7359,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: a9fd3eeb162c2354b82e2e3bd97d310d, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 4.742
+      value: 4.641
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: a9fd3eeb162c2354b82e2e3bd97d310d, type: 3}
       propertyPath: m_LocalRotation.w
@@ -9420,11 +9428,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemySpawner
   waves:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 11400000, guid: 302a413286bbfbe48a12001301f3bd2d, type: 2}
+  - {fileID: 11400000, guid: 473f894e0ede08d489526756869f010c, type: 2}
+  - {fileID: 11400000, guid: ee64785dc183bb84282ffac50b08dd22, type: 2}
+  - {fileID: 11400000, guid: 8b88498a1d4f7e24d987707dd6ec055c, type: 2}
+  - {fileID: 11400000, guid: 8c0c7e06ce40c7b42a072c3707b9c0e2, type: 2}
   spawnPoints:
   - {fileID: 1307429158}
   - {fileID: 2126571673}
@@ -11274,6 +11282,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1210067370}
     m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: a9fd3eeb162c2354b82e2e3bd97d310d, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.4286
+      objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: a9fd3eeb162c2354b82e2e3bd97d310d, type: 3}
       propertyPath: m_LocalPosition.x
       value: 35.663002
@@ -13635,6 +13647,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1210067370}
     m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: a9fd3eeb162c2354b82e2e3bd97d310d, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.4783
+      objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: a9fd3eeb162c2354b82e2e3bd97d310d, type: 3}
       propertyPath: m_LocalPosition.x
       value: 50.237
