@@ -102,7 +102,7 @@ public class LevelManager : MonoBehaviour
 
         Debug.Log($"Level {currentLevel} complete!");
 
-        if (currentLevel >= 3)
+        if (currentLevel >= 6)
         {
             if (gameCompleteUI != null)
                 gameCompleteUI.SetActive(true);
@@ -137,7 +137,7 @@ public class LevelManager : MonoBehaviour
 
     public void LoadNextLevel()
     {
-        if (currentLevel >= 3)
+        if (currentLevel >= 6)
             return;
 
         if (string.IsNullOrWhiteSpace(nextLevelSceneName))

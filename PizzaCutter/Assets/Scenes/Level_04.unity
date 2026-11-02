@@ -5655,7 +5655,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee8de0036fea5b9478e03296214f582b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LevelManager
-  currentLevel: 3
+  currentLevel: 4
   nextLevelSceneName: Level_05
   enemySpawner: {fileID: 2099703401}
   playerSpawnPoint: {fileID: 22403992}
