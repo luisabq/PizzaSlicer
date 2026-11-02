@@ -29359,6 +29359,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5606460996792810122, guid: ce8ede2a248b3074891bb3fac84b8e49, type: 3}
+      propertyPath: maxHealthPoints
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5856334446687162514, guid: ce8ede2a248b3074891bb3fac84b8e49, type: 3}
       propertyPath: m_Enabled
       value: 1
