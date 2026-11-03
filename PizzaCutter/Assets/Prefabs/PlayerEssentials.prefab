@@ -3511,7 +3511,7 @@ MonoBehaviour:
   playerOrbitRadius: 1
   donutOrbitRadius: 1
   idleEngineSound: {fileID: 8300000, guid: 6b807969b0911fd4fbaecc61a097b524, type: 3}
-  idleEngineVolume: 1
+  idleEngineVolume: 0
   travelEngineSound: {fileID: 8300000, guid: 0adeb01dd5222a8418628b7d1eae5f0b, type: 3}
   travelEngineVolume: 0.568
   hitSound: {fileID: 8300000, guid: f3e52fb4a7d7fb74e8f01f268f6c6d4d, type: 3}
