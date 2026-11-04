@@ -6490,6 +6490,9 @@ MonoBehaviour:
   gameOverUI: {fileID: 1664615461}
   winSound: {fileID: 8300000, guid: 2c15d83c1ff19f142adaf01691b8b30d, type: 3}
   winVolume: 1
+  healthIncreasePerLevel: 1
+  damageIncreasePerLevel: 1
+  speedIncreasePerLevel: 1
 --- !u!4 &680947093
 Transform:
   m_ObjectHideFlags: 0

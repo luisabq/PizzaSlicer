@@ -39,6 +39,10 @@ public class RangedEnemyController : MonoBehaviour
     private float currentHealth;
     private float attackTimer;
     private float windUpTimer;
+
+    //EnemyData values after the current level's difficulty multipliers are applied
+    private float scaledMaxHealth;
+    private float scaledAttackDamage;
     private bool preparingAttack;
 
     private Rigidbody rb;
@@ -56,11 +60,14 @@ public class RangedEnemyController : MonoBehaviour
             return;
         }
 
-        currentHealth = enemyData.maxHealth;
+        scaledMaxHealth = enemyData.maxHealth * LevelManager.HealthMultiplier;
+        scaledAttackDamage = enemyData.attackDamage * LevelManager.DamageMultiplier;
+
+        currentHealth = scaledMaxHealth;
 
         if (agent != null)
         {
-            agent.speed = enemyData.moveSpeed;
+            agent.speed = enemyData.moveSpeed * LevelManager.SpeedMultiplier;
         }
         else
         {
@@ -239,7 +246,7 @@ public class RangedEnemyController : MonoBehaviour
         {
             projectileScript.Initialize(
                 direction,
-                enemyData.attackDamage,
+                scaledAttackDamage,
                 transform
             );
         }
@@ -317,7 +324,7 @@ public class RangedEnemyController : MonoBehaviour
 
     public float GetMaxHealth()
     {
-        return enemyData != null ? enemyData.maxHealth : 0f;
+        return enemyData != null ? scaledMaxHealth : 0f;
     }
 
     public void ApplyKnockback(Vector3 direction, float force, float duration = 0.2f)

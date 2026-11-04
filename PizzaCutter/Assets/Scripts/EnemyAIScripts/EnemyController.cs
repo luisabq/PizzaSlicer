@@ -28,6 +28,10 @@ public class EnemyController : MonoBehaviour
     private float currentHealth;
     private float attackTimer;
 
+    //EnemyData values after the current level's difficulty multipliers are applied
+    private float scaledMaxHealth;
+    private float scaledAttackDamage;
+
     private Rigidbody rb;
 
     // NavMesh movement
@@ -44,11 +48,14 @@ public class EnemyController : MonoBehaviour
             return;
         }
 
-        currentHealth = enemyData.maxHealth;
+        scaledMaxHealth = enemyData.maxHealth * LevelManager.HealthMultiplier;
+        scaledAttackDamage = enemyData.attackDamage * LevelManager.DamageMultiplier;
+
+        currentHealth = scaledMaxHealth;
 
         if (agent != null)
         {
-            agent.speed = enemyData.moveSpeed;
+            agent.speed = enemyData.moveSpeed * LevelManager.SpeedMultiplier;
         }
         else
         {
@@ -123,9 +130,9 @@ public class EnemyController : MonoBehaviour
 
         if (playerHealth != null)
         {
-            playerHealth.TakeDamage(enemyData.attackDamage);
+            playerHealth.TakeDamage(scaledAttackDamage);
             AudioSource.PlayClipAtPoint(attackSound, transform.position, attackVolume);
-            Debug.Log($"{enemyData.enemyName} attacked player for {enemyData.attackDamage} damage.");
+            Debug.Log($"{enemyData.enemyName} attacked player for {scaledAttackDamage} damage.");
         }
         else
         {
@@ -139,7 +146,7 @@ public class EnemyController : MonoBehaviour
 
         Debug.Log(
             $"{enemyData.enemyName} took {damage} damage. " +
-            $"HP: {currentHealth}/{enemyData.maxHealth}"
+            $"HP: {currentHealth}/{scaledMaxHealth}"
         );
 
         SpawnHitVFX(transform.position);
@@ -199,7 +206,7 @@ public class EnemyController : MonoBehaviour
 
     public float GetMaxHealth()
     {
-        return enemyData != null ? enemyData.maxHealth : 0f;
+        return enemyData != null ? scaledMaxHealth : 0f;
     }
 
 

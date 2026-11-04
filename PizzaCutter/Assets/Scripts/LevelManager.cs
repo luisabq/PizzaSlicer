@@ -1,4 +1,3 @@
-
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Collections;
@@ -27,8 +26,34 @@ public class LevelManager : MonoBehaviour
     [Range(0f, 1f)][SerializeField] private float winVolume = 1.0f;
     //lose sound stuff is in playerhealth
 
+    [Header("Enemy Difficulty")]
+    //each value is the extra % added per level after Level 1 (0.1 = +10% per level)
+    [SerializeField] private float healthIncreasePerLevel = 1f;
+    [SerializeField] private float damageIncreasePerLevel = 1f;
+    [SerializeField] private float speedIncreasePerLevel = 1f;
+
+    //enemies read these when they spawn so their EnemyData assets stay untouched
+    public static float HealthMultiplier { get; private set; } = 1f;
+    public static float DamageMultiplier { get; private set; } = 1f;
+    public static float SpeedMultiplier { get; private set; } = 1f;
+
 
     private bool levelComplete = false;
+
+    // Works out this level's enemy multipliers before the spawner creates anything
+    private void Awake()
+    {
+        int levelsCleared = Mathf.Max(0, currentLevel - 1);
+
+        HealthMultiplier = 1f + healthIncreasePerLevel * levelsCleared;
+        DamageMultiplier = 1f + damageIncreasePerLevel * levelsCleared;
+        SpeedMultiplier = 1f + speedIncreasePerLevel * levelsCleared;
+
+        Debug.Log(
+            $"[DIFFICULTY] Level {currentLevel}: " +
+            $"HP x{HealthMultiplier:F2}, DMG x{DamageMultiplier:F2}, SPD x{SpeedMultiplier:F2}"
+        );
+    }
 
     private void Start()
     {
@@ -200,4 +225,3 @@ public class LevelManager : MonoBehaviour
     }
 
 }
-

@@ -36,6 +36,10 @@ public class RatEnemyController : MonoBehaviour
     private Rigidbody rb;
     private float currentHealth;
     private float contactDamageTimer;
+
+    //EnemyData values after the current level's difficulty multipliers are applied
+    private float scaledMaxHealth;
+    private float scaledAttackDamage;
     private float directionChangeTimer;
     private bool isDead;
 
@@ -51,7 +55,10 @@ public class RatEnemyController : MonoBehaviour
             return;
         }
 
-        currentHealth = enemyData.maxHealth;
+        scaledMaxHealth = enemyData.maxHealth * LevelManager.HealthMultiplier;
+        scaledAttackDamage = enemyData.attackDamage * LevelManager.DamageMultiplier;
+
+        currentHealth = scaledMaxHealth;
 
         if (agent == null)
         {
@@ -60,7 +67,7 @@ public class RatEnemyController : MonoBehaviour
             return;
         }
 
-        agent.speed = enemyData.moveSpeed;
+        agent.speed = enemyData.moveSpeed * LevelManager.SpeedMultiplier;
         agent.stoppingDistance = 0f;
 
         if (player == null)
@@ -177,7 +184,7 @@ public class RatEnemyController : MonoBehaviour
             if (playerHealth == null)
                 continue;
 
-            playerHealth.TakeDamage(enemyData.attackDamage);
+            playerHealth.TakeDamage(scaledAttackDamage);
 
             contactDamageTimer = Mathf.Max(
                 0.1f,
@@ -185,7 +192,7 @@ public class RatEnemyController : MonoBehaviour
             );
 
             Debug.Log(
-                $"[RAT] Contact damage attempted: {enemyData.attackDamage}"
+                $"[RAT] Contact damage attempted: {scaledAttackDamage}"
             );
 
             return;
@@ -207,10 +214,10 @@ public class RatEnemyController : MonoBehaviour
             return;
 
         
-        playerHealth.TakeDamage(enemyData.attackDamage);
+        playerHealth.TakeDamage(scaledAttackDamage);
         contactDamageTimer = Mathf.Max(0.1f, enemyData.attackCooldown);
 
-        Debug.Log($"[RAT] Hit player for {enemyData.attackDamage} damage!");
+        Debug.Log($"[RAT] Hit player for {scaledAttackDamage} damage!");
     }
 
     public void TakeDamage(float damage)
@@ -289,7 +296,7 @@ public class RatEnemyController : MonoBehaviour
 
     public float GetMaxHealth()
     {
-        return enemyData != null ? enemyData.maxHealth : 0f;
+        return enemyData != null ? scaledMaxHealth : 0f;
     }
 
     public void ApplyKnockback(
