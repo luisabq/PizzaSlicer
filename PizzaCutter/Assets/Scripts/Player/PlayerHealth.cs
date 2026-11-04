@@ -94,7 +94,7 @@ public class PlayerHealth : MonoBehaviour
         }
     }
 
-    private IEnumerator IFrameRoutine()
+    public IEnumerator IFrameRoutine()
     {
         isInvincible = true;
         Physics.IgnoreLayerCollision(playerLayer, enemyLayer, true); //can walk through enemies when hit

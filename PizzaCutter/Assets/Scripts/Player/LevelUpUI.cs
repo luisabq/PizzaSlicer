@@ -18,6 +18,7 @@ public class LevelUpUI : MonoBehaviour
     [SerializeField] private WeaponData baseMeatballData;
     [SerializeField] private WeaponData baseGarlicData;
     [SerializeField] private WeaponData baseMopedData;
+    [SerializeField] private WeaponData baseRollerData;
 
     [Header("Audio")]
     [SerializeField] private AudioClip sound1;
@@ -391,6 +392,15 @@ public class LevelUpUI : MonoBehaviour
         else if (weaponManager.currentMopedData != null && weaponManager.currentMopedData.nextTierUpgrade != null)
         {
             fullPool.Add(weaponManager.currentMopedData.nextTierUpgrade);
+        }
+
+        if (!weaponManager.IsWeaponUnlocked(WeaponType.DoughRoller))
+        {
+            if (baseRollerData != null) fullPool.Add(baseRollerData);
+        }
+        else if (weaponManager.currentRollerData != null && weaponManager.currentRollerData.nextTierUpgrade != null)
+        {
+            fullPool.Add(weaponManager.currentRollerData.nextTierUpgrade);
         }
 
         //ADD MORE WEAPONS HERE

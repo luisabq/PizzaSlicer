@@ -8,6 +8,7 @@ public class PlayerWeaponManager : MonoBehaviour
     [SerializeField] private MeatballGunWeapon meatballGunScript;
     [SerializeField] private GarlicWeapon garlicScript;
     [SerializeField] private MopedWeapon mopedScript;
+    [SerializeField] private DoughRollerWeapon doughRollerScript;
     //ADD MORE WEAPONS HERE
 
 
@@ -19,6 +20,7 @@ public class PlayerWeaponManager : MonoBehaviour
     public WeaponData currentMeatballData;
     public WeaponData currentGarlicData;
     public WeaponData currentMopedData;
+    public WeaponData currentRollerData;
     //ADD MORE WEAPONS HERE
 
     private void Start()
@@ -46,6 +48,11 @@ public class PlayerWeaponManager : MonoBehaviour
             mopedScript.gameObject.SetActive(false);
         }
 
+        if (doughRollerScript != null)
+        {
+            doughRollerScript.gameObject.SetActive(false);
+        }
+
 
         //ADD MORE WEAPONS HERE
     }
@@ -57,6 +64,7 @@ public class PlayerWeaponManager : MonoBehaviour
         if (type == WeaponType.MeatballGun) return currentMeatballData != null;
         if (type == WeaponType.Garlic) return currentGarlicData != null;
         if (type == WeaponType.Moped) return currentMopedData != null;
+        if (type == WeaponType.DoughRoller) return currentRollerData != null;
 
         //ADD MORE WEAPONS HERE
         return false;
@@ -90,6 +98,12 @@ public class PlayerWeaponManager : MonoBehaviour
             mopedScript.gameObject.SetActive(true); // Unlocks moped
             mopedScript.SetWeaponData(newWeaponData);
         }
+        else if (newWeaponData.weaponType == WeaponType.DoughRoller)
+        {
+            currentRollerData = newWeaponData;
+            doughRollerScript.gameObject.SetActive(true); // youll never guess what this unlocks
+            doughRollerScript.SetWeaponData(newWeaponData);
+        }
 
 
         //ADD MORE WEAPONS HERE
@@ -107,6 +121,7 @@ public class PlayerWeaponManager : MonoBehaviour
         currentMeatballData = null;
         currentGarlicData = null;
         currentMopedData = null;
+        currentRollerData = null;
         //ADD MORE WEAPONS HERE
 
         if (meleeWeaponScript != null)
@@ -130,6 +145,11 @@ public class PlayerWeaponManager : MonoBehaviour
         if (mopedScript != null)
         {
             mopedScript.gameObject.SetActive(false);
+        }
+
+        if (doughRollerScript != null)
+        {
+            doughRollerScript.gameObject.SetActive(false);
         }
 
         //add more weapons here
