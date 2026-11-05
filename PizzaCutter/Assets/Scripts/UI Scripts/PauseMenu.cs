@@ -101,7 +101,8 @@ public class PauseMenu : MonoBehaviour
         CloseWithoutSound();
         Time.timeScale = 1f;
 
-        SceneManager.LoadScene(mainMenuSceneName);
+        SceneTransitionManager.Instance.TransitionToScene("mainScreen");
+        //SceneManager.LoadScene(mainMenuSceneName);
 
         //PlayerEssentials uses DontDestroyOnLoad, so it has to be destroyed by hand or it keeps running on the title screen.
         //Level_01 has its own PlayerEssentials, so a fresh player spawns when Start is pressed again.
