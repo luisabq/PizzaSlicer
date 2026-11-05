@@ -176,7 +176,8 @@ public class LevelManager : MonoBehaviour
         }
 
         Time.timeScale = 1f;
-        SceneManager.LoadScene(nextLevelSceneName);
+        SceneTransitionManager.Instance.TransitionToScene(nextLevelSceneName);
+        //SceneManager.LoadScene(nextLevelSceneName);
     }
 
     public void RestartLevel()
@@ -225,7 +226,8 @@ public class LevelManager : MonoBehaviour
         if (LevelUpUI.Instance != null)
             LevelUpUI.Instance.ResetForNewRun();
 
-        SceneManager.LoadScene("Level_01");
+        //SceneManager.LoadScene("Level_01");
+        SceneTransitionManager.Instance.TransitionToScene("Level_01");
     }
 
 }
