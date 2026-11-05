@@ -10,6 +10,8 @@ public class SceneTransitionManager : MonoBehaviour
     [SerializeField] private GameObject transitionCanvasObject;
     [SerializeField] private Animator transitionAnimator;
 
+    private Coroutine activeTransitionRoutine;
+
     private void Awake()
     {
         if (Instance == null)
@@ -25,7 +27,11 @@ public class SceneTransitionManager : MonoBehaviour
 
     public void TransitionToScene(string sceneName)
     {
-        StartCoroutine(ExecuteTransition(sceneName));
+        if (activeTransitionRoutine != null)
+        {
+            StopCoroutine(activeTransitionRoutine);
+        }
+        activeTransitionRoutine = StartCoroutine(ExecuteTransition(sceneName));
     }
 
     private IEnumerator ExecuteTransition(string sceneName)
@@ -37,6 +43,7 @@ public class SceneTransitionManager : MonoBehaviour
             transitionAnimator.enabled = true;
             transitionAnimator.Rebind();
             transitionAnimator.Update(0f);
+            transitionAnimator.Play("ScreenWipe", 0, 0f);
             transitionAnimator.SetTrigger("Wipe");
         }
 
@@ -65,13 +72,19 @@ public class SceneTransitionManager : MonoBehaviour
         {
             yield return null;
         }
+        //suppoooosedly gives like 3 frames to compile stuff so the first transition isnt choppy
+        yield return null;
+        yield return null;
+        yield return null;
 
-       //lets last half of animation play out
+        //lets last half of animation play out
         yield return new WaitForSecondsRealtime(halfDuration);
         yield return new WaitForSecondsRealtime(halfDuration);
 
         //hides it until needed again
         if (transitionCanvasObject != null) transitionCanvasObject.SetActive(false);
+        activeTransitionRoutine = null;
+
     }
 
 
