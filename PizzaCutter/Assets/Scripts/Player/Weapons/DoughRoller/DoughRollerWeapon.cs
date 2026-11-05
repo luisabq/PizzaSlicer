@@ -30,14 +30,18 @@ public class DoughRollerWeapon : MonoBehaviour
     [Range(0f, 1f)][SerializeField] private float dashVolume = 1.0f;
     [SerializeField] private AudioClip hitSound;
     [Range(0f, 1f)][SerializeField] private float hitVolume = 1.0f;
+    [SerializeField] private AudioClip timerSound;
+    [Range(0f, 1f)][SerializeField] private float timerVolume = 1.0f;
 
 
     [Header("VFX")]
     [SerializeField] private GameObject hitVFXPrefab;
+    [SerializeField] private GameObject dashVFX;
+    [SerializeField] private GameObject dashPoofVFX;
 
 
 
-
+    [Header("dont touch this pls")]
     public int maxCharges = 1;
     public int currentCharges;
     public float rechargeTimer;
@@ -88,6 +92,9 @@ public class DoughRollerWeapon : MonoBehaviour
 
     void Update()
     {
+        dashVFX.SetActive(isDashing);
+
+        //Dash refill logic
         if (currentCharges < maxCharges)
         {
             //start timer if there are dash charges to refill
@@ -95,6 +102,7 @@ public class DoughRollerWeapon : MonoBehaviour
             if (rechargeTimer <= 0f)
             {
                 currentCharges++;
+                AudioSource.PlayClipAtPoint(timerSound, transform.position, timerVolume);
                 // If we still need more charges, loop the timer
 
                 //may change and make cooldown based on attack speed, if so run this
@@ -264,8 +272,15 @@ public class DoughRollerWeapon : MonoBehaviour
             transform.rotation = Quaternion.LookRotation(direction, Vector3.up);
         }
 
+        //dash poof
+        if (dashPoofVFX != null)
+        {
+            Vector3 spawnPos = playerTransform.position;
+            Quaternion spawnRot = playerTransform.rotation;
 
-
+            GameObject dashVfxInstance = Instantiate(dashPoofVFX, spawnPos, spawnRot);
+            Destroy(dashVfxInstance, 2.0f);
+        }
 
 
 

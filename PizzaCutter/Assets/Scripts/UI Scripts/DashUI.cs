@@ -19,25 +19,39 @@ public class DashUI : MonoBehaviour
         if (hudContainer == null)
         {
             hudContainer = gameObject;
+            Debug.Log("Hud doesnt exist fool");
+        }
+
+        if (doughRollerWeapon == null)
+        {
+            Debug.Log("no dough");
+            doughRollerWeapon = FindAnyObjectByType<DoughRollerWeapon>();
         }
     }
+
+
 
     private void Update()
+   {
+
+    if (doughRollerWeapon == null)
     {
-        bool isWeaponUnlockedAndActive = doughRollerWeapon != null &&
-                                         doughRollerWeapon.gameObject.activeInHierarchy &&
-                                         doughRollerWeapon.enabled;
-
-        if (hudContainer.activeSelf != isWeaponUnlockedAndActive)
-        {
-            hudContainer.SetActive(isWeaponUnlockedAndActive);
-        }
-
-        if (!isWeaponUnlockedAndActive) return;
-
-        UpdateChargeIcons(doughRollerWeapon.currentCharges, doughRollerWeapon.maxCharges);
-        UpdateCooldownBar(doughRollerWeapon.currentCharges, doughRollerWeapon.maxCharges, doughRollerWeapon.rechargeTimer, doughRollerWeapon.baseCooldown);
+        if (hudContainer.activeSelf) hudContainer.SetActive(false);
+        return;
     }
+
+    bool isWeaponUnlockedAndActive = doughRollerWeapon.gameObject.activeInHierarchy && doughRollerWeapon.enabled;
+
+    if (hudContainer.activeSelf != isWeaponUnlockedAndActive)
+    {
+        hudContainer.SetActive(isWeaponUnlockedAndActive);
+    }
+
+    if (!isWeaponUnlockedAndActive) return;
+
+    UpdateChargeIcons(doughRollerWeapon.currentCharges, doughRollerWeapon.maxCharges);
+    UpdateCooldownBar(doughRollerWeapon.currentCharges, doughRollerWeapon.maxCharges, doughRollerWeapon.rechargeTimer, doughRollerWeapon.baseCooldown);
+   }
 
 
 
