@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using Unity.Cinemachine;
 
 public class PlayerHealth : MonoBehaviour
 {
@@ -15,7 +16,8 @@ public class PlayerHealth : MonoBehaviour
     [SerializeField] private AudioClip loseSound;
     [Range(0f, 1f)][SerializeField] private float loseVolume = 1.0f;
 
-
+    [Header("Screen Shake")]
+    [SerializeField] private CinemachineImpulseSource impulseSource;
 
 
     private PlayerStats playerStats;
@@ -35,6 +37,10 @@ public class PlayerHealth : MonoBehaviour
     private void Awake()
     {
         playerStats = GetComponent<PlayerStats>();
+        if (impulseSource == null)
+        {
+            impulseSource = GetComponent<CinemachineImpulseSource>();
+        }
     }
 
     private void Start()
@@ -81,6 +87,10 @@ public class PlayerHealth : MonoBehaviour
             SoundManager.Instance.PlaySound(hurtSound, hurtVolume);
         }
         Handheld.Vibrate();
+        if (impulseSource != null)
+        {
+            impulseSource.GenerateImpulse();
+        }
         Debug.Log($"[PLAYER] Took {damageAmount} damage! Current Health: {currentHealth}");
 
         if (currentHealth <= 0)
