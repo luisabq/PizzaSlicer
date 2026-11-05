@@ -43,6 +43,7 @@ public class RangedEnemyController : MonoBehaviour
     //EnemyData values after the current level's difficulty multipliers are applied
     private float scaledMaxHealth;
     private float scaledAttackDamage;
+    private int scaledXpReward;
     private bool preparingAttack;
 
     private Rigidbody rb;
@@ -62,6 +63,7 @@ public class RangedEnemyController : MonoBehaviour
 
         scaledMaxHealth = enemyData.maxHealth * LevelManager.HealthMultiplier;
         scaledAttackDamage = enemyData.attackDamage * LevelManager.DamageMultiplier;
+        scaledXpReward = Mathf.RoundToInt(enemyData.xpReward * LevelManager.XpMultiplier);
 
         currentHealth = scaledMaxHealth;
 
@@ -289,7 +291,7 @@ public class RangedEnemyController : MonoBehaviour
             );
 
             if (orbObject.TryGetComponent<EXPOrb>(out var orb))
-                orb.SetXPValue(enemyData.xpReward);
+                orb.SetXPValue(scaledXpReward);
         }
 
         if (healthPickupPrefab != null &&

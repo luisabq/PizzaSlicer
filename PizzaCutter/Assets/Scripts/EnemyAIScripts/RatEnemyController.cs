@@ -1,4 +1,3 @@
-
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
@@ -40,6 +39,7 @@ public class RatEnemyController : MonoBehaviour
     //EnemyData values after the current level's difficulty multipliers are applied
     private float scaledMaxHealth;
     private float scaledAttackDamage;
+    private int scaledXpReward;
     private float directionChangeTimer;
     private bool isDead;
 
@@ -57,6 +57,7 @@ public class RatEnemyController : MonoBehaviour
 
         scaledMaxHealth = enemyData.maxHealth * LevelManager.HealthMultiplier;
         scaledAttackDamage = enemyData.attackDamage * LevelManager.DamageMultiplier;
+        scaledXpReward = Mathf.RoundToInt(enemyData.xpReward * LevelManager.XpMultiplier);
 
         currentHealth = scaledMaxHealth;
 
@@ -263,7 +264,7 @@ public class RatEnemyController : MonoBehaviour
             EXPOrb orb = orbObject.GetComponent<EXPOrb>();
 
             if (orb != null)
-                orb.SetXPValue(enemyData.xpReward);
+                orb.SetXPValue(scaledXpReward);
         }
 
         if (healthPickupPrefab != null &&

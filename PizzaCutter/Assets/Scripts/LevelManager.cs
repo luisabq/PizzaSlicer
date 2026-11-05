@@ -28,14 +28,16 @@ public class LevelManager : MonoBehaviour
 
     [Header("Enemy Difficulty")]
     //each value is the extra % added per level after Level 1 (0.1 = +10% per level)
-    [SerializeField] private float healthIncreasePerLevel = 1f;
-    [SerializeField] private float damageIncreasePerLevel = 1f;
-    [SerializeField] private float speedIncreasePerLevel = 1f;
+    [SerializeField] private float healthIncreasePerLevel = 0.1f;
+    [SerializeField] private float damageIncreasePerLevel = 0.1f;
+    [SerializeField] private float speedIncreasePerLevel = 0.1f;
+    [SerializeField] private float xpIncreasePerLevel = 0.1f;
 
     //enemies read these when they spawn so their EnemyData assets stay untouched
     public static float HealthMultiplier { get; private set; } = 1f;
     public static float DamageMultiplier { get; private set; } = 1f;
     public static float SpeedMultiplier { get; private set; } = 1f;
+    public static float XpMultiplier { get; private set; } = 1f;
 
 
     private bool levelComplete = false;
@@ -48,10 +50,12 @@ public class LevelManager : MonoBehaviour
         HealthMultiplier = 1f + healthIncreasePerLevel * levelsCleared;
         DamageMultiplier = 1f + damageIncreasePerLevel * levelsCleared;
         SpeedMultiplier = 1f + speedIncreasePerLevel * levelsCleared;
+        XpMultiplier = 1f + xpIncreasePerLevel * levelsCleared;
 
         Debug.Log(
             $"[DIFFICULTY] Level {currentLevel}: " +
-            $"HP x{HealthMultiplier:F2}, DMG x{DamageMultiplier:F2}, SPD x{SpeedMultiplier:F2}"
+            $"HP x{HealthMultiplier:F2}, DMG x{DamageMultiplier:F2}, " +
+            $"SPD x{SpeedMultiplier:F2}, XP x{XpMultiplier:F2}"
         );
     }
 
@@ -225,3 +229,4 @@ public class LevelManager : MonoBehaviour
     }
 
 }
+
