@@ -236,6 +236,15 @@ public class LevelUpUI : MonoBehaviour
             SoundManager.Instance.PlaySound(sound1, volume1);
         }
 
+        Animator anim = levelUpPanel.GetComponentInParent<Animator>();
+        if (anim != null)
+        {
+            anim.enabled = true;
+            anim.Rebind();
+            anim.Update(0f);
+            anim.SetTrigger("GrowSpin");
+        }
+
         Debug.Log("[LEVEL UP UI] Upgrade panel opened.");
 
         Time.timeScale = 0f;
@@ -330,7 +339,21 @@ public class LevelUpUI : MonoBehaviour
             SoundManager.Instance.PlaySound(sound1, volume1);
         }
 
+
+
+       
+
         levelUpPanel.SetActive(true);
+        Animator anim = levelUpPanel.GetComponentInParent<Animator>();
+        if (anim != null)
+        {
+            anim.enabled = true;
+            anim.Rebind();
+            anim.Update(0f);
+            anim.SetTrigger("GrowSpin");
+        }
+
+
     }
 
     private List<WeaponData> BuildWeaponUpgradePool()
