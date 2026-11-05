@@ -31,7 +31,7 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private float healthIncreasePerLevel = 0.1f;
     [SerializeField] private float damageIncreasePerLevel = 0.1f;
     [SerializeField] private float speedIncreasePerLevel = 0.1f;
-    [SerializeField] private float xpIncreasePerLevel = 0.1f;
+    [SerializeField] private float ExpOrbDropIncreasePerLevel = 0.1f;
 
     //enemies read these when they spawn so their EnemyData assets stay untouched
     public static float HealthMultiplier { get; private set; } = 1f;
@@ -50,7 +50,7 @@ public class LevelManager : MonoBehaviour
         HealthMultiplier = 1f + healthIncreasePerLevel * levelsCleared;
         DamageMultiplier = 1f + damageIncreasePerLevel * levelsCleared;
         SpeedMultiplier = 1f + speedIncreasePerLevel * levelsCleared;
-        XpMultiplier = 1f + xpIncreasePerLevel * levelsCleared;
+        XpMultiplier = 1f + ExpOrbDropIncreasePerLevel * levelsCleared;
 
         Debug.Log(
             $"[DIFFICULTY] Level {currentLevel}: " +
