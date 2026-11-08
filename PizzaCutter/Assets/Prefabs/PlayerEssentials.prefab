@@ -5839,7 +5839,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Unity.Cinemachine::Unity.Cinemachine.CinemachineImpulseListener
   ApplyAfter: 2
   ChannelMask: 1
-  Gain: 1
+  Gain: 0.45
   Use2DDistance: 0
   UseCameraSpace: 1
   SignalCombinationMode: 0
