@@ -1584,6 +1584,11 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!95 &83455536 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 5809412281747694890, guid: ce8ede2a248b3074891bb3fac84b8e49, type: 3}
+  m_PrefabInstance: {fileID: 7823109773842528859}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &85275242
 GameObject:
   m_ObjectHideFlags: 0
@@ -30664,6 +30669,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4897708031516837856, guid: ce8ede2a248b3074891bb3fac84b8e49, type: 3}
+      propertyPath: 'playerRenderers.Array.data[0]'
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 5290060895737059038, guid: ce8ede2a248b3074891bb3fac84b8e49, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -30768,6 +30777,10 @@ PrefabInstance:
       propertyPath: hitVFXPrefab
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 8399317811512803879, guid: ce8ede2a248b3074891bb3fac84b8e49, type: 3}
+      propertyPath: doughAnimator
+      value: 
+      objectReference: {fileID: 83455536}
     - target: {fileID: 8595673814433733786, guid: ce8ede2a248b3074891bb3fac84b8e49, type: 3}
       propertyPath: m_LocalPosition.x
       value: 5.51732
@@ -30835,6 +30848,8 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 107502312006250406, guid: ce8ede2a248b3074891bb3fac84b8e49, type: 3}
+    - {fileID: 6305241718359149804, guid: ce8ede2a248b3074891bb3fac84b8e49, type: 3}
+    - {fileID: 1347573579089161351, guid: ce8ede2a248b3074891bb3fac84b8e49, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 5572894921091446680, guid: ce8ede2a248b3074891bb3fac84b8e49, type: 3}

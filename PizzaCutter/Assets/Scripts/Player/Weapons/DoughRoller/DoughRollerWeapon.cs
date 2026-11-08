@@ -38,6 +38,11 @@ public class DoughRollerWeapon : MonoBehaviour
     [SerializeField] private GameObject hitVFXPrefab;
     [SerializeField] private GameObject dashVFX;
     [SerializeField] private GameObject dashPoofVFX;
+    [SerializeField] private Animator animator;
+    [SerializeField] private Animator doughAnimator;
+
+    [SerializeField] private GameObject doughRollerObject;
+    [SerializeField] private float activeDuration = 0.5f;
 
 
 
@@ -81,6 +86,12 @@ public class DoughRollerWeapon : MonoBehaviour
         {
             Debug.LogWarning("dough roller cant find playerhealth script");
         }
+
+        if (doughRollerObject != null)
+        {
+            doughRollerObject.SetActive(false);
+        }
+
     }
 
 
@@ -275,7 +286,15 @@ public class DoughRollerWeapon : MonoBehaviour
             transform.rotation = Quaternion.LookRotation(direction, Vector3.up);
         }
 
-        GetComponentInParent<Animator>().SetTrigger("DashOn");
+        animator.SetTrigger("DashOn");
+        doughAnimator.SetTrigger("DashOn");
+
+        if (doughRollerObject != null)
+        {
+            //StopAllCoroutines();
+            StartCoroutine(ToggleRollerRoutine());
+        }
+
 
         //dash poof
         if (dashPoofVFX != null)
@@ -397,6 +416,13 @@ public class DoughRollerWeapon : MonoBehaviour
         }
     }
 
+
+    private IEnumerator ToggleRollerRoutine()
+    {
+        doughRollerObject.SetActive(true);
+        yield return new WaitForSeconds(activeDuration);
+        doughRollerObject.SetActive(false);
+    }
 
     private void SpawnHitVFX(Transform enemyTransform)
     {
