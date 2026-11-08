@@ -131,7 +131,7 @@ public class LevelManager : MonoBehaviour
 
         Debug.Log($"Level {currentLevel} complete!");
 
-        if (currentLevel >= 6)
+        if (currentLevel >= 9)
         {
             if (gameCompleteUI != null)
                 gameCompleteUI.SetActive(true);
@@ -166,7 +166,7 @@ public class LevelManager : MonoBehaviour
 
     public void LoadNextLevel()
     {
-        if (currentLevel >= 6)
+        if (currentLevel >= 9)
             return;
 
         if (string.IsNullOrWhiteSpace(nextLevelSceneName))
@@ -178,6 +178,28 @@ public class LevelManager : MonoBehaviour
         Time.timeScale = 1f;
         SceneTransitionManager.Instance.TransitionToScene(nextLevelSceneName);
         //SceneManager.LoadScene(nextLevelSceneName);
+    }
+
+    // fricking debug button to skip to the first level of the next stage since we have no patience in this world.
+    public void DebugSkipToNextStage()
+    {
+        string targetScene = "";
+
+        if (currentLevel >= 1 && currentLevel <= 3)
+            targetScene = "Level_04";
+        else if (currentLevel >= 4 && currentLevel <= 6)
+            targetScene = "Level_07";
+
+        if (string.IsNullOrEmpty(targetScene))
+        {
+            Debug.Log("[DEBUG] that's all folks.");
+            return;
+        }
+
+        Time.timeScale = 1f;
+        Debug.Log("[DEBUG] ooo look at me, i can't beat the levels so i'll just skip it. next up: " + targetScene);
+
+        SceneTransitionManager.Instance.TransitionToScene(targetScene);
     }
 
     public void RestartLevel()

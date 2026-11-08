@@ -6609,7 +6609,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LevelManager
   currentLevel: 6
-  nextLevelSceneName: 
+  nextLevelSceneName: Level_07
   enemySpawner: {fileID: 551322556}
   playerSpawnPoint: {fileID: 296231702}
   levelCompleteUI: {fileID: 0}
@@ -6620,7 +6620,7 @@ MonoBehaviour:
   healthIncreasePerLevel: 0.1
   damageIncreasePerLevel: 0.1
   speedIncreasePerLevel: 0.1
-  xpIncreasePerLevel: 0.1
+  ExpOrbDropIncreasePerLevel: 0.1
 --- !u!4 &680947093
 Transform:
   m_ObjectHideFlags: 0
@@ -20986,8 +20986,8 @@ MonoBehaviour:
   m_SerializedVersion: 0
   m_AgentTypeID: 0
   m_CollectObjects: 1
-  m_Size: {x: 22.276175, y: 4.3846846, z: 41.676666}
-  m_Center: {x: -0.013539314, y: 0.40765762, z: 6.358223}
+  m_Size: {x: 22.276175, y: 2.385523, z: 41.676666}
+  m_Center: {x: -0.013539314, y: -0.5919231, z: 6.358223}
   m_LayerMask:
     serializedVersion: 2
     m_Bits: 63
@@ -21001,7 +21001,7 @@ MonoBehaviour:
   m_OverrideVoxelSize: 0
   m_VoxelSize: 0.16666667
   m_MinRegionArea: 2
-  m_NavMeshData: {fileID: 23800000, guid: 08df2f3426753154e8cc2f47d8975059, type: 2}
+  m_NavMeshData: {fileID: 23800000, guid: bfeaf3763551b7e4cab862057ff47b03, type: 2}
   m_BuildHeightMesh: 0
 --- !u!4 &2059891748
 Transform:

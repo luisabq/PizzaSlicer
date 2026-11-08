@@ -12258,9 +12258,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5136535694801148435, guid: d3159f69b649c144290559a990c5cb1d, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7139932130878145538, guid: d3159f69b649c144290559a990c5cb1d, type: 3}
       propertyPath: m_Name
       value: ScreenTransitioner
+      objectReference: {fileID: 0}
+    - target: {fileID: 7139932130878145538, guid: d3159f69b649c144290559a990c5cb1d, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8378219147862624582, guid: d3159f69b649c144290559a990c5cb1d, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -30500,6 +30512,14 @@ PrefabInstance:
       propertyPath: m_Volume
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 631702504462592492, guid: ce8ede2a248b3074891bb3fac84b8e49, type: 3}
+      propertyPath: m_text
+      value: Next Stage
+      objectReference: {fileID: 0}
+    - target: {fileID: 631702504462592492, guid: ce8ede2a248b3074891bb3fac84b8e49, type: 3}
+      propertyPath: m_fontSize
+      value: 18
+      objectReference: {fileID: 0}
     - target: {fileID: 1610013831837532411, guid: ce8ede2a248b3074891bb3fac84b8e49, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -30543,6 +30563,10 @@ PrefabInstance:
     - target: {fileID: 1766390754032725741, guid: ce8ede2a248b3074891bb3fac84b8e49, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1779921041148642814, guid: ce8ede2a248b3074891bb3fac84b8e49, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 22.24424
       objectReference: {fileID: 0}
     - target: {fileID: 2225011208264687967, guid: ce8ede2a248b3074891bb3fac84b8e49, type: 3}
       propertyPath: m_AnchorMax.y
@@ -30656,6 +30680,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5572894921091446680, guid: ce8ede2a248b3074891bb3fac84b8e49, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5606460996792810122, guid: ce8ede2a248b3074891bb3fac84b8e49, type: 3}
       propertyPath: maxHealthPoints
       value: 0
@@ -30759,6 +30787,26 @@ PrefabInstance:
     - target: {fileID: 8595673814433733786, guid: ce8ede2a248b3074891bb3fac84b8e49, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8699688535930092664, guid: ce8ede2a248b3074891bb3fac84b8e49, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 2024969445}
+    - target: {fileID: 8699688535930092664, guid: ce8ede2a248b3074891bb3fac84b8e49, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: DebugSkipToNextStage
+      objectReference: {fileID: 0}
+    - target: {fileID: 8699688535930092664, guid: ce8ede2a248b3074891bb3fac84b8e49, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: LevelManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 9199632647237898199, guid: ce8ede2a248b3074891bb3fac84b8e49, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 32.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 9199632647237898199, guid: ce8ede2a248b3074891bb3fac84b8e49, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -129.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
