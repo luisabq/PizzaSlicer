@@ -56,10 +56,13 @@ public class DoughRollerWeapon : MonoBehaviour
 
 
 
+
+
     private void Awake()
     {
         playerStats = GetComponentInParent<PlayerStats>();
         characterController = GetComponentInParent<CharacterController>();
+        
 
         GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
         if (playerObj != null)
@@ -271,6 +274,8 @@ public class DoughRollerWeapon : MonoBehaviour
         {
             transform.rotation = Quaternion.LookRotation(direction, Vector3.up);
         }
+
+        GetComponentInParent<Animator>().SetTrigger("DashOn");
 
         //dash poof
         if (dashPoofVFX != null)
