@@ -547,7 +547,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 680947092}
         m_TargetAssemblyTypeName: LevelManager, Assembly-CSharp
         m_MethodName: LoadNextLevel
         m_Mode: 1
@@ -6612,8 +6612,8 @@ MonoBehaviour:
   nextLevelSceneName: Level_07
   enemySpawner: {fileID: 551322556}
   playerSpawnPoint: {fileID: 296231702}
-  levelCompleteUI: {fileID: 0}
-  gameCompleteUI: {fileID: 818890383}
+  levelCompleteUI: {fileID: 558563006}
+  gameCompleteUI: {fileID: 0}
   gameOverUI: {fileID: 1664615461}
   winSound: {fileID: 8300000, guid: 2c15d83c1ff19f142adaf01691b8b30d, type: 3}
   winVolume: 1

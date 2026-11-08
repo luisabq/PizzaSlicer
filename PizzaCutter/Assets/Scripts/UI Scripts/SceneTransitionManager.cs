@@ -29,8 +29,10 @@ public class SceneTransitionManager : MonoBehaviour
     {
         if (activeTransitionRoutine != null)
         {
-            StopCoroutine(activeTransitionRoutine);
+            Debug.LogWarning("[TRANSITION] A scene transition is already running.");
+            return;
         }
+
         activeTransitionRoutine = StartCoroutine(ExecuteTransition(sceneName));
     }
 

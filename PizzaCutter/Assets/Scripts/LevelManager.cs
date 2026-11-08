@@ -180,24 +180,33 @@ public class LevelManager : MonoBehaviour
         //SceneManager.LoadScene(nextLevelSceneName);
     }
 
-    // fricking debug button to skip to the first level of the next stage since we have no patience in this world.
     public void DebugSkipToNextStage()
     {
         string targetScene = "";
 
         if (currentLevel >= 1 && currentLevel <= 3)
-            targetScene = "Level_04";
-        else if (currentLevel >= 4 && currentLevel <= 6)
-            targetScene = "Level_07";
-
-        if (string.IsNullOrEmpty(targetScene))
         {
-            Debug.Log("[DEBUG] that's all folks.");
+            targetScene = "Level_04";
+        }
+        else if (currentLevel >= 4 && currentLevel <= 6)
+        {
+            targetScene = "Level_07";
+        }
+        else
+        {
+            Debug.Log("[DEBUG] No next stage available.");
+            return;
+        }
+
+        if (SceneTransitionManager.Instance == null)
+        {
+            Debug.LogError("[DEBUG] SceneTransitionManager not found!");
             return;
         }
 
         Time.timeScale = 1f;
-        Debug.Log("[DEBUG] ooo look at me, i can't beat the levels so i'll just skip it. next up: " + targetScene);
+
+        Debug.Log($"[DEBUG] Skipping from Level {currentLevel} to {targetScene}");
 
         SceneTransitionManager.Instance.TransitionToScene(targetScene);
     }
