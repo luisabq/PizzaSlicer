@@ -1582,6 +1582,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ScreenTransitioner
       objectReference: {fileID: 0}
+    - target: {fileID: 7139932130878145538, guid: d3159f69b649c144290559a990c5cb1d, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 9017252057865858324, guid: d3159f69b649c144290559a990c5cb1d, type: 3}
       propertyPath: m_Enabled
       value: 1
