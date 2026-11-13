@@ -29082,6 +29082,9 @@ MonoBehaviour:
   nextLevelSceneName: Level_02
   enemySpawner: {fileID: 2106183822}
   playerSpawnPoint: {fileID: 85275243}
+  completionCamera: {fileID: 0}
+  zoomedFOV: 30
+  cinematicDuration: 3
   levelCompleteUI: {fileID: 924024531}
   gameCompleteUI: {fileID: 0}
   gameOverUI: {fileID: 114327614}

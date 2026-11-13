@@ -588,6 +588,7 @@ MonoBehaviour:
   dashHitStopDuration: 0.1
   pitchStepMultiplier: 0.08
   hitImpulseSource: {fileID: 3210233909016292872}
+  levelUpPanel: {fileID: 6423964978751465748}
   maxCharges: 1
   currentCharges: 0
   rechargeTimer: 0
@@ -705,6 +706,7 @@ MonoBehaviour:
   hitVolume: 1
   hitStopDuration: 0.13
   hitImpulseSource: {fileID: 6145168905690273551}
+  levelUpPanel: {fileID: 6423964978751465748}
 --- !u!114 &6145168905690273551
 MonoBehaviour:
   m_ObjectHideFlags: 0

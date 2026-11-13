@@ -50,6 +50,7 @@ public class DoughRollerWeapon : MonoBehaviour
     [SerializeField] private float dashHitStopDuration = 0.05f; 
     [SerializeField] private float pitchStepMultiplier = 0.15f;
     [SerializeField] private CinemachineImpulseSource hitImpulseSource;
+    [SerializeField] private GameObject levelUpPanel;
 
 
     [Header("dont touch this pls")]
@@ -370,10 +371,15 @@ public class DoughRollerWeapon : MonoBehaviour
             if (hitSomeone)
             {
                 //hitstop
-                Time.timeScale = 0f;
+                Time.timeScale = 0.2f;
                 yield return new WaitForSecondsRealtime(dashHitStopDuration);
-                Time.timeScale = 1f;
-               
+                bool isLevelUpActive = levelUpPanel != null && levelUpPanel.activeInHierarchy;
+
+                if (!LevelManager.IsLevelCompleted && !isLevelUpActive)
+                {
+                    Time.timeScale = 1f;
+                }
+
             }
 
 

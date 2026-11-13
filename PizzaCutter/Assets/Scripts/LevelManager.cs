@@ -16,7 +16,7 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private Transform playerSpawnPoint;
 
     [Header("Completion Slowdown Effect")]
-    [SerializeField] private CinemachineVirtualCamera completionCamera;
+    [SerializeField] private CinemachineCamera completionCamera;
     [SerializeField] private float zoomedFOV = 30f;
     [SerializeField] private float cinematicDuration = 3f;
     private float defaultFOV;
@@ -47,6 +47,8 @@ public class LevelManager : MonoBehaviour
     public static float XpMultiplier { get; private set; } = 1f;
 
 
+    public static bool IsLevelCompleted { get; private set; } = false;
+
     private bool levelComplete = false;
 
     // Works out this level's enemy multipliers before the spawner creates anything
@@ -54,7 +56,7 @@ public class LevelManager : MonoBehaviour
     {
         if (completionCamera == null)
         {
-            completionCamera = FindObjectOfType<CinemachineVirtualCamera>();
+            completionCamera = FindObjectOfType<CinemachineCamera>();
         }
 
             int levelsCleared = Mathf.Max(0, currentLevel - 1);
@@ -73,6 +75,7 @@ public class LevelManager : MonoBehaviour
 
     private void Start()
     {
+        IsLevelCompleted = false;
         Time.timeScale = 1f;
 
         if (levelCompleteUI != null)
@@ -85,7 +88,8 @@ public class LevelManager : MonoBehaviour
             gameOverUI.SetActive(false);
 
         if (completionCamera != null)
-            defaultFOV = completionCamera.m_Lens.FieldOfView;
+            defaultFOV = completionCamera.Lens.FieldOfView;
+        
 
         StartCoroutine(PositionPlayerAtSpawn());
     }
@@ -138,12 +142,9 @@ public class LevelManager : MonoBehaviour
 
     private void CompleteLevel()
     {
-        if (levelComplete) return; 
+        if (levelComplete) return;
         levelComplete = true;
-        if (winSound != null && SoundManager.Instance != null)
-        {
-            SoundManager.Instance.PlaySound(winSound, winVolume);
-        }
+        IsLevelCompleted = true;       
 
         StartCoroutine(LevelCompleteCinematicRoutine());
 
@@ -178,44 +179,63 @@ public class LevelManager : MonoBehaviour
         //time slow
         Time.timeScale = 0.2f;
 
+        if (completionCamera == null)
+        {
+            completionCamera = FindAnyObjectByType<CinemachineCamera>();
+            if (completionCamera != null) defaultFOV = completionCamera.Lens.FieldOfView;
+
+        }
         float elapsed = 0f;
-        float startFOV = completionCamera != null ? completionCamera.m_Lens.FieldOfView : defaultFOV;
+        float startFOV = completionCamera != null ? completionCamera.Lens.FieldOfView : defaultFOV;
 
        //zoom in
         while (elapsed < cinematicDuration)
         {
             float t = elapsed / cinematicDuration;
 
+
             if (completionCamera != null)
             {
-                completionCamera.m_Lens.FieldOfView = Mathf.Lerp(startFOV, zoomedFOV, t);
+                    var currentLens = completionCamera.Lens;
+                    currentLens.FieldOfView = Mathf.Lerp(startFOV, zoomedFOV, t);
+                    completionCamera.Lens = currentLens;
+            }
+            else
+            {
+                Debug.LogWarning("[LEVEL MANAGER] completionCamera is still NULL during zoom!");
             }
 
             elapsed += Time.unscaledDeltaTime;
             yield return null;
         }
 
-        //reseting stuff back to normal
-        Time.timeScale = 1f;
-        if (completionCamera != null)
-        {
-            completionCamera.m_Lens.FieldOfView = defaultFOV;
-        }
+        
 
-        //THEN showing the completion stuff
-        ShowCompletionUI();
+          
+
+            //showing the completion stuff
+            ShowCompletionUI();
     }
 
     private void ShowCompletionUI()
     {
+        if (winSound != null && SoundManager.Instance != null)
+        {
+            SoundManager.Instance.PlaySound(winSound, winVolume);
+        }
+
         Debug.Log($"Level {currentLevel} complete!");
 
         if (currentLevel >= 9)
         {
             if (gameCompleteUI != null)
+            {
                 gameCompleteUI.SetActive(true);
+            }
             else
+            {
                 Debug.LogWarning("Game Complete UI is not assigned.");
+            }
 
             Time.timeScale = 0f;
             return;
@@ -227,6 +247,10 @@ public class LevelManager : MonoBehaviour
             Debug.LogWarning("Level Complete UI is not assigned.");
 
         Time.timeScale = 0f;
+
+
+        
+
     }
 
 
@@ -253,6 +277,16 @@ public class LevelManager : MonoBehaviour
         {
             Debug.LogError("Next level scene name is missing!");
             return;
+        }
+
+
+        //reseting camera stuff back to normal from level complete slowdown
+
+        if (completionCamera != null)
+        {
+            var resetLens = completionCamera.Lens;
+            resetLens.FieldOfView = defaultFOV;
+            completionCamera.Lens = resetLens;
         }
 
         Time.timeScale = 1f;

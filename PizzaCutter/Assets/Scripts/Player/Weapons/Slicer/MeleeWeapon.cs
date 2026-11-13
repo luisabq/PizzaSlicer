@@ -29,6 +29,7 @@ public class MeleeWeapon : MonoBehaviour
     [Header("Hitstop")]
     [SerializeField] private float hitStopDuration = 0.08f;
     [SerializeField] private CinemachineImpulseSource hitImpulseSource;
+    [SerializeField] private GameObject levelUpPanel;
 
 
     private bool isPaused = false;
@@ -277,7 +278,16 @@ public class MeleeWeapon : MonoBehaviour
 
         Time.timeScale = 0f;
         yield return new WaitForSecondsRealtime(hitStopDuration);
-        Time.timeScale = 1f;
+
+        bool isLevelUpActive = levelUpPanel != null && levelUpPanel.activeInHierarchy; 
+
+        //need to make sure anything else that pauses the game doesnt get unpaused cause of hitstop 
+        if (!LevelManager.IsLevelCompleted && !isLevelUpActive)
+        {
+            Time.timeScale = 1f;
+        }
+
+
         isPaused = false;
     }
 
