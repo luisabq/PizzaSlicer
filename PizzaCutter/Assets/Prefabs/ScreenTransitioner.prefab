@@ -157,6 +157,7 @@ GameObject:
   - component: {fileID: 4116152756604385585}
   - component: {fileID: 6234882933532055790}
   - component: {fileID: 4616387668727329442}
+  - component: {fileID: 6679331414720234169}
   m_Layer: 5
   m_Name: ScreenTransitioner
   m_TagString: Untagged
@@ -262,6 +263,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: '::'
   transitionCanvasObject: {fileID: 2566430648090485286}
   transitionAnimator: {fileID: 9017252057865858324}
+--- !u!81 &6679331414720234169
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7139932130878145538}
+  m_Enabled: 1
 --- !u!1 &8378219147862624582
 GameObject:
   m_ObjectHideFlags: 0

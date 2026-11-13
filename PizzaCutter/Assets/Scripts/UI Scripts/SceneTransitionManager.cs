@@ -10,6 +10,8 @@ public class SceneTransitionManager : MonoBehaviour
     [SerializeField] private GameObject transitionCanvasObject;
     [SerializeField] private Animator transitionAnimator;
 
+    public static bool IsTransitioning { get; private set; } = false;
+
     private Coroutine activeTransitionRoutine;
 
     private void Awake()
@@ -27,11 +29,7 @@ public class SceneTransitionManager : MonoBehaviour
 
     public void TransitionToScene(string sceneName)
     {
-        if (activeTransitionRoutine != null)
-        {
-            Debug.LogWarning("[TRANSITION] A scene transition is already running.");
-            return;
-        }
+        if (IsTransitioning) return;        
 
         activeTransitionRoutine = StartCoroutine(ExecuteTransition(sceneName));
     }
@@ -85,6 +83,9 @@ public class SceneTransitionManager : MonoBehaviour
 
         //hides it until needed again
         if (transitionCanvasObject != null) transitionCanvasObject.SetActive(false);
+
+        IsTransitioning = false;
+
         activeTransitionRoutine = null;
 
     }
