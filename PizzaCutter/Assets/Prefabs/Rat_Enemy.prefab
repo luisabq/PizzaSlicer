@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 631544724311088894}
   - component: {fileID: -4876292921122402202}
   - component: {fileID: -7937108384574105551}
+  - component: {fileID: 5928478459778281832}
   m_Layer: 3
   m_Name: Rat_Enemy
   m_TagString: Enemy
@@ -165,6 +166,20 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &5928478459778281832
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 670784579579757561}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29c72759577715c4cbe733ff94eb3b7e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyHitFlash
+  flashMaterial: {fileID: 2100000, guid: c5c2a17be29305942932affb214b207f, type: 2}
+  flashDuration: 0.08
 --- !u!1001 &124600489765400849
 PrefabInstance:
   m_ObjectHideFlags: 0
