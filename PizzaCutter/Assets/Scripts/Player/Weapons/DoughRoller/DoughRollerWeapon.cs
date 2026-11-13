@@ -52,6 +52,13 @@ public class DoughRollerWeapon : MonoBehaviour
     [SerializeField] private CinemachineImpulseSource hitImpulseSource;
     [SerializeField] private GameObject levelUpPanel;
 
+    [Header("Dash Camera Settings No Not Like The Car Type")]
+    [SerializeField] private CinemachineCamera playerCamera;
+    [SerializeField] private float dashZoomFOV = 75f;      
+    [SerializeField] private float zoomTransitionDuration = 0.5f;
+
+    private float defaultFOV;
+    private Coroutine activeZoomRoutine;
 
     [Header("dont touch this pls")]
     public int maxCharges = 1;
@@ -104,6 +111,11 @@ public class DoughRollerWeapon : MonoBehaviour
             hitImpulseSource = GetComponent<CinemachineImpulseSource>();
         }
 
+        if (playerCamera != null)
+        {
+            defaultFOV = playerCamera.Lens.FieldOfView;
+        }
+
     }
 
 
@@ -111,6 +123,8 @@ public class DoughRollerWeapon : MonoBehaviour
     {
         UpdateTierStats();
         currentCharges = maxCharges;
+
+
     }
 
 
@@ -272,6 +286,8 @@ public class DoughRollerWeapon : MonoBehaviour
     private IEnumerator ExecuteDashRoutine(Vector3 direction)
     {
         isDashing = true;
+
+        PlayDashZoom(baseDashDuration);
 
         if (currentCharges == maxCharges)
         {
@@ -498,6 +514,64 @@ public class DoughRollerWeapon : MonoBehaviour
 
         Destroy(audioObj, hitSound.length / Mathf.Max(pitch, 0.1f) + 0.1f);
     }
+
+
+    public void PlayDashZoom(float totalDashDuration)
+    {
+        if (playerCamera == null) return;
+
+    //if a zoom is running dont run it again
+        if (activeZoomRoutine != null)
+        {
+            StopCoroutine(activeZoomRoutine);
+        }
+
+        activeZoomRoutine = StartCoroutine(DashZoomRoutine(totalDashDuration));
+    }
+
+    //i really should have just made this an animation on the camera instead AAAAA
+    private IEnumerator DashZoomRoutine(float dashDuration)
+    {
+        float elapsed = 0f;
+        float startFOV = playerCamera.Lens.FieldOfView;
+        float halfDuration = dashDuration * 0.5f;
+
+        //quick zoom out at the start
+        while (elapsed < zoomTransitionDuration)
+        {
+            float t = elapsed / zoomTransitionDuration;
+            var lens = playerCamera.Lens;
+            lens.FieldOfView = Mathf.Lerp(startFOV, dashZoomFOV, t);
+            playerCamera.Lens = lens;
+
+            elapsed += Time.unscaledDeltaTime; 
+            yield return null;
+        }
+
+        //holds the zoomed out state for half way point
+        yield return new WaitForSecondsRealtime(Mathf.Max(0f, dashDuration - (zoomTransitionDuration * 2f)));
+
+        //zooms back in to normal fov
+        elapsed = 0f;
+        while (elapsed < zoomTransitionDuration)
+        {
+            float t = elapsed / zoomTransitionDuration;
+            var lens = playerCamera.Lens;
+            lens.FieldOfView = Mathf.Lerp(dashZoomFOV, defaultFOV, t);
+            playerCamera.Lens = lens;
+
+            elapsed += Time.unscaledDeltaTime;
+            yield return null;
+        }
+
+      
+        var finalLens = playerCamera.Lens;
+        finalLens.FieldOfView = defaultFOV;
+        playerCamera.Lens = finalLens;
+
+        activeZoomRoutine = null;
+    }
+
 
 
     private void SpawnHitVFX(Transform enemyTransform)
