@@ -9698,14 +9698,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 743752115}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 18, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 38854155}
   - {fileID: 267929575}
-  m_Father: {fileID: 2096460796}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &760226771
 PrefabInstance:
@@ -19145,6 +19145,9 @@ MonoBehaviour:
   nextLevelSceneName: Level_04
   enemySpawner: {fileID: 1080519416}
   playerSpawnPoint: {fileID: 1259971010}
+  completionCamera: {fileID: 0}
+  zoomedFOV: 30
+  cinematicDuration: 3
   levelCompleteUI: {fileID: 1475300284}
   gameCompleteUI: {fileID: 0}
   gameOverUI: {fileID: 350939551}
@@ -24372,8 +24375,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 18, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 743752116}
+  m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!114 &2096460797
@@ -24617,6 +24619,7 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 2096460796}
+  - {fileID: 743752116}
   - {fileID: 1968813050}
   - {fileID: 1080519417}
   - {fileID: 1657679941}

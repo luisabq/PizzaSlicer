@@ -37,7 +37,7 @@ RenderSettings:
   m_ReflectionBounces: 1
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
-  m_Sun: {fileID: 0}
+  m_Sun: {fileID: 1269143863}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -6485,6 +6485,9 @@ MonoBehaviour:
   nextLevelSceneName: Level_07
   enemySpawner: {fileID: 551322556}
   playerSpawnPoint: {fileID: 296231702}
+  completionCamera: {fileID: 0}
+  zoomedFOV: 30
+  cinematicDuration: 3
   levelCompleteUI: {fileID: 558563006}
   gameCompleteUI: {fileID: 0}
   gameOverUI: {fileID: 1664615461}
@@ -10369,8 +10372,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1002262336}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: 0.40821788, y: -0.23456968, z: 0.10938163, w: 0.8754261}
+  m_LocalPosition: {x: -14.95, y: 28.08, z: 25.88}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -10378,7 +10381,7 @@ Transform:
   - {fileID: 2042201092}
   - {fileID: 819091762}
   - {fileID: 1873350132}
-  m_Father: {fileID: 1269143864}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1005272337
 GameObject:
@@ -12864,11 +12867,10 @@ Transform:
   m_GameObject: {fileID: 1269143862}
   serializedVersion: 2
   m_LocalRotation: {x: 0.40821788, y: -0.23456968, z: 0.10938163, w: 0.8754261}
-  m_LocalPosition: {x: -14.95, y: 28.08, z: 25.88}
+  m_LocalPosition: {x: -2.8, y: 7.7, z: 4.9}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1002262337}
+  m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
 --- !u!114 &1269143865
@@ -20803,6 +20805,7 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 1269143864}
+  - {fileID: 1002262337}
   - {fileID: 1437445057}
   - {fileID: 296231702}
   - {fileID: 347442797}
