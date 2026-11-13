@@ -154,10 +154,11 @@ public class RatEnemyController : MonoBehaviour
             directionChangeMaxTime);
     }
 
-    private void OnTriggerStay(Collider other)
-    {
-        TryDamagePlayer(other.transform);
-    }
+    //private void OnTriggerStay(Collider other)
+   // {
+        
+     //   TryDamagePlayer(other.transform);
+    //}
 
     private void OnCollisionStay(Collision collision)
     {
@@ -204,6 +205,10 @@ public class RatEnemyController : MonoBehaviour
     {
         if (isDead || contactDamageTimer > 0f || enemyData == null)
             return;
+
+        if (player.gameObject.layer == LayerMask.NameToLayer("Garlic"))
+            return;
+
 
         PlayerHealth playerHealth =
             other.GetComponentInParent<PlayerHealth>();
