@@ -263,6 +263,7 @@ public class RangedEnemyController : MonoBehaviour
 
     public void TakeDamage(float damage)
     {
+        GetComponent<EnemyHitFlash>().TriggerFlash();
         currentHealth -= damage;
 
         if (hitVFXPrefab != null)

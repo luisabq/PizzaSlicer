@@ -144,6 +144,7 @@ public class EnemyController : MonoBehaviour
 
     public void TakeDamage(float damage)
     {
+        GetComponent<EnemyHitFlash>()?.TriggerFlash();
         currentHealth -= damage;
 
         Debug.Log(

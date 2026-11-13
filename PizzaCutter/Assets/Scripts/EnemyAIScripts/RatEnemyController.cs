@@ -231,6 +231,7 @@ public class RatEnemyController : MonoBehaviour
 
         if (isDead)
             return;
+        GetComponent<EnemyHitFlash>()?.TriggerFlash();
         GetComponentInChildren<Animator>().SetTrigger("AttackOn");
         AudioSource.PlayClipAtPoint(attackSound, transform.position, attackVolume);
         currentHealth -= damage;
