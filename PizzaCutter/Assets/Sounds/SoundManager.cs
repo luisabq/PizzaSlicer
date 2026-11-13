@@ -27,6 +27,10 @@ public class SoundManager : MonoBehaviour
         {
             Instance = this;
             DontDestroyOnLoad(gameObject);
+
+            //applies the volumes saved from the settings menu
+            AudioListener.volume = PlayerPrefs.GetFloat(SettingsMenu.MasterVolumeKey, 1f);
+            musicVolume = PlayerPrefs.GetFloat(SettingsMenu.MusicVolumeKey, musicVolume);
         }
         else
         {
@@ -111,6 +115,23 @@ public class SoundManager : MonoBehaviour
         musicSource.loop = true;
         musicSource.volume = musicVolume;
         musicSource.Play();
+    }
+
+    // Changes the music volume right away, used by the settings menu slider
+    public void SetMusicVolume(float volume)
+    {
+        musicVolume = volume;
+
+        if (musicSource != null)
+        {
+            musicSource.volume = musicVolume;
+        }
+    }
+
+    // Gives the settings menu the current music volume so its slider starts in the right spot
+    public float GetMusicVolume()
+    {
+        return musicVolume;
     }
 
 

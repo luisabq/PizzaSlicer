@@ -8,6 +8,7 @@ public class PauseMenu : MonoBehaviour
     [Header("UI")]
     [SerializeField] private GameObject pauseMenuPanel; //the clipboard panel
     [SerializeField] private GameObject pauseButton; //the HUD pause button, hidden while the menu is open
+    [SerializeField] private GameObject settingsPanel; //the settings panel opened from the HUD settings button
 
     [Header("Scene Names")]
     [SerializeField] private string firstLevelSceneName = "Level_01"; //only used if no LevelManager is in the scene
@@ -21,6 +22,7 @@ public class PauseMenu : MonoBehaviour
 
 
     private PlayerStats playerStats;
+    private bool settingsPausedGame; //true when the HUD settings button is what froze the game
 
 
     // Makes sure the menu starts closed
@@ -114,6 +116,54 @@ public class PauseMenu : MonoBehaviour
         }
     }
 
+    // Freezes the game and shows the settings panel (hook the HUD Settings button to this)
+    public void OpenSettings()
+    {
+        if (settingsPanel == null)
+        {
+            Debug.LogWarning("[PauseMenu] Settings Panel is not assigned.");
+            return;
+        }
+
+        if (!IsPaused)
+        {
+            //if time is already stopped, something else owns the pause (level up, game over, level complete) so dont stack on top of it
+            if (Time.timeScale <= 0f) return;
+
+            IsPaused = true;
+            Time.timeScale = 0f;
+            settingsPausedGame = true;
+
+            if (pauseButton != null)
+            {
+                pauseButton.SetActive(false);
+            }
+        }
+
+        settingsPanel.SetActive(true);
+    }
+
+    // Hides the settings panel and unfreezes the game if settings is what froze it (hook the settings Back button to this)
+    public void CloseSettings()
+    {
+        if (settingsPanel != null)
+        {
+            settingsPanel.SetActive(false);
+        }
+
+        if (settingsPausedGame)
+        {
+            settingsPausedGame = false;
+            IsPaused = false;
+            Time.timeScale = 1f;
+
+            if (pauseButton != null)
+            {
+                pauseButton.SetActive(true);
+            }
+        }
+    }
+
     // Closes the menu state without playing the resume sound, used before changing scenes
     private void CloseWithoutSound()
     {
@@ -136,6 +186,12 @@ public class PauseMenu : MonoBehaviour
         if (pauseButton != null)
         {
             pauseButton.SetActive(!visible);
+        }
+
+        //settings always starts closed and closes with the pause menu
+        if (settingsPanel != null)
+        {
+            settingsPanel.SetActive(false);
         }
     }
 

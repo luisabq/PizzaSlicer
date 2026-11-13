@@ -86,7 +86,11 @@ public class PlayerHealth : MonoBehaviour
         {
             SoundManager.Instance.PlaySound(hurtSound, hurtVolume);
         }
-        Handheld.Vibrate();
+        //only vibrates the phone if vibration is turned on in the settings menu
+        if (SettingsMenu.VibrationEnabled)
+        {
+            Handheld.Vibrate();
+        }
         if (impulseSource != null)
         {
             impulseSource.GenerateImpulse();
