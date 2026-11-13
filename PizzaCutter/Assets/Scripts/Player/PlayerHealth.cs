@@ -10,6 +10,9 @@ public class PlayerHealth : MonoBehaviour
     [SerializeField] private Renderer[] playerRenderers;
     [SerializeField] private GameObject[] playerVisualObjects;
 
+    [SerializeField] private bool lockVerticalPosition = true;
+    private float lockedYPosition;
+
 
     [Header("Audio")]
     [SerializeField] private AudioClip hurtSound;
@@ -54,7 +57,15 @@ public class PlayerHealth : MonoBehaviour
 
 
 
-
+    private void LateUpdate()
+    {
+        if (lockVerticalPosition)
+        {
+            Vector3 pos = transform.position;
+            pos.y = lockedYPosition;
+            transform.position = pos;
+        }
+    }
 
 
 
@@ -127,8 +138,20 @@ public class PlayerHealth : MonoBehaviour
         }
 
         SetRenderersEnabled(true);
-        Physics.IgnoreLayerCollision(playerLayer, enemyLayer, false); //adds collision back
+        //Physics.IgnoreLayerCollision(playerLayer, enemyLayer, false); //adds collision back
         isInvincible = false;
+
+
+        while (IsOverlappingEnemy())
+        {
+            yield return null; //Wait until the player is not in an enemy to enable collision
+        }
+
+        
+        
+        Physics.IgnoreLayerCollision(playerLayer, enemyLayer, false);
+      
+
     }
 
     private void SetRenderersEnabled(bool enabled)
@@ -144,6 +167,13 @@ public class PlayerHealth : MonoBehaviour
         }
     }
 
+
+    private bool IsOverlappingEnemy()
+    {
+        //checks around player for enemy colliders
+        Collider[] colliders = Physics.OverlapSphere(transform.position, 0.8f, 1 << enemyLayer);
+        return colliders.Length > 0;
+    }
 
     //use this for death management like pausing the game or switching levels
     private void Die()

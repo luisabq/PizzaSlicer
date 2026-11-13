@@ -2285,6 +2285,7 @@ MonoBehaviour:
   - {fileID: 2039016041524232756}
   playerVisualObjects:
   - {fileID: 746634988648711988}
+  lockVerticalPosition: 0
   hurtSound: {fileID: 8300000, guid: 4a6de289131c70c4a99ae3e3f7a90d4d, type: 3}
   hurtVolume: 0.706
   loseSound: {fileID: 8300000, guid: 453d4ca1600146848a10f4b94a4552c9, type: 3}
