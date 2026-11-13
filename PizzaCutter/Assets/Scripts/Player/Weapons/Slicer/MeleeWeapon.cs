@@ -1,6 +1,8 @@
 
 using UnityEngine;
 using UnityEngine.VFX;
+using System.Collections;
+using Unity.Cinemachine;
 
 public class MeleeWeapon : MonoBehaviour
 {
@@ -23,6 +25,13 @@ public class MeleeWeapon : MonoBehaviour
     [Range(0f, 1f)][SerializeField] private float swingVolume = 1.0f;
     [SerializeField] private AudioClip hitSound;
     [Range(0f, 1f)][SerializeField] private float hitVolume = 1.0f;
+
+    [Header("Hitstop")]
+    [SerializeField] private float hitStopDuration = 0.08f;
+    [SerializeField] private CinemachineImpulseSource hitImpulseSource;
+
+
+    private bool isPaused = false;
 
 
     private PlayerStats playerStats;
@@ -47,6 +56,12 @@ public class MeleeWeapon : MonoBehaviour
             attackPoint = transform;
             Debug.Log("no attackpoint set for vfx");
         }
+
+        if (hitImpulseSource == null)
+        {
+            hitImpulseSource = GetComponent<CinemachineImpulseSource>();
+        }
+
     }
 
 
@@ -178,6 +193,7 @@ public class MeleeWeapon : MonoBehaviour
 
         //Hitbox/Enemy detection 
         Collider[] hits = Physics.OverlapSphere(attackPoint.position, weaponData.baseAttackRange, enemyLayer);
+        bool hitSomething = false;
 
         foreach (var hit in hits)
         {
@@ -197,6 +213,7 @@ public class MeleeWeapon : MonoBehaviour
                 meleeEnemy.TakeDamage(combinedDamage);
                 ApplyKnockbackIfNeeded(hit.gameObject, hitDirection, currentTier);
                 Debug.Log($"[MELEE ATTACK] Hit {meleeEnemy.name} for {combinedDamage} total damage!");
+                hitSomething = true;
                 if (hitSound != null && SoundManager.Instance != null)
                 {
                     AudioSource.PlayClipAtPoint(hitSound, transform.position, hitVolume);
@@ -213,6 +230,7 @@ public class MeleeWeapon : MonoBehaviour
                 rangedEnemy.TakeDamage(combinedDamage);
                 ApplyKnockbackIfNeeded(hit.gameObject, hitDirection, currentTier);
                 Debug.Log($"[MELEE ATTACK] Hit {rangedEnemy.name} for {combinedDamage} total damage!");
+                hitSomething = true;
                 if (hitSound != null && SoundManager.Instance != null)
                 {
                     AudioSource.PlayClipAtPoint(hitSound, transform.position, hitVolume);
@@ -229,7 +247,7 @@ public class MeleeWeapon : MonoBehaviour
                 ApplyKnockbackIfNeeded(hit.gameObject, hitDirection, currentTier);
 
                 Debug.Log($"[MELEE ATTACK] Hit Rat for {combinedDamage} damage!");
-
+                hitSomething = true;
                 if (hitSound != null && SoundManager.Instance != null)
                 {
                     AudioSource.PlayClipAtPoint(
@@ -239,7 +257,28 @@ public class MeleeWeapon : MonoBehaviour
 
             // ADD MORE ENEMIES HERE
 
+
+
         }
+
+        if (hitSomething && !isPaused)
+        {
+            if (hitImpulseSource != null)
+            {
+                hitImpulseSource.GenerateImpulse();
+            }
+            StartCoroutine(DoHitStop());
+        }
+    }
+
+    private IEnumerator DoHitStop()
+    {
+        isPaused = true;
+
+        Time.timeScale = 0f;
+        yield return new WaitForSecondsRealtime(hitStopDuration);
+        Time.timeScale = 1f;
+        isPaused = false;
     }
 
 

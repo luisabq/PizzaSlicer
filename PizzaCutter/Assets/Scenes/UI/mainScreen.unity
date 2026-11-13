@@ -1582,6 +1582,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.x
       value: 57.6
       objectReference: {fileID: 0}
+    - target: {fileID: 6679331414720234169, guid: d3159f69b649c144290559a990c5cb1d, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7139932130878145538, guid: d3159f69b649c144290559a990c5cb1d, type: 3}
       propertyPath: m_Name
       value: ScreenTransitioner
