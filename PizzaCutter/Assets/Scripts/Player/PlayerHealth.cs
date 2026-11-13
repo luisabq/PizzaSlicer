@@ -8,6 +8,7 @@ public class PlayerHealth : MonoBehaviour
     [SerializeField] private float iFrameDuration = 3.0f;
     [SerializeField] private float flashInterval = 0.5f;
     [SerializeField] private Renderer[] playerRenderers;
+    [SerializeField] private GameObject[] playerVisualObjects;
 
 
     [Header("Audio")]
@@ -132,13 +133,13 @@ public class PlayerHealth : MonoBehaviour
 
     private void SetRenderersEnabled(bool enabled)
     {
-        if (playerRenderers == null) return;
+        if (playerVisualObjects == null || playerVisualObjects.Length == 0) return;
 
-        foreach (var rend in playerRenderers)
+        foreach (var obj in playerVisualObjects)
         {
-            if (rend != null)
+            if (obj != null)
             {
-                rend.enabled = enabled;
+                obj.SetActive(enabled);
             }
         }
     }

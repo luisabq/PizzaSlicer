@@ -188,6 +188,9 @@ public class RatEnemyController : MonoBehaviour
 
             playerHealth.TakeDamage(scaledAttackDamage);
 
+            GetComponentInChildren<Animator>().SetTrigger("AttackOn");
+            AudioSource.PlayClipAtPoint(attackSound, transform.position, attackVolume);
+
             contactDamageTimer = Mathf.Max(
                 0.1f,
                 enemyData.attackCooldown
@@ -231,9 +234,8 @@ public class RatEnemyController : MonoBehaviour
 
         if (isDead)
             return;
-        GetComponent<EnemyHitFlash>()?.TriggerFlash();
-        GetComponentInChildren<Animator>().SetTrigger("AttackOn");
-        AudioSource.PlayClipAtPoint(attackSound, transform.position, attackVolume);
+        GetComponent<EnemyHitFlash>().TriggerFlash();
+        
         currentHealth -= damage;
 
         if (hitVFXPrefab != null)
@@ -256,6 +258,7 @@ public class RatEnemyController : MonoBehaviour
             return;
 
         isDead = true;
+        GetComponent<EnemyHitFlash>().TriggerDeathDissolve();
 
         if (agent != null && agent.enabled)
             agent.enabled = false;

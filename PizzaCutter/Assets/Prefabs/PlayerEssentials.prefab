@@ -2283,6 +2283,8 @@ MonoBehaviour:
   flashInterval: 0.1
   playerRenderers:
   - {fileID: 2039016041524232756}
+  playerVisualObjects:
+  - {fileID: 746634988648711988}
   hurtSound: {fileID: 8300000, guid: 4a6de289131c70c4a99ae3e3f7a90d4d, type: 3}
   hurtVolume: 0.706
   loseSound: {fileID: 8300000, guid: 453d4ca1600146848a10f4b94a4552c9, type: 3}
@@ -9788,6 +9790,11 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 5809412281747694890}
   m_SourcePrefab: {fileID: 100100000, guid: 99e2d6e1eb9efea448e0b166a4f247b8, type: 3}
+--- !u!1 &746634988648711988 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -1709609619428571922, guid: 99e2d6e1eb9efea448e0b166a4f247b8, type: 3}
+  m_PrefabInstance: {fileID: 7069151178903667674}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &4396490766368899555 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6852739780478911033, guid: 99e2d6e1eb9efea448e0b166a4f247b8, type: 3}

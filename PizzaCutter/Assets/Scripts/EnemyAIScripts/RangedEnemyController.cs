@@ -283,6 +283,8 @@ public class RangedEnemyController : MonoBehaviour
 
     private void Die()
     {
+        GetComponent<EnemyHitFlash>().TriggerFlash();
+
         if (xpOrbPrefab != null)
         {
             GameObject orbObject = Instantiate(

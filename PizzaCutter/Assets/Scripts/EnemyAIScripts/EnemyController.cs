@@ -144,7 +144,7 @@ public class EnemyController : MonoBehaviour
 
     public void TakeDamage(float damage)
     {
-        GetComponent<EnemyHitFlash>()?.TriggerFlash();
+        GetComponent<EnemyHitFlash>().TriggerFlash();
         currentHealth -= damage;
 
         Debug.Log(
@@ -162,6 +162,7 @@ public class EnemyController : MonoBehaviour
 
     private void Die()
     {
+        GetComponent<EnemyHitFlash>().TriggerDeathDissolve();
         Debug.Log($"{enemyData.enemyName} is ded. DED I TELL YA!");
 
         //spawns exp orb
