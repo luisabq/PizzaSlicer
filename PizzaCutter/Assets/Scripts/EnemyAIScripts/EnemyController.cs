@@ -162,7 +162,7 @@ public class EnemyController : MonoBehaviour
 
     private void Die()
     {
-        GetComponent<EnemyHitFlash>().TriggerDeathDissolve();
+
         Debug.Log($"{enemyData.enemyName} is ded. DED I TELL YA!");
 
         //spawns exp orb
@@ -191,7 +191,15 @@ public class EnemyController : MonoBehaviour
             }
         }
 
-        Destroy(gameObject);
+        EnemyHitFlash hitFlash = GetComponent<EnemyHitFlash>();
+        if (hitFlash != null)
+        {
+            hitFlash.TriggerDeathDissolve();
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
     private void SpawnHitVFX(Vector3 spawnPosition)

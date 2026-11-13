@@ -296,7 +296,15 @@ public class RatEnemyController : MonoBehaviour
                 pickup.SetHealValue(enemyData.healthReward);
         }
 
-        Destroy(gameObject);
+        EnemyHitFlash hitFlash = GetComponent<EnemyHitFlash>();
+        if (hitFlash != null)
+        {
+            hitFlash.TriggerDeathDissolve();
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
     public float GetCurrentHealth()

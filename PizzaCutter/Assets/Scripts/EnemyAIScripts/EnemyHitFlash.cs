@@ -92,9 +92,12 @@ public class EnemyHitFlash : MonoBehaviour
         }
 
 
-        RestoreOriginalMaterials();
-        //unparenting so destroying the enemy object doesnt also destroy this
-        transform.SetParent(null);
+        if (flashRoutine != null)
+        {
+            StopCoroutine(flashRoutine);
+            flashRoutine = null;
+        }
+
         StartCoroutine(DissolveAndDestroyRoutine());
     }
 
@@ -102,16 +105,16 @@ public class EnemyHitFlash : MonoBehaviour
     {
         float elapsed = 0f;
 
-        Material[][] activeMaterials = new Material[renderers.Length][];
+        Material[][] activeFlashMaterials = new Material[renderers.Length][];
         for (int i = 0; i < renderers.Length; i++)
         {
-            activeMaterials[i] = renderers[i].materials;
-
-            foreach (var mat in activeMaterials[i])
+            Material[] matArray = new Material[renderers[i].sharedMaterials.Length];
+            for (int j = 0; j < matArray.Length; j++)
             {
-                SetupMaterialForTransparent(mat);
+                matArray[j] = new Material(flashMaterial);
             }
-
+            renderers[i].materials = matArray;
+            activeFlashMaterials[i] = renderers[i].materials;
         }
 
         while (elapsed < dissolveDuration)
@@ -125,15 +128,15 @@ public class EnemyHitFlash : MonoBehaviour
             {
                 if (renderers[i] != null)
                 {
-                    for (int j = 0; j < activeMaterials[i].Length; j++)
+                    for (int j = 0; j < activeFlashMaterials[i].Length; j++)
                     {
-                        if (activeMaterials[i][j].HasProperty("_BaseColor"))
+                        if (activeFlashMaterials[i][j].HasProperty("_BaseColor"))
                         {
-                            activeMaterials[i][j].SetColor("_BaseColor", targetColor);
+                            activeFlashMaterials[i][j].SetColor("_BaseColor", targetColor);
                         }
-                        else if (activeMaterials[i][j].HasProperty("_Color"))
+                        else if (activeFlashMaterials[i][j].HasProperty("_Color"))
                         {
-                            activeMaterials[i][j].SetColor("_Color", targetColor);
+                            activeFlashMaterials[i][j].SetColor("_Color", targetColor);
                         }
                     }
                 }
@@ -147,18 +150,7 @@ public class EnemyHitFlash : MonoBehaviour
     }
 
 
-    private void SetupMaterialForTransparent(Material material)
-    {
-        //this is so much easier in unreal aaaaaaaaaaa
-        material.SetFloat("_Surface", 1.0f);
-        material.SetFloat("_Blend", 0.0f);  
-        material.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.SrcAlpha);
-        material.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);
-        material.SetInt("_ZWrite", 0);      
-        material.EnableKeyword("_SURFACE_TYPE_TRANSPARENT");
-        material.renderQueue = (int)UnityEngine.Rendering.RenderQueue.Transparent;
-    }
-
+   
 
 
 }
