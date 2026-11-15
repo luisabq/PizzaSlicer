@@ -177,6 +177,9 @@ public class RatEnemyController : MonoBehaviour
 
         foreach (Collider hit in hits)
         {
+            if (hit.isTrigger)
+                continue;
+
             PlayerHealth playerHealth =
                 hit.GetComponentInParent<PlayerHealth>();
 
@@ -209,7 +212,7 @@ public class RatEnemyController : MonoBehaviour
         if (isDead || contactDamageTimer > 0f || enemyData == null)
             return;
 
-        if (player.gameObject.layer == LayerMask.NameToLayer("Garlic"))
+        if (other.gameObject.layer == LayerMask.NameToLayer("Garlic"))
             return;
 
 
