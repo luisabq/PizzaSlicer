@@ -78,6 +78,9 @@ public class EnemyController : MonoBehaviour
 
     private void Update()
     {
+        if (isDead || enemyData == null || player == null || agent == null)
+            return;
+
         if (enemyData == null || player == null || agent == null)
             return;
 
@@ -109,6 +112,8 @@ public class EnemyController : MonoBehaviour
 
     private void AttackPlayer()
     {
+        if (isDead) return;
+
         attackTimer -= Time.deltaTime;
 
         if (attackTimer <= 0f)
@@ -122,6 +127,8 @@ public class EnemyController : MonoBehaviour
 
     private void DealDamageToPlayer()
     {
+        if (isDead) return;
+
         PlayerHealth playerHealth = player != null
             ? player.GetComponentInParent<PlayerHealth>()
             : null;

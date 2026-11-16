@@ -92,6 +92,9 @@ public class RangedEnemyController : MonoBehaviour
 
     private void Update()
     {
+        if (isDead || player == null || enemyData == null || agent == null)
+            return;
+
         if (player == null || enemyData == null || agent == null)
             return;
 
@@ -193,6 +196,8 @@ public class RangedEnemyController : MonoBehaviour
 
     private void AttackPlayer()
     {
+        if (isDead) return;
+
         attackTimer -= Time.deltaTime;
 
         if (preparingAttack)
@@ -220,6 +225,8 @@ public class RangedEnemyController : MonoBehaviour
 
     private void FireProjectile()
     {
+        if (isDead) return;
+
         if (projectilePrefab == null || firePoint == null)
         {
             Debug.LogError(
