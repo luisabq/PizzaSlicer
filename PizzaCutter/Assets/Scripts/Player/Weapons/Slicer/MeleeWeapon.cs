@@ -27,7 +27,8 @@ public class MeleeWeapon : MonoBehaviour
     [Range(0f, 1f)][SerializeField] private float hitVolume = 1.0f;
 
     [Header("Hitstop")]
-    [SerializeField] private float hitStopDuration = 0.08f;
+    [SerializeField] private float hitStopDuration = 0f;
+    //0.08 orignally
     [SerializeField] private CinemachineImpulseSource hitImpulseSource;
     [SerializeField] private GameObject levelUpPanel;
 
@@ -161,11 +162,13 @@ public class MeleeWeapon : MonoBehaviour
         {
             currentAttackRange *= 1.25f; //more reach for tier 2
             vfxScale = tier2ScaleMultiplier;
-            hitStopDuration = 0.06f;
+            hitStopDuration = 0.0f;
+            //0.06
         }
         else if (currentTier >= 3)
         {
-            hitStopDuration = 0.03f;
+            hitStopDuration = 0.0f;
+            //0.03
             currentAttackRange *= 1.4f; //even more reach, knockback logic further down + in knockback function
             vfxScale = tier3ScaleMultiplier;
         }
@@ -264,7 +267,8 @@ public class MeleeWeapon : MonoBehaviour
 
 
         }
-
+        
+        /*
         if (hitSomething && !isPaused)
         {
             if (hitImpulseSource != null)
@@ -273,8 +277,10 @@ public class MeleeWeapon : MonoBehaviour
             }
             StartCoroutine(DoHitStop());
         }
+        */
     }
 
+    /*
     private IEnumerator DoHitStop()
     {
         isPaused = true;
@@ -293,6 +299,7 @@ public class MeleeWeapon : MonoBehaviour
 
         isPaused = false;
     }
+    */
 
 
     private void ApplyKnockbackIfNeeded(GameObject enemyObj, Vector3 hitDirection, int currentTier)

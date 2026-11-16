@@ -47,7 +47,8 @@ public class DoughRollerWeapon : MonoBehaviour
 
 
     [Header("Dash Hitstop")]
-    [SerializeField] private float dashHitStopDuration = 0.05f; 
+    [SerializeField] private float dashHitStopDuration = 0.0f;
+    //0.05f
     [SerializeField] private float pitchStepMultiplier = 0.15f;
     [SerializeField] private CinemachineImpulseSource hitImpulseSource;
     [SerializeField] private GameObject levelUpPanel;
@@ -384,6 +385,7 @@ public class DoughRollerWeapon : MonoBehaviour
                 hitImpulseSource.GenerateImpulse();
             }
 
+            /*
             if (hitSomeone)
             {
                 //hitstop
@@ -397,6 +399,7 @@ public class DoughRollerWeapon : MonoBehaviour
                 }
 
             }
+            */
 
 
 
