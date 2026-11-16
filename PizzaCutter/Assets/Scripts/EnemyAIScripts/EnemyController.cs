@@ -27,6 +27,7 @@ public class EnemyController : MonoBehaviour
 
     private float currentHealth;
     private float attackTimer;
+    private bool isDead = false;
 
     //EnemyData values after the current level's difficulty multipliers are applied
     private float scaledMaxHealth;
@@ -144,6 +145,7 @@ public class EnemyController : MonoBehaviour
 
     public void TakeDamage(float damage)
     {
+        if (isDead) return;
         GetComponent<EnemyHitFlash>().TriggerFlash();
         currentHealth -= damage;
 
@@ -156,12 +158,19 @@ public class EnemyController : MonoBehaviour
 
         if (currentHealth <= 0f)
         {
+            isDead = true; 
             Die();
         }
     }
 
     private void Die()
     {
+        foreach (var col in GetComponentsInChildren<Collider>())
+        {
+            col.enabled = false;
+        }
+
+        
 
         Debug.Log($"{enemyData.enemyName} is ded. DED I TELL YA!");
 

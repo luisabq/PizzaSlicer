@@ -35,7 +35,7 @@ public class RangedEnemyController : MonoBehaviour
     [SerializeField] private AudioClip attackSound;
     [Range(0f, 1f)][SerializeField] private float attackVolume = 1.0f;
 
-
+    private bool isDead = false;
     private float currentHealth;
     private float attackTimer;
     private float windUpTimer;
@@ -263,6 +263,8 @@ public class RangedEnemyController : MonoBehaviour
 
     public void TakeDamage(float damage)
     {
+        if (isDead) return;
+
         GetComponent<EnemyHitFlash>().TriggerFlash();
         currentHealth -= damage;
 
@@ -278,11 +280,21 @@ public class RangedEnemyController : MonoBehaviour
         }
 
         if (currentHealth <= 0f)
+        {
+            isDead = true;
             Die();
+       
+        }
+         
     }
 
     private void Die()
     {
+        foreach (var col in GetComponentsInChildren<Collider>())
+        {
+            col.enabled = false;
+        }
+
         GetComponent<EnemyHitFlash>().TriggerFlash();
 
         if (xpOrbPrefab != null)

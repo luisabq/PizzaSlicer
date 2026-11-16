@@ -41,7 +41,7 @@ public class RatEnemyController : MonoBehaviour
     private float scaledAttackDamage;
     private int scaledXpReward;
     private float directionChangeTimer;
-    private bool isDead;
+    private bool isDead = false;
 
     private void Start()
     {
@@ -252,15 +252,21 @@ public class RatEnemyController : MonoBehaviour
         }
 
         if (currentHealth <= 0f)
+        {
+            isDead = true;
             Die();
+        }
+           
     }
 
     private void Die()
     {
-        if (isDead)
-            return;
 
-        isDead = true;
+        foreach (var col in GetComponentsInChildren<Collider>())
+        {
+            col.enabled = false;
+        }
+
         GetComponent<EnemyHitFlash>().TriggerDeathDissolve();
 
         if (agent != null && agent.enabled)

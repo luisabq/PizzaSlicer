@@ -76,6 +76,7 @@ public class MeleeWeapon : MonoBehaviour
 
     void Update()
     {
+        
         //autoswing
         if (Time.time >= nextAttackTime)
         {
@@ -160,9 +161,11 @@ public class MeleeWeapon : MonoBehaviour
         {
             currentAttackRange *= 1.25f; //more reach for tier 2
             vfxScale = tier2ScaleMultiplier;
+            hitStopDuration = 0.06f;
         }
         else if (currentTier >= 3)
         {
+            hitStopDuration = 0.03f;
             currentAttackRange *= 1.4f; //even more reach, knockback logic further down + in knockback function
             vfxScale = tier3ScaleMultiplier;
         }
