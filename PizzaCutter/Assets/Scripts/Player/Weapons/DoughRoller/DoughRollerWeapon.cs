@@ -47,7 +47,7 @@ public class DoughRollerWeapon : MonoBehaviour
 
 
     [Header("Dash Hitstop")]
-    [SerializeField] private float dashHitStopDuration = 0.0f;
+    [SerializeField] private float dashHitStopDuration = 0.05f;
     //0.05f
     [SerializeField] private float pitchStepMultiplier = 0.15f;
     [SerializeField] private CinemachineImpulseSource hitImpulseSource;
@@ -385,12 +385,18 @@ public class DoughRollerWeapon : MonoBehaviour
                 hitImpulseSource.GenerateImpulse();
             }
 
-            /*
+            
             if (hitSomeone)
             {
                 //hitstop
+
                 Time.timeScale = 0.2f;
-                yield return new WaitForSecondsRealtime(dashHitStopDuration);
+                float pauseEndTime = Time.realtimeSinceStartup + (dashHitStopDuration * 0.2f); 
+
+                while (Time.realtimeSinceStartup < pauseEndTime)
+                {
+                    yield return null;
+                }
                 bool isLevelUpActive = levelUpPanel != null && levelUpPanel.activeInHierarchy;
 
                 if (!LevelManager.IsLevelCompleted && !isLevelUpActive)
@@ -399,7 +405,7 @@ public class DoughRollerWeapon : MonoBehaviour
                 }
 
             }
-            */
+            
 
 
 
