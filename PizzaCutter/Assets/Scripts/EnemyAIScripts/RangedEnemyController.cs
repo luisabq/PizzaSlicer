@@ -35,10 +35,15 @@ public class RangedEnemyController : MonoBehaviour
     [SerializeField] private AudioClip attackSound;
     [Range(0f, 1f)][SerializeField] private float attackVolume = 1.0f;
 
-
+    private bool isDead = false;
     private float currentHealth;
     private float attackTimer;
     private float windUpTimer;
+
+    //EnemyData values after the current level's difficulty multipliers are applied
+    private float scaledMaxHealth;
+    private float scaledAttackDamage;
+    private int scaledXpReward;
     private bool preparingAttack;
 
     private Rigidbody rb;
@@ -56,11 +61,15 @@ public class RangedEnemyController : MonoBehaviour
             return;
         }
 
-        currentHealth = enemyData.maxHealth;
+        scaledMaxHealth = enemyData.maxHealth * LevelManager.HealthMultiplier;
+        scaledAttackDamage = enemyData.attackDamage * LevelManager.DamageMultiplier;
+        scaledXpReward = Mathf.RoundToInt(enemyData.xpReward * LevelManager.XpMultiplier);
+
+        currentHealth = scaledMaxHealth;
 
         if (agent != null)
         {
-            agent.speed = enemyData.moveSpeed;
+            agent.speed = enemyData.moveSpeed * LevelManager.SpeedMultiplier;
         }
         else
         {
@@ -83,6 +92,9 @@ public class RangedEnemyController : MonoBehaviour
 
     private void Update()
     {
+        if (isDead || player == null || enemyData == null || agent == null)
+            return;
+
         if (player == null || enemyData == null || agent == null)
             return;
 
@@ -184,6 +196,8 @@ public class RangedEnemyController : MonoBehaviour
 
     private void AttackPlayer()
     {
+        if (isDead) return;
+
         attackTimer -= Time.deltaTime;
 
         if (preparingAttack)
@@ -211,6 +225,8 @@ public class RangedEnemyController : MonoBehaviour
 
     private void FireProjectile()
     {
+        if (isDead) return;
+
         if (projectilePrefab == null || firePoint == null)
         {
             Debug.LogError(
@@ -239,7 +255,7 @@ public class RangedEnemyController : MonoBehaviour
         {
             projectileScript.Initialize(
                 direction,
-                enemyData.attackDamage,
+                scaledAttackDamage,
                 transform
             );
         }
@@ -254,6 +270,9 @@ public class RangedEnemyController : MonoBehaviour
 
     public void TakeDamage(float damage)
     {
+        if (isDead) return;
+
+        GetComponent<EnemyHitFlash>().TriggerFlash();
         currentHealth -= damage;
 
         if (hitVFXPrefab != null)
@@ -268,11 +287,23 @@ public class RangedEnemyController : MonoBehaviour
         }
 
         if (currentHealth <= 0f)
+        {
+            isDead = true;
             Die();
+       
+        }
+         
     }
 
     private void Die()
     {
+        foreach (var col in GetComponentsInChildren<Collider>())
+        {
+            col.enabled = false;
+        }
+
+        GetComponent<EnemyHitFlash>().TriggerFlash();
+
         if (xpOrbPrefab != null)
         {
             GameObject orbObject = Instantiate(
@@ -282,7 +313,7 @@ public class RangedEnemyController : MonoBehaviour
             );
 
             if (orbObject.TryGetComponent<EXPOrb>(out var orb))
-                orb.SetXPValue(enemyData.xpReward);
+                orb.SetXPValue(scaledXpReward);
         }
 
         if (healthPickupPrefab != null &&
@@ -307,7 +338,15 @@ public class RangedEnemyController : MonoBehaviour
             }
         }
 
-        Destroy(gameObject);
+        EnemyHitFlash hitFlash = GetComponent<EnemyHitFlash>();
+        if (hitFlash != null)
+        {
+            hitFlash.TriggerDeathDissolve();
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
     public float GetCurrentHealth()
@@ -317,7 +356,7 @@ public class RangedEnemyController : MonoBehaviour
 
     public float GetMaxHealth()
     {
-        return enemyData != null ? enemyData.maxHealth : 0f;
+        return enemyData != null ? scaledMaxHealth : 0f;
     }
 
     public void ApplyKnockback(Vector3 direction, float force, float duration = 0.2f)

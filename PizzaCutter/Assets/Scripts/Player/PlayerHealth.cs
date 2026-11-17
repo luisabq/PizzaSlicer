@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using Unity.Cinemachine;
 
 public class PlayerHealth : MonoBehaviour
 {
@@ -7,6 +8,10 @@ public class PlayerHealth : MonoBehaviour
     [SerializeField] private float iFrameDuration = 3.0f;
     [SerializeField] private float flashInterval = 0.5f;
     [SerializeField] private Renderer[] playerRenderers;
+    [SerializeField] private GameObject[] playerVisualObjects;
+
+    [SerializeField] private bool lockVerticalPosition = true;
+    private float lockedYPosition;
 
 
     [Header("Audio")]
@@ -15,7 +20,8 @@ public class PlayerHealth : MonoBehaviour
     [SerializeField] private AudioClip loseSound;
     [Range(0f, 1f)][SerializeField] private float loseVolume = 1.0f;
 
-
+    [Header("Screen Shake")]
+    [SerializeField] private CinemachineImpulseSource impulseSource;
 
 
     private PlayerStats playerStats;
@@ -35,6 +41,10 @@ public class PlayerHealth : MonoBehaviour
     private void Awake()
     {
         playerStats = GetComponent<PlayerStats>();
+        if (impulseSource == null)
+        {
+            impulseSource = GetComponent<CinemachineImpulseSource>();
+        }
     }
 
     private void Start()
@@ -47,7 +57,15 @@ public class PlayerHealth : MonoBehaviour
 
 
 
-
+    private void LateUpdate()
+    {
+        if (lockVerticalPosition)
+        {
+            Vector3 pos = transform.position;
+            pos.y = lockedYPosition;
+            transform.position = pos;
+        }
+    }
 
 
 
@@ -80,7 +98,15 @@ public class PlayerHealth : MonoBehaviour
         {
             SoundManager.Instance.PlaySound(hurtSound, hurtVolume);
         }
-        Handheld.Vibrate();
+        //only vibrates the phone if vibration is turned on in the settings menu
+        if (SettingsMenu.VibrationEnabled)
+        {
+            Handheld.Vibrate();
+        }
+        if (impulseSource != null)
+        {
+            impulseSource.GenerateImpulse();
+        }
         Debug.Log($"[PLAYER] Took {damageAmount} damage! Current Health: {currentHealth}");
 
         if (currentHealth <= 0)
@@ -94,7 +120,7 @@ public class PlayerHealth : MonoBehaviour
         }
     }
 
-    private IEnumerator IFrameRoutine()
+    public IEnumerator IFrameRoutine()
     {
         isInvincible = true;
         Physics.IgnoreLayerCollision(playerLayer, enemyLayer, true); //can walk through enemies when hit
@@ -112,23 +138,42 @@ public class PlayerHealth : MonoBehaviour
         }
 
         SetRenderersEnabled(true);
-        Physics.IgnoreLayerCollision(playerLayer, enemyLayer, false); //adds collision back
+        //Physics.IgnoreLayerCollision(playerLayer, enemyLayer, false); //adds collision back
         isInvincible = false;
+
+
+        while (IsOverlappingEnemy())
+        {
+            yield return null; //Wait until the player is not in an enemy to enable collision
+        }
+
+        
+        
+        Physics.IgnoreLayerCollision(playerLayer, enemyLayer, false);
+      
+
     }
 
     private void SetRenderersEnabled(bool enabled)
     {
-        if (playerRenderers == null) return;
+        if (playerVisualObjects == null || playerVisualObjects.Length == 0) return;
 
-        foreach (var rend in playerRenderers)
+        foreach (var obj in playerVisualObjects)
         {
-            if (rend != null)
+            if (obj != null)
             {
-                rend.enabled = enabled;
+                obj.SetActive(enabled);
             }
         }
     }
 
+
+    private bool IsOverlappingEnemy()
+    {
+        //checks around player for enemy colliders
+        Collider[] colliders = Physics.OverlapSphere(transform.position, 0.8f, 1 << enemyLayer);
+        return colliders.Length > 0;
+    }
 
     //use this for death management like pausing the game or switching levels
     private void Die()

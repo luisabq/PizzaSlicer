@@ -29,13 +29,25 @@ public class MainMenuManager : MonoBehaviour
 
     public void StartGame()
     {
+
         if (startSound != null && SoundManager.Instance != null)
         {
             SoundManager.Instance.PlaySound(startSound, startVolume);
         }
 
         Time.timeScale = 1f;
-        SceneManager.LoadScene(firstLevelScene);
+        //Animator anim = ScreenTransitioner.GetComponentInChildren<Animator>();
+        // if (anim != null)
+        // {
+        //    anim.enabled = true;
+        //    anim.Rebind();
+        //     anim.Update(0f);
+        //     anim.SetTrigger("Wipe");
+        //  }
+
+     
+        SceneTransitionManager.Instance.TransitionToScene("Level_01");
+        //SceneManager.LoadScene(firstLevelScene);
     }
 
     public void OpenCredits()

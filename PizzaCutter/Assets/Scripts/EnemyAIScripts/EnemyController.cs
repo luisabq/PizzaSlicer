@@ -27,6 +27,12 @@ public class EnemyController : MonoBehaviour
 
     private float currentHealth;
     private float attackTimer;
+    private bool isDead = false;
+
+    //EnemyData values after the current level's difficulty multipliers are applied
+    private float scaledMaxHealth;
+    private float scaledAttackDamage;
+    private int scaledXpReward;
 
     private Rigidbody rb;
 
@@ -44,11 +50,15 @@ public class EnemyController : MonoBehaviour
             return;
         }
 
-        currentHealth = enemyData.maxHealth;
+        scaledMaxHealth = enemyData.maxHealth * LevelManager.HealthMultiplier;
+        scaledAttackDamage = enemyData.attackDamage * LevelManager.DamageMultiplier;
+        scaledXpReward = Mathf.RoundToInt(enemyData.xpReward * LevelManager.XpMultiplier);
+
+        currentHealth = scaledMaxHealth;
 
         if (agent != null)
         {
-            agent.speed = enemyData.moveSpeed;
+            agent.speed = enemyData.moveSpeed * LevelManager.SpeedMultiplier;
         }
         else
         {
@@ -68,6 +78,9 @@ public class EnemyController : MonoBehaviour
 
     private void Update()
     {
+        if (isDead || enemyData == null || player == null || agent == null)
+            return;
+
         if (enemyData == null || player == null || agent == null)
             return;
 
@@ -99,6 +112,8 @@ public class EnemyController : MonoBehaviour
 
     private void AttackPlayer()
     {
+        if (isDead) return;
+
         attackTimer -= Time.deltaTime;
 
         if (attackTimer <= 0f)
@@ -112,6 +127,8 @@ public class EnemyController : MonoBehaviour
 
     private void DealDamageToPlayer()
     {
+        if (isDead) return;
+
         PlayerHealth playerHealth = player != null
             ? player.GetComponentInParent<PlayerHealth>()
             : null;
@@ -123,9 +140,9 @@ public class EnemyController : MonoBehaviour
 
         if (playerHealth != null)
         {
-            playerHealth.TakeDamage(enemyData.attackDamage);
+            playerHealth.TakeDamage(scaledAttackDamage);
             AudioSource.PlayClipAtPoint(attackSound, transform.position, attackVolume);
-            Debug.Log($"{enemyData.enemyName} attacked player for {enemyData.attackDamage} damage.");
+            Debug.Log($"{enemyData.enemyName} attacked player for {scaledAttackDamage} damage.");
         }
         else
         {
@@ -135,32 +152,42 @@ public class EnemyController : MonoBehaviour
 
     public void TakeDamage(float damage)
     {
+        if (isDead) return;
+        GetComponent<EnemyHitFlash>().TriggerFlash();
         currentHealth -= damage;
 
         Debug.Log(
             $"{enemyData.enemyName} took {damage} damage. " +
-            $"HP: {currentHealth}/{enemyData.maxHealth}"
+            $"HP: {currentHealth}/{scaledMaxHealth}"
         );
 
         SpawnHitVFX(transform.position);
 
         if (currentHealth <= 0f)
         {
+            isDead = true; 
             Die();
         }
     }
 
     private void Die()
     {
+        foreach (var col in GetComponentsInChildren<Collider>())
+        {
+            col.enabled = false;
+        }
+
+        
+
         Debug.Log($"{enemyData.enemyName} is ded. DED I TELL YA!");
 
         //spawns exp orb
         if (xpOrbPrefab != null)
         {
-            Instantiate(xpOrbPrefab, transform.position, Quaternion.identity);
-            if (xpOrbPrefab.TryGetComponent<EXPOrb>(out var orb))
+            GameObject orbObject = Instantiate(xpOrbPrefab, transform.position, Quaternion.identity);
+            if (orbObject.TryGetComponent<EXPOrb>(out var orb))
             {
-                orb.SetXPValue(enemyData.xpReward);
+                orb.SetXPValue(scaledXpReward);
             }
         }
         else
@@ -180,7 +207,15 @@ public class EnemyController : MonoBehaviour
             }
         }
 
-        Destroy(gameObject);
+        EnemyHitFlash hitFlash = GetComponent<EnemyHitFlash>();
+        if (hitFlash != null)
+        {
+            hitFlash.TriggerDeathDissolve();
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
     private void SpawnHitVFX(Vector3 spawnPosition)
@@ -199,7 +234,7 @@ public class EnemyController : MonoBehaviour
 
     public float GetMaxHealth()
     {
-        return enemyData != null ? enemyData.maxHealth : 0f;
+        return enemyData != null ? scaledMaxHealth : 0f;
     }
 
 
