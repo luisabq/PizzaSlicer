@@ -275,7 +275,7 @@ public class MeleeWeapon : MonoBehaviour
             {
                 hitImpulseSource.GenerateImpulse();
             }
-            StartCoroutine(DoHitStop());
+           // StartCoroutine(DoHitStop());
         }
         
     }

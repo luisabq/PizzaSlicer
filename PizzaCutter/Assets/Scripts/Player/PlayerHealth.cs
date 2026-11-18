@@ -179,6 +179,9 @@ public class PlayerHealth : MonoBehaviour
     private void Die()
     {
         Debug.Log("You dieded :D");
+        isInvincible = true;
+        StopAllCoroutines();
+        SetRenderersEnabled(true);
         if (loseSound != null && SoundManager.Instance != null)
         {
             SoundManager.Instance.PlaySound(loseSound, loseVolume);
@@ -211,11 +214,35 @@ public class PlayerHealth : MonoBehaviour
         currentHealth = MaxHealth;
         isInvincible = false;
 
-        SetRenderersEnabled(true);
-
-        if (playerLayer >= 0 && enemyLayer >= 0)
-            Physics.IgnoreLayerCollision(playerLayer, enemyLayer, false);
+        StartCoroutine(RestartInvincibilityRoutine());
 
         Debug.Log($"[PLAYER] Health reset to {currentHealth}/{MaxHealth} for a new run.");
     }
+
+    private IEnumerator RestartInvincibilityRoutine()
+    {
+        isInvincible = true;
+        if (playerLayer >= 0 && enemyLayer >= 0)
+        {
+            Physics.IgnoreLayerCollision(playerLayer, enemyLayer, true);
+        }
+
+        SetRenderersEnabled(true);
+
+        //actually making sure you dont get hit between restart, invincible while touching something or for 0.5 seconds
+        float timer = 0f;
+        while (timer < 0.5f || IsOverlappingEnemy())
+        {
+            timer += Time.unscaledDeltaTime;
+            yield return null;
+        }
+
+        if (playerLayer >= 0 && enemyLayer >= 0)
+        {
+            Physics.IgnoreLayerCollision(playerLayer, enemyLayer, false);
+        }
+        isInvincible = false;
+    }
+
+
 }

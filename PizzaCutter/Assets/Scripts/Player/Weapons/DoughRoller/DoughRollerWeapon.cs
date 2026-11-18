@@ -386,7 +386,8 @@ public class DoughRollerWeapon : MonoBehaviour
             }
 
             
-            if (hitSomeone)
+            /*
+             * if (hitSomeone)
             {
                 //hitstop
 
@@ -405,6 +406,7 @@ public class DoughRollerWeapon : MonoBehaviour
                 }
 
             }
+            */
             
 
 
