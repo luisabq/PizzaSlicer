@@ -21,20 +21,7 @@ public class SettingsMenu : MonoBehaviour
     // Connects the sliders to their volume functions once
     private void Awake()
     {
-        //FPS
-        QualitySettings.vSyncCount = 0;
-        Application.targetFrameRate = 60;
-
-
-        //Portrait mode only
-        Screen.autorotateToPortrait = true;
-        Screen.autorotateToPortraitUpsideDown = false;
-        Screen.autorotateToLandscapeLeft = false;
-        Screen.autorotateToLandscapeRight = false;
-
-        Screen.orientation = ScreenOrientation.Portrait;
-
-
+        
         if (masterVolumeSlider != null)
         {
             masterVolumeSlider.onValueChanged.AddListener(SetMasterVolume);
