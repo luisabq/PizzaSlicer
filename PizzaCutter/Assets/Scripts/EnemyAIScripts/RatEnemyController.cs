@@ -41,7 +41,7 @@ public class RatEnemyController : MonoBehaviour
     private float scaledAttackDamage;
     private int scaledXpReward;
     private float directionChangeTimer;
-    private bool isDead;
+    private bool isDead = false;
 
     private void Start()
     {
@@ -154,10 +154,11 @@ public class RatEnemyController : MonoBehaviour
             directionChangeMaxTime);
     }
 
-    private void OnTriggerStay(Collider other)
-    {
-        TryDamagePlayer(other.transform);
-    }
+    //private void OnTriggerStay(Collider other)
+   // {
+        
+     //   TryDamagePlayer(other.transform);
+    //}
 
     private void OnCollisionStay(Collision collision)
     {
@@ -176,6 +177,9 @@ public class RatEnemyController : MonoBehaviour
 
         foreach (Collider hit in hits)
         {
+            if (hit.isTrigger)
+                continue;
+
             PlayerHealth playerHealth =
                 hit.GetComponentInParent<PlayerHealth>();
 
@@ -186,6 +190,9 @@ public class RatEnemyController : MonoBehaviour
                 continue;
 
             playerHealth.TakeDamage(scaledAttackDamage);
+
+            GetComponentInChildren<Animator>().SetTrigger("AttackOn");
+            AudioSource.PlayClipAtPoint(attackSound, transform.position, attackVolume);
 
             contactDamageTimer = Mathf.Max(
                 0.1f,
@@ -204,6 +211,10 @@ public class RatEnemyController : MonoBehaviour
     {
         if (isDead || contactDamageTimer > 0f || enemyData == null)
             return;
+
+        if (other.gameObject.layer == LayerMask.NameToLayer("Garlic"))
+            return;
+
 
         PlayerHealth playerHealth =
             other.GetComponentInParent<PlayerHealth>();
@@ -226,8 +237,8 @@ public class RatEnemyController : MonoBehaviour
 
         if (isDead)
             return;
-        GetComponentInChildren<Animator>().SetTrigger("AttackOn");
-        AudioSource.PlayClipAtPoint(attackSound, transform.position, attackVolume);
+        GetComponent<EnemyHitFlash>().TriggerFlash();
+        
         currentHealth -= damage;
 
         if (hitVFXPrefab != null)
@@ -241,15 +252,22 @@ public class RatEnemyController : MonoBehaviour
         }
 
         if (currentHealth <= 0f)
+        {
+            isDead = true;
             Die();
+        }
+           
     }
 
     private void Die()
     {
-        if (isDead)
-            return;
 
-        isDead = true;
+        foreach (var col in GetComponentsInChildren<Collider>())
+        {
+            col.enabled = false;
+        }
+
+        GetComponent<EnemyHitFlash>().TriggerDeathDissolve();
 
         if (agent != null && agent.enabled)
             agent.enabled = false;
@@ -287,7 +305,15 @@ public class RatEnemyController : MonoBehaviour
                 pickup.SetHealValue(enemyData.healthReward);
         }
 
-        Destroy(gameObject);
+        EnemyHitFlash hitFlash = GetComponent<EnemyHitFlash>();
+        if (hitFlash != null)
+        {
+            hitFlash.TriggerDeathDissolve();
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
     public float GetCurrentHealth()

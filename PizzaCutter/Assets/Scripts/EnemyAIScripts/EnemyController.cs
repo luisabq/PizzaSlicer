@@ -27,6 +27,7 @@ public class EnemyController : MonoBehaviour
 
     private float currentHealth;
     private float attackTimer;
+    private bool isDead = false;
 
     //EnemyData values after the current level's difficulty multipliers are applied
     private float scaledMaxHealth;
@@ -77,6 +78,9 @@ public class EnemyController : MonoBehaviour
 
     private void Update()
     {
+        if (isDead || enemyData == null || player == null || agent == null)
+            return;
+
         if (enemyData == null || player == null || agent == null)
             return;
 
@@ -108,6 +112,8 @@ public class EnemyController : MonoBehaviour
 
     private void AttackPlayer()
     {
+        if (isDead) return;
+
         attackTimer -= Time.deltaTime;
 
         if (attackTimer <= 0f)
@@ -121,6 +127,8 @@ public class EnemyController : MonoBehaviour
 
     private void DealDamageToPlayer()
     {
+        if (isDead) return;
+
         PlayerHealth playerHealth = player != null
             ? player.GetComponentInParent<PlayerHealth>()
             : null;
@@ -144,6 +152,8 @@ public class EnemyController : MonoBehaviour
 
     public void TakeDamage(float damage)
     {
+        if (isDead) return;
+        GetComponent<EnemyHitFlash>().TriggerFlash();
         currentHealth -= damage;
 
         Debug.Log(
@@ -155,12 +165,20 @@ public class EnemyController : MonoBehaviour
 
         if (currentHealth <= 0f)
         {
+            isDead = true; 
             Die();
         }
     }
 
     private void Die()
     {
+        foreach (var col in GetComponentsInChildren<Collider>())
+        {
+            col.enabled = false;
+        }
+
+        
+
         Debug.Log($"{enemyData.enemyName} is ded. DED I TELL YA!");
 
         //spawns exp orb
@@ -189,7 +207,15 @@ public class EnemyController : MonoBehaviour
             }
         }
 
-        Destroy(gameObject);
+        EnemyHitFlash hitFlash = GetComponent<EnemyHitFlash>();
+        if (hitFlash != null)
+        {
+            hitFlash.TriggerDeathDissolve();
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
     private void SpawnHitVFX(Vector3 spawnPosition)

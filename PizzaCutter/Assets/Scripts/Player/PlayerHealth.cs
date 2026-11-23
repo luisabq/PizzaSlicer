@@ -8,6 +8,10 @@ public class PlayerHealth : MonoBehaviour
     [SerializeField] private float iFrameDuration = 3.0f;
     [SerializeField] private float flashInterval = 0.5f;
     [SerializeField] private Renderer[] playerRenderers;
+    [SerializeField] private GameObject[] playerVisualObjects;
+
+    [SerializeField] private bool lockVerticalPosition = true;
+    private float lockedYPosition;
 
 
     [Header("Audio")]
@@ -53,7 +57,15 @@ public class PlayerHealth : MonoBehaviour
 
 
 
-
+    private void LateUpdate()
+    {
+        if (lockVerticalPosition)
+        {
+            Vector3 pos = transform.position;
+            pos.y = lockedYPosition;
+            transform.position = pos;
+        }
+    }
 
 
 
@@ -86,7 +98,11 @@ public class PlayerHealth : MonoBehaviour
         {
             SoundManager.Instance.PlaySound(hurtSound, hurtVolume);
         }
-        Handheld.Vibrate();
+        //only vibrates the phone if vibration is turned on in the settings menu
+        if (SettingsMenu.VibrationEnabled)
+        {
+            Handheld.Vibrate();
+        }
         if (impulseSource != null)
         {
             impulseSource.GenerateImpulse();
@@ -122,28 +138,50 @@ public class PlayerHealth : MonoBehaviour
         }
 
         SetRenderersEnabled(true);
-        Physics.IgnoreLayerCollision(playerLayer, enemyLayer, false); //adds collision back
+        //Physics.IgnoreLayerCollision(playerLayer, enemyLayer, false); //adds collision back
         isInvincible = false;
+
+
+        while (IsOverlappingEnemy())
+        {
+            yield return null; //Wait until the player is not in an enemy to enable collision
+        }
+
+        
+        
+        Physics.IgnoreLayerCollision(playerLayer, enemyLayer, false);
+      
+
     }
 
     private void SetRenderersEnabled(bool enabled)
     {
-        if (playerRenderers == null) return;
+        if (playerVisualObjects == null || playerVisualObjects.Length == 0) return;
 
-        foreach (var rend in playerRenderers)
+        foreach (var obj in playerVisualObjects)
         {
-            if (rend != null)
+            if (obj != null)
             {
-                rend.enabled = enabled;
+                obj.SetActive(enabled);
             }
         }
     }
 
 
+    private bool IsOverlappingEnemy()
+    {
+        //checks around player for enemy colliders
+        Collider[] colliders = Physics.OverlapSphere(transform.position, 0.8f, 1 << enemyLayer);
+        return colliders.Length > 0;
+    }
+
     //use this for death management like pausing the game or switching levels
     private void Die()
     {
         Debug.Log("You dieded :D");
+        isInvincible = true;
+        StopAllCoroutines();
+        SetRenderersEnabled(true);
         if (loseSound != null && SoundManager.Instance != null)
         {
             SoundManager.Instance.PlaySound(loseSound, loseVolume);
@@ -176,11 +214,35 @@ public class PlayerHealth : MonoBehaviour
         currentHealth = MaxHealth;
         isInvincible = false;
 
-        SetRenderersEnabled(true);
-
-        if (playerLayer >= 0 && enemyLayer >= 0)
-            Physics.IgnoreLayerCollision(playerLayer, enemyLayer, false);
+        StartCoroutine(RestartInvincibilityRoutine());
 
         Debug.Log($"[PLAYER] Health reset to {currentHealth}/{MaxHealth} for a new run.");
     }
+
+    private IEnumerator RestartInvincibilityRoutine()
+    {
+        isInvincible = true;
+        if (playerLayer >= 0 && enemyLayer >= 0)
+        {
+            Physics.IgnoreLayerCollision(playerLayer, enemyLayer, true);
+        }
+
+        SetRenderersEnabled(true);
+
+        //actually making sure you dont get hit between restart, invincible while touching something or for 0.5 seconds
+        float timer = 0f;
+        while (timer < 0.5f || IsOverlappingEnemy())
+        {
+            timer += Time.unscaledDeltaTime;
+            yield return null;
+        }
+
+        if (playerLayer >= 0 && enemyLayer >= 0)
+        {
+            Physics.IgnoreLayerCollision(playerLayer, enemyLayer, false);
+        }
+        isInvincible = false;
+    }
+
+
 }

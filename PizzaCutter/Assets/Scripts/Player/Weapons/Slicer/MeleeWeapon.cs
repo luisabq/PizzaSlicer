@@ -1,6 +1,8 @@
 
 using UnityEngine;
 using UnityEngine.VFX;
+using System.Collections;
+using Unity.Cinemachine;
 
 public class MeleeWeapon : MonoBehaviour
 {
@@ -23,6 +25,15 @@ public class MeleeWeapon : MonoBehaviour
     [Range(0f, 1f)][SerializeField] private float swingVolume = 1.0f;
     [SerializeField] private AudioClip hitSound;
     [Range(0f, 1f)][SerializeField] private float hitVolume = 1.0f;
+
+    [Header("Hitstop")]
+    [SerializeField] private float hitStopDuration = 0.08f;
+    //0.08 orignally
+    [SerializeField] private CinemachineImpulseSource hitImpulseSource;
+    [SerializeField] private GameObject levelUpPanel;
+
+
+    private bool isPaused = false;
 
 
     private PlayerStats playerStats;
@@ -47,6 +58,12 @@ public class MeleeWeapon : MonoBehaviour
             attackPoint = transform;
             Debug.Log("no attackpoint set for vfx");
         }
+
+        if (hitImpulseSource == null)
+        {
+            hitImpulseSource = GetComponent<CinemachineImpulseSource>();
+        }
+
     }
 
 
@@ -60,6 +77,7 @@ public class MeleeWeapon : MonoBehaviour
 
     void Update()
     {
+        
         //autoswing
         if (Time.time >= nextAttackTime)
         {
@@ -144,9 +162,13 @@ public class MeleeWeapon : MonoBehaviour
         {
             currentAttackRange *= 1.25f; //more reach for tier 2
             vfxScale = tier2ScaleMultiplier;
+            hitStopDuration = 0.06f;
+            //0.06
         }
         else if (currentTier >= 3)
         {
+            hitStopDuration = 0.03f;
+            //0.03
             currentAttackRange *= 1.4f; //even more reach, knockback logic further down + in knockback function
             vfxScale = tier3ScaleMultiplier;
         }
@@ -178,6 +200,7 @@ public class MeleeWeapon : MonoBehaviour
 
         //Hitbox/Enemy detection 
         Collider[] hits = Physics.OverlapSphere(attackPoint.position, weaponData.baseAttackRange, enemyLayer);
+        bool hitSomething = false;
 
         foreach (var hit in hits)
         {
@@ -197,6 +220,7 @@ public class MeleeWeapon : MonoBehaviour
                 meleeEnemy.TakeDamage(combinedDamage);
                 ApplyKnockbackIfNeeded(hit.gameObject, hitDirection, currentTier);
                 Debug.Log($"[MELEE ATTACK] Hit {meleeEnemy.name} for {combinedDamage} total damage!");
+                hitSomething = true;
                 if (hitSound != null && SoundManager.Instance != null)
                 {
                     AudioSource.PlayClipAtPoint(hitSound, transform.position, hitVolume);
@@ -213,6 +237,7 @@ public class MeleeWeapon : MonoBehaviour
                 rangedEnemy.TakeDamage(combinedDamage);
                 ApplyKnockbackIfNeeded(hit.gameObject, hitDirection, currentTier);
                 Debug.Log($"[MELEE ATTACK] Hit {rangedEnemy.name} for {combinedDamage} total damage!");
+                hitSomething = true;
                 if (hitSound != null && SoundManager.Instance != null)
                 {
                     AudioSource.PlayClipAtPoint(hitSound, transform.position, hitVolume);
@@ -229,7 +254,7 @@ public class MeleeWeapon : MonoBehaviour
                 ApplyKnockbackIfNeeded(hit.gameObject, hitDirection, currentTier);
 
                 Debug.Log($"[MELEE ATTACK] Hit Rat for {combinedDamage} damage!");
-
+                hitSomething = true;
                 if (hitSound != null && SoundManager.Instance != null)
                 {
                     AudioSource.PlayClipAtPoint(
@@ -239,8 +264,46 @@ public class MeleeWeapon : MonoBehaviour
 
             // ADD MORE ENEMIES HERE
 
+
+
         }
+        
+        
+        if (hitSomething && !isPaused)
+        {
+            if (hitImpulseSource != null)
+            {
+                hitImpulseSource.GenerateImpulse();
+            }
+           // StartCoroutine(DoHitStop());
+        }
+        
     }
+
+    
+    private IEnumerator DoHitStop()
+    {
+        isPaused = true;
+
+        Time.timeScale = 0f;
+        float pauseEndTime = Time.realtimeSinceStartup + hitStopDuration;
+        while (Time.realtimeSinceStartup < pauseEndTime)
+        {
+            yield return null;
+        }
+
+        bool isLevelUpActive = levelUpPanel != null && levelUpPanel.activeInHierarchy; 
+
+        //need to make sure anything else that pauses the game doesnt get unpaused cause of hitstop 
+        if (!LevelManager.IsLevelCompleted && !isLevelUpActive)
+        {
+            Time.timeScale = 1f;
+        }
+
+
+        isPaused = false;
+    }
+    
 
 
     private void ApplyKnockbackIfNeeded(GameObject enemyObj, Vector3 hitDirection, int currentTier)

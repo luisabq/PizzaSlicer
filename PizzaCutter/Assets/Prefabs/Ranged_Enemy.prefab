@@ -45,6 +45,7 @@ GameObject:
   - component: {fileID: 741970193956321580}
   - component: {fileID: 1575429599415452806}
   - component: {fileID: 8887459901576831655}
+  - component: {fileID: 1771203584680824334}
   m_Layer: 3
   m_Name: Ranged_Enemy
   m_TagString: Enemy
@@ -200,6 +201,20 @@ NavMeshAgent:
   m_BaseOffset: 1
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!114 &1771203584680824334
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6445932388589793619}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29c72759577715c4cbe733ff94eb3b7e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyHitFlash
+  flashMaterial: {fileID: 2100000, guid: c5c2a17be29305942932affb214b207f, type: 2}
+  flashDuration: 0.08
 --- !u!1001 &339434741512566490
 PrefabInstance:
   m_ObjectHideFlags: 0

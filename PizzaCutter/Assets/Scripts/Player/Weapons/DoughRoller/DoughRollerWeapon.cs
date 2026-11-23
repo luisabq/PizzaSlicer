@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.EnhancedTouch;
 using Touch = UnityEngine.InputSystem.EnhancedTouch.Touch;
+using Unity.Cinemachine;
 
 public class DoughRollerWeapon : MonoBehaviour
 {
@@ -45,6 +46,20 @@ public class DoughRollerWeapon : MonoBehaviour
     [SerializeField] private float activeDuration = 0.5f;
 
 
+    [Header("Dash Hitstop")]
+    [SerializeField] private float dashHitStopDuration = 0.05f;
+    //0.05f
+    [SerializeField] private float pitchStepMultiplier = 0.15f;
+    [SerializeField] private CinemachineImpulseSource hitImpulseSource;
+    [SerializeField] private GameObject levelUpPanel;
+
+    [Header("Dash Camera Settings No Not Like The Car Type")]
+    [SerializeField] private CinemachineCamera playerCamera;
+    [SerializeField] private float dashZoomFOV = 75f;      
+    [SerializeField] private float zoomTransitionDuration = 0.5f;
+
+    private float defaultFOV;
+    private Coroutine activeZoomRoutine;
 
     [Header("dont touch this pls")]
     public int maxCharges = 1;
@@ -92,6 +107,16 @@ public class DoughRollerWeapon : MonoBehaviour
             doughRollerObject.SetActive(false);
         }
 
+        if (hitImpulseSource == null)
+        {
+            hitImpulseSource = GetComponent<CinemachineImpulseSource>();
+        }
+
+        if (playerCamera != null)
+        {
+            defaultFOV = playerCamera.Lens.FieldOfView;
+        }
+
     }
 
 
@@ -99,6 +124,8 @@ public class DoughRollerWeapon : MonoBehaviour
     {
         UpdateTierStats();
         currentCharges = maxCharges;
+
+
     }
 
 
@@ -261,6 +288,8 @@ public class DoughRollerWeapon : MonoBehaviour
     {
         isDashing = true;
 
+        PlayDashZoom(baseDashDuration);
+
         if (currentCharges == maxCharges)
         {
             rechargeTimer = baseCooldown;
@@ -327,6 +356,7 @@ public class DoughRollerWeapon : MonoBehaviour
 
         //tracking enemies in this specific dash
         HashSet<GameObject> hitEnemiesInThisDash = new HashSet<GameObject>();
+        int hitCountInThisDash = 0;
 
 
         //Dash movement, moves you from point A to point B over time (dash duration)
@@ -344,27 +374,64 @@ public class DoughRollerWeapon : MonoBehaviour
                 //if theres no playertransform can use wherever this script is attatched ig
                 transform.root.position = newPos;
             }
+            
+            bool hitSomeone = PerformDashCollisionCheck(hitEnemiesInThisDash, ref hitCountInThisDash);
 
             //checking for enemies you hit when dashing to deal damage
-            PerformDashCollisionCheck(hitEnemiesInThisDash);
+            //PerformDashCollisionCheck(hitEnemiesInThisDash);
+
+            if (hitSomeone && hitImpulseSource != null)
+            {
+                hitImpulseSource.GenerateImpulse();
+            }
+
+            
+            /*
+             * if (hitSomeone)
+            {
+                //hitstop
+
+                Time.timeScale = 0.2f;
+                float pauseEndTime = Time.realtimeSinceStartup + (dashHitStopDuration * 0.2f); 
+
+                while (Time.realtimeSinceStartup < pauseEndTime)
+                {
+                    yield return null;
+                }
+                bool isLevelUpActive = levelUpPanel != null && levelUpPanel.activeInHierarchy;
+
+                if (!LevelManager.IsLevelCompleted && !isLevelUpActive)
+                {
+                    Time.timeScale = 1f;
+                }
+
+            }
+            */
+            
+
+
 
             elapsedTime += Time.deltaTime;
             yield return null;
         }
 
-       //end of dash
+        //end of dash
+
+        
         isDashing = false;
     }
 
     //Checks what enemies were collided with the dash, and deals deals damage
     //hashet is for making sure a given enemy is only hit once per dash
-    private void PerformDashCollisionCheck(HashSet<GameObject> hitTracker)
+    //ref int for the rising pitch sound
+    private bool PerformDashCollisionCheck(HashSet<GameObject> hitTracker, ref int hitCount)
     {
         float extraDamage = playerStats != null ? playerStats.Damage : 0f;
         float combinedDamage = weaponData != null ? weaponData.baseWeaponDamage + extraDamage : 10f;
         
         //may need to adjust this for attack range
         Collider[] hits = Physics.OverlapSphere(attackPoint.position, weaponData != null ? weaponData.baseAttackRange : 1.5f, enemyLayer);
+        bool triggeredNewHit = false;
 
         foreach (var hit in hits)
         {
@@ -374,46 +441,66 @@ public class DoughRollerWeapon : MonoBehaviour
             if (hitTracker.Contains(enemyRoot)) continue;
 
 
+            hitTracker.Add(enemyRoot);
+            triggeredNewHit = true;
+            hitCount++; 
+
+            //pitch rising calculation
+            float currentPitch = 1.0f + ((hitCount - 1) * pitchStepMultiplier);
+
             EnemyController meleeEnemy = hit.GetComponentInParent<EnemyController>();
             if (meleeEnemy != null)
             {
                 hitTracker.Add(enemyRoot);
+                triggeredNewHit = true;
                 meleeEnemy.TakeDamage(combinedDamage);
                 SpawnHitVFX(hit.transform);
                 Debug.Log("[Dash] hit " + meleeEnemy + " for " + combinedDamage + " damage!");
-                if (hitSound != null && SoundManager.Instance != null)
-                {
-                    AudioSource.PlayClipAtPoint(hitSound, transform.position, hitVolume);
-                }
+             //   if (hitSound != null && SoundManager.Instance != null)
+              //  {
+              //      AudioSource.PlayClipAtPoint(hitSound, transform.position, hitVolume);
+              //  }
             }
 
             RangedEnemyController rangedEnemy = hit.GetComponentInParent<RangedEnemyController>();
             if (rangedEnemy != null)
             {
                 hitTracker.Add(enemyRoot);
+                triggeredNewHit = true;
                 rangedEnemy.TakeDamage(combinedDamage);
                 SpawnHitVFX(hit.transform);
                 Debug.Log("[Dash] hit " + rangedEnemy + " for " + combinedDamage + " damage!");
-                if (hitSound != null && SoundManager.Instance != null)
-                {
-                    AudioSource.PlayClipAtPoint(hitSound, transform.position, hitVolume);
-                }
+               // if (hitSound != null && SoundManager.Instance != null)
+               // {
+               //     AudioSource.PlayClipAtPoint(hitSound, transform.position, hitVolume);
+               // }
             }
 
             RatEnemyController ratEnemy = hit.GetComponentInParent<RatEnemyController>();
             if (ratEnemy != null)
             {
                 hitTracker.Add(enemyRoot);
+                triggeredNewHit = true;
                 ratEnemy.TakeDamage(combinedDamage);
                 SpawnHitVFX(hit.transform);
                 Debug.Log("[Dash] hit " + ratEnemy + " for " + combinedDamage + " damage!");
-                if (hitSound != null && SoundManager.Instance != null)
-                {
-                    AudioSource.PlayClipAtPoint(hitSound, transform.position, hitVolume);
-                }
+               // if (hitSound != null && SoundManager.Instance != null)
+               // {
+               //     AudioSource.PlayClipAtPoint(hitSound, transform.position, hitVolume);
+               // }
             }
             //ADD MORE ENEMIES HERE AAAAAAAAA
+
+
+            if (hitSound != null)
+            {
+                PlayPitchedHitSound(hit.transform.position, currentPitch);
+            }
+
         }
+
+        return triggeredNewHit;
+
     }
 
 
@@ -423,6 +510,80 @@ public class DoughRollerWeapon : MonoBehaviour
         yield return new WaitForSeconds(activeDuration);
         doughRollerObject.SetActive(false);
     }
+
+    //spawns audio source here
+    private void PlayPitchedHitSound(Vector3 position, float pitch)
+    {
+        GameObject audioObj = new GameObject("DashHitAudio");
+        audioObj.transform.position = position;
+        AudioSource audioSource = audioObj.AddComponent<AudioSource>();
+        audioSource.clip = hitSound;
+        audioSource.volume = hitVolume;
+        audioSource.pitch = pitch;
+        audioSource.spatialBlend = 0.5f;
+        audioSource.Play();
+
+        Destroy(audioObj, hitSound.length / Mathf.Max(pitch, 0.1f) + 0.1f);
+    }
+
+
+    public void PlayDashZoom(float totalDashDuration)
+    {
+        if (playerCamera == null) return;
+
+    //if a zoom is running dont run it again
+        if (activeZoomRoutine != null)
+        {
+            StopCoroutine(activeZoomRoutine);
+        }
+
+        activeZoomRoutine = StartCoroutine(DashZoomRoutine(totalDashDuration));
+    }
+
+    //i really should have just made this an animation on the camera instead AAAAA
+    private IEnumerator DashZoomRoutine(float dashDuration)
+    {
+        float elapsed = 0f;
+        float startFOV = playerCamera.Lens.FieldOfView;
+        float halfDuration = dashDuration * 0.5f;
+
+        //quick zoom out at the start
+        while (elapsed < zoomTransitionDuration)
+        {
+            float t = elapsed / zoomTransitionDuration;
+            var lens = playerCamera.Lens;
+            lens.FieldOfView = Mathf.Lerp(startFOV, dashZoomFOV, t);
+            playerCamera.Lens = lens;
+
+            elapsed += Time.unscaledDeltaTime; 
+            yield return null;
+        }
+
+        //holds the zoomed out state for half way point
+        yield return new WaitForSecondsRealtime(Mathf.Max(0f, dashDuration - (zoomTransitionDuration * 2f)));
+
+        //zooms back in to normal fov
+        elapsed = 0f;
+        while (elapsed < zoomTransitionDuration)
+        {
+            float t = elapsed / zoomTransitionDuration;
+            var lens = playerCamera.Lens;
+            lens.FieldOfView = Mathf.Lerp(dashZoomFOV, defaultFOV, t);
+            playerCamera.Lens = lens;
+
+            elapsed += Time.unscaledDeltaTime;
+            yield return null;
+        }
+
+      
+        var finalLens = playerCamera.Lens;
+        finalLens.FieldOfView = defaultFOV;
+        playerCamera.Lens = finalLens;
+
+        activeZoomRoutine = null;
+    }
+
+
 
     private void SpawnHitVFX(Transform enemyTransform)
     {
@@ -438,6 +599,8 @@ public class DoughRollerWeapon : MonoBehaviour
             Destroy(vfxInstance, 1.5f);
         }
     }
+
+
 
 
 

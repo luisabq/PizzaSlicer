@@ -37,7 +37,7 @@ RenderSettings:
   m_ReflectionBounces: 1
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
-  m_Sun: {fileID: 0}
+  m_Sun: {fileID: 1353815007}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2292,6 +2292,9 @@ MonoBehaviour:
   nextLevelSceneName: Level_06
   enemySpawner: {fileID: 1329714231}
   playerSpawnPoint: {fileID: 1886660567}
+  completionCamera: {fileID: 0}
+  zoomedFOV: 30
+  cinematicDuration: 3
   levelCompleteUI: {fileID: 646607869}
   gameCompleteUI: {fileID: 0}
   gameOverUI: {fileID: 1113766360}
@@ -2300,7 +2303,7 @@ MonoBehaviour:
   healthIncreasePerLevel: 0.1
   damageIncreasePerLevel: 0.1
   speedIncreasePerLevel: 0.1
-  xpIncreasePerLevel: 0.1
+  ExpOrbDropIncreasePerLevel: 0.1
 --- !u!4 &383963391
 Transform:
   m_ObjectHideFlags: 0
@@ -9685,13 +9688,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1353815006}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.40821788, y: -0.23456968, z: 0.10938163, w: 0.8754261}
-  m_LocalPosition: {x: 0, y: 3, z: 0}
+  m_LocalRotation: {x: 0.7083952, y: -0.6003311, z: -0.19953744, w: 0.31299156}
+  m_LocalPosition: {x: -5.13, y: 22.71, z: -19.67}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+  m_LocalEulerAnglesHint: {x: 11.763, y: -137.73, z: -94.88}
 --- !u!114 &1353815009
 MonoBehaviour:
   m_ObjectHideFlags: 0

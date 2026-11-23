@@ -35,7 +35,7 @@ public class RangedEnemyController : MonoBehaviour
     [SerializeField] private AudioClip attackSound;
     [Range(0f, 1f)][SerializeField] private float attackVolume = 1.0f;
 
-
+    private bool isDead = false;
     private float currentHealth;
     private float attackTimer;
     private float windUpTimer;
@@ -92,6 +92,9 @@ public class RangedEnemyController : MonoBehaviour
 
     private void Update()
     {
+        if (isDead || player == null || enemyData == null || agent == null)
+            return;
+
         if (player == null || enemyData == null || agent == null)
             return;
 
@@ -193,6 +196,8 @@ public class RangedEnemyController : MonoBehaviour
 
     private void AttackPlayer()
     {
+        if (isDead) return;
+
         attackTimer -= Time.deltaTime;
 
         if (preparingAttack)
@@ -220,6 +225,8 @@ public class RangedEnemyController : MonoBehaviour
 
     private void FireProjectile()
     {
+        if (isDead) return;
+
         if (projectilePrefab == null || firePoint == null)
         {
             Debug.LogError(
@@ -263,6 +270,9 @@ public class RangedEnemyController : MonoBehaviour
 
     public void TakeDamage(float damage)
     {
+        if (isDead) return;
+
+        GetComponent<EnemyHitFlash>().TriggerFlash();
         currentHealth -= damage;
 
         if (hitVFXPrefab != null)
@@ -277,11 +287,23 @@ public class RangedEnemyController : MonoBehaviour
         }
 
         if (currentHealth <= 0f)
+        {
+            isDead = true;
             Die();
+       
+        }
+         
     }
 
     private void Die()
     {
+        foreach (var col in GetComponentsInChildren<Collider>())
+        {
+            col.enabled = false;
+        }
+
+        GetComponent<EnemyHitFlash>().TriggerFlash();
+
         if (xpOrbPrefab != null)
         {
             GameObject orbObject = Instantiate(
@@ -316,7 +338,15 @@ public class RangedEnemyController : MonoBehaviour
             }
         }
 
-        Destroy(gameObject);
+        EnemyHitFlash hitFlash = GetComponent<EnemyHitFlash>();
+        if (hitFlash != null)
+        {
+            hitFlash.TriggerDeathDissolve();
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
     public float GetCurrentHealth()
