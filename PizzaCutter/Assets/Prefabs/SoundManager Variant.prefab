@@ -58,7 +58,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8742593276600538098, guid: cec3e679aad641045893656fd61a8528, type: 3}
       propertyPath: sceneMusicList.Array.size
-      value: 10
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 8742593276600538098, guid: cec3e679aad641045893656fd61a8528, type: 3}
       propertyPath: sceneMusicList.Array.data[0].musicClip
@@ -111,6 +111,14 @@ PrefabInstance:
     - target: {fileID: 8742593276600538098, guid: cec3e679aad641045893656fd61a8528, type: 3}
       propertyPath: sceneMusicList.Array.data[9].sceneName
       value: Level_09
+      objectReference: {fileID: 0}
+    - target: {fileID: 8742593276600538098, guid: cec3e679aad641045893656fd61a8528, type: 3}
+      propertyPath: sceneMusicList.Array.data[10].musicClip
+      value: 
+      objectReference: {fileID: 8300000, guid: ac8e64201f7e43949b426c243429ab2a, type: 3}
+    - target: {fileID: 8742593276600538098, guid: cec3e679aad641045893656fd61a8528, type: 3}
+      propertyPath: sceneMusicList.Array.data[10].sceneName
+      value: Infini Parking Lot
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
